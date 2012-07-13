@@ -3,3 +3,8 @@ C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\ServerStuff\bin\
 C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\ServerStuff\bin\Debug\ServerStuff.pdb
 C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\ServerStuff\obj\x86\Debug\ServerStuff.exe
 C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\ServerStuff\obj\x86\Debug\ServerStuff.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\ServerStuff\ServerStuff\obj\x86\Debug\ServerStuff.exe
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\ServerStuff\ServerStuff\obj\x86\Debug\ServerStuff.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\ServerStuff\ServerStuff\bin\Debug\ServerStuff.exe
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\ServerStuff\ServerStuff\bin\Debug\ServerStuff.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\ServerStuff\ServerStuff\obj\x86\Debug\ResolveAssemblyReference.cache
