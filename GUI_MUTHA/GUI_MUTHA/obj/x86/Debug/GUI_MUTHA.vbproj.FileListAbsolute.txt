@@ -1,0 +1,12 @@
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\bin\Debug\GUI_MUTHA.exe
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\bin\Debug\GUI_MUTHA.pdb
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\bin\Debug\GUI_MUTHA.xml
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.Editor.resources
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.Resources.resources
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.Startup.resources
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.exe
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.xml
+c:\users\user\documents\visual studio 2010\Projects\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.pdb
