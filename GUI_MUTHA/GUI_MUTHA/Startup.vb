@@ -19,7 +19,7 @@ Public Class Startup
         fs.Write(info, 0, info.Length)
         fs.Close()
 
-        FileName2 = ComboBox.Text
+        FileName2 = TextName.Text
         Dim fs2 As FileStream = File.Create("C:\Users\user\AppData\Local\Temp\Name.txt")
         Dim info2 As Byte() = New UTF8Encoding(True).GetBytes(FileName2)
         fs2.Write(info2, 0, info2.Length)

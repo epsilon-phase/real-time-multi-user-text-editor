@@ -52,10 +52,11 @@ Partial Class Editor
         Me.WHYAREYOUSTILLREADINGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.backButton = New System.Windows.Forms.Button()
         Me.PanelDown = New System.Windows.Forms.TableLayoutPanel()
+        Me.Send = New System.Windows.Forms.Button()
         Me.bUP = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ChatMessage = New System.Windows.Forms.TextBox()
+        Me.lblNames = New System.Windows.Forms.Label()
+        Me.Chatbox = New System.Windows.Forms.Label()
         Me.xBox2 = New System.Windows.Forms.TextBox()
         Me.PanelUP = New System.Windows.Forms.Panel()
         Me.xBox = New System.Windows.Forms.TextBox()
@@ -264,27 +265,40 @@ Partial Class Editor
         Me.PanelDown.ColumnCount = 2
         Me.PanelDown.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.64576!))
         Me.PanelDown.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.35424!))
+        Me.PanelDown.Controls.Add(Me.Send, 1, 2)
         Me.PanelDown.Controls.Add(Me.bUP, 1, 0)
-        Me.PanelDown.Controls.Add(Me.TextBox1, 0, 2)
-        Me.PanelDown.Controls.Add(Me.Label2, 1, 1)
-        Me.PanelDown.Controls.Add(Me.Label1, 0, 1)
+        Me.PanelDown.Controls.Add(Me.ChatMessage, 0, 2)
+        Me.PanelDown.Controls.Add(Me.lblNames, 1, 1)
+        Me.PanelDown.Controls.Add(Me.Chatbox, 0, 1)
         Me.PanelDown.Controls.Add(Me.xBox2, 0, 0)
         Me.PanelDown.Location = New System.Drawing.Point(634, 42)
         Me.PanelDown.Name = "PanelDown"
         Me.PanelDown.RowCount = 3
         Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.21739!))
         Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 84.78261!))
-        Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24.0!))
+        Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26.0!))
         Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.PanelDown.Size = New System.Drawing.Size(271, 209)
         Me.PanelDown.TabIndex = 5
         Me.PanelDown.Visible = False
         '
+        'Send
+        '
+        Me.Send.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Send.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Send.Location = New System.Drawing.Point(208, 185)
+        Me.Send.Name = "Send"
+        Me.Send.Size = New System.Drawing.Size(60, 21)
+        Me.Send.TabIndex = 11
+        Me.Send.Text = "Send"
+        Me.Send.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Send.UseVisualStyleBackColor = True
+        '
         'bUP
         '
         Me.bUP.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.bUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.bUP.Location = New System.Drawing.Point(249, 5)
+        Me.bUP.Location = New System.Drawing.Point(249, 4)
         Me.bUP.Name = "bUP"
         Me.bUP.Size = New System.Drawing.Size(19, 20)
         Me.bUP.TabIndex = 12
@@ -292,36 +306,35 @@ Partial Class Editor
         Me.bUP.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.bUP.UseVisualStyleBackColor = True
         '
-        'TextBox1
+        'ChatMessage
         '
-        Me.TextBox1.Location = New System.Drawing.Point(3, 187)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(199, 19)
-        Me.TextBox1.TabIndex = 0
+        Me.ChatMessage.Location = New System.Drawing.Point(3, 185)
+        Me.ChatMessage.Name = "ChatMessage"
+        Me.ChatMessage.Size = New System.Drawing.Size(199, 20)
+        Me.ChatMessage.TabIndex = 0
         '
-        'Label2
+        'lblNames
         '
-        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.BackColor = System.Drawing.SystemColors.Control
-        Me.Label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Label2.Location = New System.Drawing.Point(208, 28)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(60, 155)
-        Me.Label2.TabIndex = 7
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.lblNames.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblNames.BackColor = System.Drawing.SystemColors.Control
+        Me.lblNames.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblNames.Location = New System.Drawing.Point(208, 27)
+        Me.lblNames.Name = "lblNames"
+        Me.lblNames.Size = New System.Drawing.Size(60, 155)
+        Me.lblNames.TabIndex = 7
+        Me.lblNames.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
-        'Label1
+        'Chatbox
         '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.BackColor = System.Drawing.SystemColors.Window
-        Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label1.Location = New System.Drawing.Point(3, 28)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(199, 155)
-        Me.Label1.TabIndex = 6
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.Chatbox.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Chatbox.BackColor = System.Drawing.SystemColors.Window
+        Me.Chatbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Chatbox.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Chatbox.Location = New System.Drawing.Point(3, 27)
+        Me.Chatbox.Name = "Chatbox"
+        Me.Chatbox.Size = New System.Drawing.Size(199, 155)
+        Me.Chatbox.TabIndex = 6
+        Me.Chatbox.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'xBox2
         '
@@ -428,14 +441,15 @@ Partial Class Editor
     Friend WithEvents ToolStripMenuItem10 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents backButton As System.Windows.Forms.Button
     Friend WithEvents PanelDown As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents ChatMessage As System.Windows.Forms.TextBox
+    Friend WithEvents Chatbox As System.Windows.Forms.Label
+    Friend WithEvents lblNames As System.Windows.Forms.Label
     Friend WithEvents PanelUP As System.Windows.Forms.Panel
     Friend WithEvents BDown As System.Windows.Forms.Button
     Friend WithEvents ChatToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents xBox As System.Windows.Forms.TextBox
     Friend WithEvents bUP As System.Windows.Forms.Button
     Friend WithEvents xBox2 As System.Windows.Forms.TextBox
+    Friend WithEvents Send As System.Windows.Forms.Button
 
 End Class
