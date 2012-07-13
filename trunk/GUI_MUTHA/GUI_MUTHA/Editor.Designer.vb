@@ -44,13 +44,25 @@ Partial Class Editor
         Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ChatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GoAwayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WeCantHelpYouToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GetALifeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WHYAREYOUSTILLREADINGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.backButton = New System.Windows.Forms.Button()
+        Me.PanelDown = New System.Windows.Forms.TableLayoutPanel()
+        Me.bUP = New System.Windows.Forms.Button()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.xBox2 = New System.Windows.Forms.TextBox()
+        Me.PanelUP = New System.Windows.Forms.Panel()
+        Me.xBox = New System.Windows.Forms.TextBox()
+        Me.BDown = New System.Windows.Forms.Button()
         Me.MenuStrip.SuspendLayout()
+        Me.PanelDown.SuspendLayout()
+        Me.PanelUP.SuspendLayout()
         Me.SuspendLayout()
         '
         'rtbText
@@ -133,7 +145,7 @@ Partial Class Editor
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ChatToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.ViewToolStripMenuItem.Text = "View"
@@ -193,6 +205,12 @@ Partial Class Editor
         Me.ToolStripMenuItem10.Size = New System.Drawing.Size(102, 22)
         Me.ToolStripMenuItem10.Text = "200%"
         '
+        'ChatToolStripMenuItem
+        '
+        Me.ChatToolStripMenuItem.Name = "ChatToolStripMenuItem"
+        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
+        Me.ChatToolStripMenuItem.Text = "Chat"
+        '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GoAwayToolStripMenuItem, Me.WeCantHelpYouToolStripMenuItem, Me.GetALifeToolStripMenuItem, Me.WHYAREYOUSTILLREADINGToolStripMenuItem})
@@ -238,16 +256,132 @@ Partial Class Editor
         Me.backButton.Text = "Back"
         Me.backButton.UseVisualStyleBackColor = True
         '
+        'PanelDown
+        '
+        Me.PanelDown.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelDown.ColumnCount = 2
+        Me.PanelDown.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.64576!))
+        Me.PanelDown.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.35424!))
+        Me.PanelDown.Controls.Add(Me.bUP, 1, 0)
+        Me.PanelDown.Controls.Add(Me.TextBox1, 0, 2)
+        Me.PanelDown.Controls.Add(Me.Label2, 1, 1)
+        Me.PanelDown.Controls.Add(Me.Label1, 0, 1)
+        Me.PanelDown.Controls.Add(Me.xBox2, 0, 0)
+        Me.PanelDown.Location = New System.Drawing.Point(634, 42)
+        Me.PanelDown.Name = "PanelDown"
+        Me.PanelDown.RowCount = 3
+        Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.21739!))
+        Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 84.78261!))
+        Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24.0!))
+        Me.PanelDown.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.PanelDown.Size = New System.Drawing.Size(271, 209)
+        Me.PanelDown.TabIndex = 5
+        Me.PanelDown.Visible = False
+        '
+        'bUP
+        '
+        Me.bUP.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.bUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.bUP.Location = New System.Drawing.Point(249, 5)
+        Me.bUP.Name = "bUP"
+        Me.bUP.Size = New System.Drawing.Size(19, 20)
+        Me.bUP.TabIndex = 12
+        Me.bUP.Text = "^"
+        Me.bUP.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.bUP.UseVisualStyleBackColor = True
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(3, 187)
+        Me.TextBox1.Multiline = True
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(199, 19)
+        Me.TextBox1.TabIndex = 0
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.BackColor = System.Drawing.SystemColors.Control
+        Me.Label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label2.Location = New System.Drawing.Point(208, 28)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(60, 155)
+        Me.Label2.TabIndex = 7
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.BackColor = System.Drawing.SystemColors.Window
+        Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label1.Location = New System.Drawing.Point(3, 28)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(199, 155)
+        Me.Label1.TabIndex = 6
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        '
+        'xBox2
+        '
+        Me.xBox2.BackColor = System.Drawing.SystemColors.Control
+        Me.xBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.xBox2.Cursor = System.Windows.Forms.Cursors.Default
+        Me.xBox2.Location = New System.Drawing.Point(3, 3)
+        Me.xBox2.Name = "xBox2"
+        Me.xBox2.ReadOnly = True
+        Me.xBox2.Size = New System.Drawing.Size(19, 20)
+        Me.xBox2.TabIndex = 11
+        Me.xBox2.Text = "x"
+        Me.xBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'PanelUP
+        '
+        Me.PanelUP.Controls.Add(Me.xBox)
+        Me.PanelUP.Controls.Add(Me.BDown)
+        Me.PanelUP.Location = New System.Drawing.Point(634, 42)
+        Me.PanelUP.Name = "PanelUP"
+        Me.PanelUP.Size = New System.Drawing.Size(271, 28)
+        Me.PanelUP.TabIndex = 6
+        '
+        'xBox
+        '
+        Me.xBox.BackColor = System.Drawing.SystemColors.Control
+        Me.xBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.xBox.Cursor = System.Windows.Forms.Cursors.Default
+        Me.xBox.Location = New System.Drawing.Point(3, 3)
+        Me.xBox.Name = "xBox"
+        Me.xBox.ReadOnly = True
+        Me.xBox.Size = New System.Drawing.Size(19, 20)
+        Me.xBox.TabIndex = 10
+        Me.xBox.Text = "x"
+        Me.xBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'BDown
+        '
+        Me.BDown.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BDown.Location = New System.Drawing.Point(249, 5)
+        Me.BDown.Name = "BDown"
+        Me.BDown.Size = New System.Drawing.Size(19, 20)
+        Me.BDown.TabIndex = 9
+        Me.BDown.Text = "^"
+        Me.BDown.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.BDown.UseVisualStyleBackColor = True
+        '
         'Editor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(933, 639)
         Me.ControlBox = False
+        Me.Controls.Add(Me.PanelUP)
         Me.Controls.Add(Me.backButton)
         Me.Controls.Add(Me.closeButton)
-        Me.Controls.Add(Me.rtbText)
         Me.Controls.Add(Me.MenuStrip)
+        Me.Controls.Add(Me.PanelDown)
+        Me.Controls.Add(Me.rtbText)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip
@@ -258,6 +392,10 @@ Partial Class Editor
         Me.Text = "Text Editor"
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
+        Me.PanelDown.ResumeLayout(False)
+        Me.PanelDown.PerformLayout()
+        Me.PanelUP.ResumeLayout(False)
+        Me.PanelUP.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -289,5 +427,15 @@ Partial Class Editor
     Friend WithEvents ToolStripMenuItem9 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem10 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents backButton As System.Windows.Forms.Button
+    Friend WithEvents PanelDown As System.Windows.Forms.TableLayoutPanel
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents PanelUP As System.Windows.Forms.Panel
+    Friend WithEvents BDown As System.Windows.Forms.Button
+    Friend WithEvents ChatToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents xBox As System.Windows.Forms.TextBox
+    Friend WithEvents bUP As System.Windows.Forms.Button
+    Friend WithEvents xBox2 As System.Windows.Forms.TextBox
 
 End Class

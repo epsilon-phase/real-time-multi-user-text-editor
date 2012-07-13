@@ -27,12 +27,13 @@ Partial Class Startup
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.ComboBox = New System.Windows.Forms.ComboBox()
         Me.closeButton = New System.Windows.Forms.Button()
+        Me.TextName = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Button2
         '
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(12, 39)
+        Me.Button2.Location = New System.Drawing.Point(12, 65)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(200, 22)
         Me.Button2.TabIndex = 2
@@ -52,19 +53,29 @@ Partial Class Startup
         'closeButton
         '
         Me.closeButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.closeButton.Location = New System.Drawing.Point(12, 67)
+        Me.closeButton.Location = New System.Drawing.Point(12, 93)
         Me.closeButton.Name = "closeButton"
         Me.closeButton.Size = New System.Drawing.Size(200, 23)
         Me.closeButton.TabIndex = 4
         Me.closeButton.Text = "Close"
         Me.closeButton.UseVisualStyleBackColor = True
         '
+        'TextName
+        '
+        Me.TextName.ForeColor = System.Drawing.SystemColors.GrayText
+        Me.TextName.Location = New System.Drawing.Point(12, 39)
+        Me.TextName.Name = "TextName"
+        Me.TextName.Size = New System.Drawing.Size(200, 20)
+        Me.TextName.TabIndex = 5
+        Me.TextName.Text = "What is your name?"
+        '
         'Startup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(224, 96)
+        Me.ClientSize = New System.Drawing.Size(224, 122)
         Me.ControlBox = False
+        Me.Controls.Add(Me.TextName)
         Me.Controls.Add(Me.closeButton)
         Me.Controls.Add(Me.ComboBox)
         Me.Controls.Add(Me.Button2)
@@ -76,10 +87,12 @@ Partial Class Startup
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "File Selection"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents OpenFileDialog As System.Windows.Forms.OpenFileDialog
     Friend WithEvents ComboBox As System.Windows.Forms.ComboBox
     Friend WithEvents closeButton As System.Windows.Forms.Button
+    Friend WithEvents TextName As System.Windows.Forms.TextBox
 End Class
