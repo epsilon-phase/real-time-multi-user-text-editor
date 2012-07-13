@@ -5,6 +5,7 @@ Imports System.Text
 Public Class Editor
     Private Declare Function GetAsyncKeyState Lib "user32" (ByVal vkey As Long) As Integer
     Dim Directory As String
+    Dim NamePerson As String
     Dim FileName As String
 
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -13,6 +14,9 @@ Public Class Editor
         FileName = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Doc.txt")
         Directory = "C:\Users\user\AppData\Local\Temp\" + FileName + ".txt"
         rtbText.Text = My.Computer.FileSystem.ReadAllText(Directory)
+
+        NamePerson = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Name.txt")
+        lblNames.Text = NamePerson
     End Sub
 
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
@@ -124,5 +128,9 @@ Public Class Editor
     Private Sub bUP_Click_1(sender As System.Object, e As System.EventArgs) Handles bUP.Click
         PanelUP.Visible = True
         PanelDown.Visible = False
+    End Sub
+
+    Private Sub Send_Click(sender As System.Object, e As System.EventArgs) Handles Send.Click
+        Chatbox.Text = "[" + NamePerson + "]: " + ChatMessage.Text
     End Sub
 End Class
