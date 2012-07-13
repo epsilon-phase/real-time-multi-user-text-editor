@@ -68,9 +68,15 @@ namespace ChatServerLib
                 {
                     if (cs.running && cs.clients.Count != 0)
                     {
-                        byte[] bytes = { };
-                        cs.MyServer.Receive(bytes);
-                        cs.broadcast(bytes);
+                        try {
+                            byte[] bytes = { };
+                            cs.MyServer.Receive(bytes);
+                            Console.WriteLine("Recieved bytes:");
+                            Console.Write(bytes);
+                            cs.broadcast(bytes);
+                        } catch(SocketException e) {
+                            //Console.WriteLine(e.StackTrace);
+                        }
                     }
                 }
             };
@@ -130,7 +136,7 @@ namespace ChatServerLib
         /// </summary>
         /// <param name="s">The string to send</param>
         public void broadcast(string s){
-            MyServer.Send(Encoding.ASCII.GetBytes(s));
+            broadcast(Encoding.ASCII.GetBytes(s));
         }
         /// <summary>
         /// Sends a byte array out to all connected sockets
@@ -138,7 +144,10 @@ namespace ChatServerLib
         /// <param name="s">The byte array to send</param>
         public void broadcast(byte[] bytes)
         {
-            MyServer.Send(bytes);
+            foreach(Socket s in clients){
+                Console.WriteLine("Server sending bytes to " + s.ToString());
+                s.Send(bytes);
+            }
         }
 
         public IPAddress getIPAddress(){
