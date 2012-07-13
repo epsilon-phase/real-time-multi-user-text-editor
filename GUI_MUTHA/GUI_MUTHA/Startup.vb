@@ -5,6 +5,8 @@ Imports System.Text
 Public Class Startup
 
     Dim FileName As String
+    Dim FileName2 As String
+    Dim Dal As Boolean = False
 
     Private Sub Startup_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Editor.Hide()
@@ -17,6 +19,12 @@ Public Class Startup
         fs.Write(info, 0, info.Length)
         fs.Close()
 
+        FileName2 = ComboBox.Text
+        Dim fs2 As FileStream = File.Create("C:\Users\user\AppData\Local\Temp\Name.txt")
+        Dim info2 As Byte() = New UTF8Encoding(True).GetBytes(FileName2)
+        fs2.Write(info2, 0, info2.Length)
+        fs2.Close()
+
         Editor.Show()
         Me.Hide()
     End Sub
@@ -24,5 +32,15 @@ Public Class Startup
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
         Editor.Close()
         Me.Close()
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As System.Object, e As System.EventArgs) Handles TextName.Click
+        TextName.ForeColor = Color.Black
+
+        If Dal = False Then
+            TextName.Text = ""
+            Dal = True
+        End If
+
     End Sub
 End Class

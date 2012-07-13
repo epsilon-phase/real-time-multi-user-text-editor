@@ -94,4 +94,35 @@ Public Class Editor
         selectall()
     End Sub
 
+    Private Sub bUP_Click(sender As System.Object, e As System.EventArgs)
+        PanelUP.Visible = True
+        PanelDown.Visible = False
+    End Sub
+
+    Private Sub BDown_Click(sender As System.Object, e As System.EventArgs) Handles BDown.Click
+        PanelUP.Visible = False
+        PanelDown.Visible = True
+    End Sub
+
+    Private Sub xBox_TextChanged(sender As System.Object, e As System.EventArgs) Handles xBox.Click
+        PanelUP.Visible = False
+        PanelDown.Visible = False
+    End Sub
+
+    Private Sub xBox2_TextChanged(sender As System.Object, e As System.EventArgs) Handles xBox2.Click
+        PanelUP.Visible = False
+        PanelDown.Visible = False
+    End Sub
+
+    Private Sub ChatToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChatToolStripMenuItem.Click
+        If PanelUP.Visible = False And PanelDown.Visible = False Then
+            PanelUP.Visible = True
+            PanelDown.Visible = False
+        End If
+    End Sub
+
+    Private Sub bUP_Click_1(sender As System.Object, e As System.EventArgs) Handles bUP.Click
+        PanelUP.Visible = True
+        PanelDown.Visible = False
+    End Sub
 End Class
