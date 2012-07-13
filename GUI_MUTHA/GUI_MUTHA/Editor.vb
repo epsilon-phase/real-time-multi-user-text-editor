@@ -94,24 +94,4 @@ Public Class Editor
         selectall()
     End Sub
 
-
-
-    'Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
-    '    Dim ctrl, copyhotkey, cuthotkey, pastehotkey, sallhotkey As Boolean
-    '    ctrl = GetAsyncKeyState(Keys.ControlKey)
-    '    copyhotkey = GetAsyncKeyState(Keys.C)
-    '    cuthotkey = GetAsyncKeyState(Keys.X)
-    '    pastehotkey = GetAsyncKeyState(Keys.V)
-    '    sallhotkey = GetAsyncKeyState(Keys.A)
-
-    '    If ctrl = True And copyhotkey = True Then
-    '        copy()
-    '    End If
-
-    '    If ctrl = True And cuthotkey = True Then
-    '        copy()
-    '    End If
-
-    'End Sub
-
 End Class
