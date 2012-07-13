@@ -9,7 +9,15 @@
     class Program
     {
         #region Methods
-
+        public static void Recieve(object i)
+        {
+            byte[] e = new byte[1024];
+            while (true)
+            {
+                ((System.Net.Sockets.Socket)i).Receive(e);
+                Console.WriteLine(Encoding.ASCII.GetChars(e).);
+            }
+        }
         static void Main(string[] args)
         {
             Console.WriteLine("Client is here.");
@@ -17,11 +25,12 @@
             Console.WriteLine("What IP address would you like to connect to?");
             i.Connect(new IPEndPoint(IPAddress.Parse(Console.ReadLine()), 6000));
             Console.WriteLine("Connected");
-            i.Send(Encoding.ASCII.GetBytes(Console.ReadLine().ToCharArray()));
-            byte[] e=new byte[1024];
-            i.Receive(e);
-            Console.WriteLine(Encoding.ASCII.GetChars(e).ToString());
-            Console.ReadKey();
+            System.Threading.Thread fun = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(Recieve));
+            fun.Start(i);
+            while (true)
+            {
+                i.Send(Encoding.ASCII.GetBytes(Console.ReadLine().ToCharArray()));
+            }
             i.Close();
         }
 

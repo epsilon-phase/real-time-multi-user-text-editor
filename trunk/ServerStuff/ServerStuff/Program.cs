@@ -36,14 +36,12 @@
                     {
                         lock (clients[i])
                         {
-                            if (clients[i].i.message.Count == 0)
+                            if (clients[i].i.message.Count >= 0)
                             {
                                 while (clients[i].i.message.Count > 0)
                                 {
                                     pendingmessage.Enqueue(clients[i].i.message.Dequeue());
                                 }
-                                //clear thread's storage
-                                clients[i].i.message.Clear();
                             }//put strings from it into the class
 
                         }
@@ -106,7 +104,6 @@
             i = new somethingrecieve(p);
             q = new System.Threading.Thread(new System.Threading.ThreadStart(i.startstuff));
             //start thread for listening, this is already the thread for sending
-            q.Start();
         }
 
         #endregion Constructors
@@ -120,27 +117,15 @@
 
         public void Startit()
         {
+            q.Start();
             Console.WriteLine("Client at {0} connected.", sockety.LocalEndPoint.ToString());
             isrunning = true;
             while (true)
             {
-                if (q.ThreadState != System.Threading.ThreadState.Stopped)
-                {
-                    if (messagestosend.Count == 0)
-                    {
-                        System.Threading.Thread.Yield();
-                    }
-                    else
-                    {//remove send message and remove from queue
-                        Console.WriteLine("Sending message");
+                    if (messagestosend.Count>0){//remove send message and remove from queue
+                        Console.WriteLine("Sending message {0}",messagestosend.Peek());
                         sockety.Send(Encoding.ASCII.GetBytes(messagestosend.Dequeue().ToCharArray()));
                     }
-                }
-                else
-                {
-                    isrunning = false;
-                    return;
-                }
             }
         }
 
@@ -192,13 +177,13 @@
                     y.Receive(j);
                     //Encode the recieved message into a string, trim, and push onto queue
                     message.Enqueue(Encoding.ASCII.GetString(j).Trim());
+
                     //write the recently recieved message without removing it from the queue
                     Console.WriteLine(message.Peek());
                     
                 }
                 catch (System.Net.Sockets.SocketException p)
                 {
-                    Console.WriteLine(p.SocketErrorCode);
                     return;
                 }
             }
