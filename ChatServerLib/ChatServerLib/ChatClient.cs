@@ -61,6 +61,7 @@ namespace ChatServerLib
                 ChatClient cc = (ChatClient)o;
                 while(true){
                     string s = cc.recieve();
+                    Console.WriteLine("Client recieved bytes");
                     mrl(s);
                 }
             };
@@ -73,13 +74,14 @@ namespace ChatServerLib
         /// <param name="s">The string to send</param>
         public void send(string s){
             me.Send(Encoding.ASCII.GetBytes(s));
+            Console.WriteLine("Client sent bytes.");
         }
         /// <summary>
         /// Hangs until a message is recieved then returns it in string form
         /// </summary>
         /// <returns>The string sent by the server</returns>
         public string recieve(){
-            byte[] bytes = null;
+            byte[] bytes = {};
             me.Receive(bytes);
             return Encoding.ASCII.GetString(bytes);
         }

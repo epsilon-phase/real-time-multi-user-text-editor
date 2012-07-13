@@ -11,7 +11,6 @@ namespace ChatTesting
     {
         public static void Main()
         {
-            System.Net.IPAddress ip = System.Net.IPAddress.Any;
             ChatServer server = new ChatServer(1341);
             server.start();
             ChatClient client = new ChatClient("144.118.118.68",1341);
