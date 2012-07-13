@@ -3,3 +3,8 @@ c:\users\user\documents\visual studio 2012\Projects\ChatServerLib\ChatServerLib\
 c:\users\user\documents\visual studio 2012\Projects\ChatServerLib\ChatServerLib\bin\Debug\ChatServerLib.pdb
 c:\users\user\documents\visual studio 2012\Projects\ChatServerLib\ChatServerLib\obj\Debug\ChatServerLib.dll
 c:\users\user\documents\visual studio 2012\Projects\ChatServerLib\ChatServerLib\obj\Debug\ChatServerLib.pdb
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatServerLib\ChatServerLib\bin\Debug\ChatServerLib.dll
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatServerLib\ChatServerLib\bin\Debug\ChatServerLib.pdb
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatServerLib\ChatServerLib\obj\Debug\ChatServerLib.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatServerLib\ChatServerLib\obj\Debug\ChatServerLib.dll
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatServerLib\ChatServerLib\obj\Debug\ChatServerLib.pdb
