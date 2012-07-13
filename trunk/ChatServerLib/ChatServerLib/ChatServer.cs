@@ -37,12 +37,12 @@ namespace ChatServerLib
             MyServer.Bind(new IPEndPoint(ip, port));
         }
         /// <summary>
-        /// This constructor creates the IPaddress and endpoint from the string (using ASCII encoding) and port
+        /// This constructor creates the IPaddress and endpoint from the string and port
         /// </summary>
         /// <param name="ip">The IP in the form of "xxx.yyy.ww.zz"</param>
         /// <param name="port">The port you wish to bind to</param>
         public ChatServer(string ip, int port){
-            IPAddress IP = new IPAddress(Encoding.ASCII.GetBytes(ip));
+            IPAddress IP = IPAddress.Parse(ip);
             MyServer.Bind(new IPEndPoint(IP, port));
             myIP = IP;
         }

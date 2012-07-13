@@ -12,9 +12,9 @@ namespace ChatTesting
         public static void Main()
         {
             System.Net.IPAddress ip = System.Net.IPAddress.Any;
-            ChatServer server = new ChatServer(ip,1341);
+            ChatServer server = new ChatServer(1341);
             server.start();
-            ChatClient client = new ChatClient("126",1341);
+            ChatClient client = new ChatClient("144.118.118.68",1341);
             MessageRecievedListener mrl = delegate(string s)
             {
                 Console.WriteLine(s);

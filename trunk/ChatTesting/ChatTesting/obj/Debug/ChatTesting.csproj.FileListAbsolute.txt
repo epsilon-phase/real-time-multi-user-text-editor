@@ -6,3 +6,11 @@ C:\Users\user\Documents\Visual Studio 2012\Projects\ChatTesting\ChatTesting\bin\
 C:\Users\user\Documents\Visual Studio 2012\Projects\ChatTesting\ChatTesting\obj\Debug\ChatTesting.exe
 C:\Users\user\Documents\Visual Studio 2012\Projects\ChatTesting\ChatTesting\obj\Debug\ChatTesting.pdb
 C:\Users\user\Documents\Visual Studio 2012\Projects\ChatTesting\ChatTesting\bin\Debug\ChatServerLib.dll
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatTesting\ChatTesting\bin\Debug\ChatTesting.exe.config
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatTesting\ChatTesting\obj\Debug\ChatTesting.exe
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatTesting\ChatTesting\obj\Debug\ChatTesting.pdb
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatTesting\ChatTesting\bin\Debug\ChatTesting.exe
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatTesting\ChatTesting\bin\Debug\ChatTesting.pdb
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatTesting\ChatTesting\bin\Debug\ChatServerLib.dll
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatTesting\ChatTesting\bin\Debug\ChatServerLib.pdb
+C:\Users\user\Desktop\real-time-multi-user-text-editor\ChatTesting\ChatTesting\obj\Debug\ChatTesting.csprojResolveAssemblyReference.cache
