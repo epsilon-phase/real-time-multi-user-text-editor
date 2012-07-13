@@ -1,0 +1,5 @@
+C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\Clienttesting\bin\Debug\Clienttesting.exe
+C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\Clienttesting\bin\Debug\Clienttesting.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\Clienttesting\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\Clienttesting\obj\x86\Debug\Clienttesting.exe
+C:\Users\user\Documents\Visual Studio 2010\Projects\ServerStuff\Clienttesting\obj\x86\Debug\Clienttesting.pdb
