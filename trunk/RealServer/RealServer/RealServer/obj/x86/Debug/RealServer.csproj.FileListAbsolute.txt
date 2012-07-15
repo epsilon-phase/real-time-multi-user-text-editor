@@ -1,0 +1,5 @@
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\bin\Debug\RealServer.exe
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\bin\Debug\RealServer.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\obj\x86\Debug\RealServer.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\obj\x86\Debug\RealServer.exe
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\obj\x86\Debug\RealServer.pdb
