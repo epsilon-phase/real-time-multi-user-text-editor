@@ -19,13 +19,14 @@ namespace ChatServerLib
     /// </summary>
     public class ChatClient
     {
-        Socket me = new Socket(SocketType.Stream, ProtocolType.IP);
+        Socket mySocket = new Socket(SocketType.Stream, ProtocolType.IP);
+        public const int bufferSize = 666;
         /// <summary>
         /// This connects to a local IP supplied by the system and the specified port
         /// </summary>
         /// <param name="port">The port you're connecting to.</param>
         public ChatClient(int port){
-            me.Connect(IPAddress.Any, port);
+            mySocket.Connect(IPAddress.Any, port);
         }
         /// <summary>
         /// Connects to a specific IP and port
@@ -33,7 +34,7 @@ namespace ChatServerLib
         /// <param name="ip">The IP of the server</param>
         /// <param name="port">The port of the server</param>
         public ChatClient(IPAddress ip,int port){
-            me.Connect(ip, port);
+            mySocket.Connect(ip, port);
         }
         /// <summary>
         /// Converts the string into an IPAddress
@@ -41,7 +42,7 @@ namespace ChatServerLib
         /// <param name="ipstr">The IP address in the form "aaa.bbb.cc.dddd"</param>
         /// <param name="port">The port number</param>
         public ChatClient(string ipstr,int port){
-            me.Connect(IPAddress.Parse(ipstr), port);
+            mySocket.Connect(IPAddress.Parse(ipstr), port);
         }
         /// <summary>
         /// 
@@ -49,7 +50,7 @@ namespace ChatServerLib
         /// <param name="ip"></param>
         /// <param name="port"></param>
         public ChatClient(long ip,int port){
-            me.Connect(new IPAddress(ip), port);
+            mySocket.Connect(new IPAddress(ip), port);
         }
         /// <summary>
         /// Starts the listener thread given
@@ -61,7 +62,7 @@ namespace ChatServerLib
                 ChatClient cc = (ChatClient)o;
                 while(true){
                     string s = cc.recieve();
-                    Console.WriteLine("Client recieved bytes");
+                    //Console.WriteLine("Client recieved bytes");
                     mrl(s);
                 }
             };
@@ -73,8 +74,13 @@ namespace ChatServerLib
         /// </summary>
         /// <param name="s">The string to send</param>
         public void send(string s){
-            me.Send(Encoding.ASCII.GetBytes(s));
-            Console.WriteLine("Client sent bytes.");
+            if(s.Length<=bufferSize){
+                mySocket.Send(Encoding.ASCII.GetBytes(s));
+                //Console.WriteLine("Client sent bytes.");
+            }else{
+                send(s.Substring(0,bufferSize));
+                send(s.Remove(0, bufferSize));
+            }
         }
         /// <summary>
         /// Hangs until a message is recieved then returns it in string form
@@ -82,7 +88,7 @@ namespace ChatServerLib
         /// <returns>The string sent by the server</returns>
         public string recieve(){
             byte[] bytes = {};
-            me.Receive(bytes);
+            mySocket.Receive(bytes);
             return Encoding.ASCII.GetString(bytes);
         }
     }
