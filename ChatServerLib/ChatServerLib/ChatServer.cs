@@ -64,31 +64,31 @@ namespace ChatServerLib
             chatSenderThread = delegate(object o)
             {
                 ChatServer cs = (ChatServer)o;
+                while (!(cs.running && cs.clients.Count != 0)){
+
+                }
+                Socket s = cs.clients.Last<Socket>();
                 while (true)
                 {
-                    if (cs.running && cs.clients.Count != 0)
-                    {
-                        try {
-                            byte[] bytes = { };
-                            cs.MyServer.Receive(bytes);
-                            Console.WriteLine("Recieved bytes:");
-                            Console.Write(bytes);
-                            cs.broadcast(bytes);
-                        } catch(SocketException e) {
-                            //Console.WriteLine(e.StackTrace);
-                        }
+                    try {
+                        byte[] bytes = {};
+                        s.Receive(bytes);
+                        Console.WriteLine("Server Recieved bytes:"+Encoding.ASCII.GetString(bytes));
+                        cs.broadcastException(bytes,s);
+                    } catch(SocketException e) {
+                        Console.WriteLine(e.StackTrace);
                     }
                 }
             };
             MyServer.Listen(5);
             running = true;
-            newChatThread();
             ParameterizedThreadStart receptions = delegate(object o)
             {
                 ChatServer cs = (ChatServer)o;
                 while (running)
                 {
                     cs.clients.Add(MyServer.Accept());
+                    newChatThread();
                 }
             };
             addThread(receptions);
@@ -144,12 +144,26 @@ namespace ChatServerLib
         /// <param name="s">The byte array to send</param>
         public void broadcast(byte[] bytes)
         {
-            foreach(Socket s in clients){
-                Console.WriteLine("Server sending bytes to " + s.ToString());
-                s.Send(bytes);
+            broadcastException(bytes, null);
+        }
+        /// <summary>
+        /// Broadcasts to all sockets not equal to the parameter "exception"
+        /// </summary>
+        /// <param name="bytes">The bytes to broadcast</param>
+        /// <param name="exception">The socket you don't want to send to.</param>
+        public void broadcastException(byte[] bytes, Socket exception){
+            foreach (Socket s in clients)
+            {
+                if(!(s==exception)){
+                    Console.WriteLine("Server sending bytes to Socket");
+                    s.Send(bytes);
+                }
             }
         }
-
+        /// <summary>
+        /// Gets the IP address
+        /// </summary>
+        /// <returns>System.Net.IPAdress</returns>
         public IPAddress getIPAddress(){
             return myIP;
         }
