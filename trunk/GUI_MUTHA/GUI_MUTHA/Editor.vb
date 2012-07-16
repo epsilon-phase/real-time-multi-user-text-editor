@@ -3,8 +3,7 @@ Imports System.IO
 Imports System.Text
 
 Public Class Editor
-    Dim Directory, NamePerson, FileName, RecvText As String
-    Dim IsThereText As Boolean
+    Dim Directory, NamePerson, FileName As String
 
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
@@ -129,9 +128,14 @@ Public Class Editor
     End Sub
 
     Private Sub Send_Click(sender As System.Object, e As System.EventArgs) Handles Send.Click
-        Dim PName As String = "[" + NamePerson + "]: "
-        Chatbox.Text = Chatbox.Text + vbCrLf + PName + ChatMessage.Text + vbCrLf + "Hello"
-        ChatMessage.Text = ""
+        Dim SendMess As String = "[" + NamePerson + "]: " + ChatMessage.Text
+
+        If Chatbox.Text = "" Then
+            Chatbox.Text = SendMess
+        Else
+            Chatbox.Text = Chatbox.Text + vbCrLf + SendMess
+            ChatMessage.Text = ""
+        End If
 
     End Sub
 
@@ -140,13 +144,4 @@ Public Class Editor
         Chatbox.ScrollToCaret()
     End Sub
 
-    Private Sub tick_Tick(sender As System.Object, e As System.EventArgs) Handles tick.Tick
-        If IsThereText = False Then
-            RecvText = vbCrLf
-        ElseIf IsThereText = True Then
-            RecvText = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Text.txt")
-            Chatbox.Text = Chatbox.Text + vbCrLf + RecvText
-
-        End If
-    End Sub
 End Class
