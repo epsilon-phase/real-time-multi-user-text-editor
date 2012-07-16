@@ -11,9 +11,10 @@ namespace OperationalTransform
         {
             return DateTime.Compare(a.time, b.time);
         }
-        TextTransformCollection(string initial)
+        public TextTransformCollection(string initial)
         {
             this.initial = initial;
+            this.actions = new List<TextTransformActor>();
         }
         public void add(TextTransformActor ax)
         {
@@ -21,12 +22,12 @@ namespace OperationalTransform
             //Sort actions in order to keep it clear.
             actions.Sort(CompareTextActorTime);
         }
-        private int calculateindexoffset(TextTransformActor d,int indexonlist)
+        private int calculateindexoffset(TextTransformActor d)
         {
             int total = 0;
-            for (int i = 0; i < indexonlist; i++)
+            for (int i = 0; actions[i].time<d.time; i++)
             {
-                if (actions[i].Index < d.Index)
+                if (actions[i].Index <= d.Index)
                 {
                     if (actions[i].Command == TextTransformType.Insert)
                     {
@@ -45,17 +46,27 @@ namespace OperationalTransform
         /// goes through list of text transformations and applies them, calculating the necessary offsets to do so.
         /// </summary>
         /// <returns> The Consolidated string</returns>
-        private string CalculateConsolidatedString()
+        public string CalculateConsolidatedString()
         {
             string e = initial;
             int offset=0;
             for (int i = 0; i < actions.Count; i++)
             {
-                offset=calculateindexoffset(actions[i],i);
+                
+                offset=calculateindexoffset(actions[i]);
                 if (actions[i].Command == TextTransformType.Delete)
-                    e.Remove(actions[i].Index + offset, actions[i].Length);
+                    e=e.Remove(actions[i].Index + offset, actions[i].Length);
                 if (actions[i].Command == TextTransformType.Insert)
-                    e.Insert(actions[i].Index + offset, actions[i].Insert);
+                {
+                    try
+                    {
+                        e = e.Insert(actions[i].Index + offset, actions[i].Insert);
+                    }
+                    catch (IndexOutOfRangeException q)
+                    {
+                        e = e + actions[i].Insert;
+                    }
+                }
             }
             return e;
         }
@@ -90,6 +101,11 @@ namespace OperationalTransform
                 return insert;
             }
         }
+        public static TextTransformActor GetObjectFromBytes(byte[] q)
+        {
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            return (TextTransformActor)t.Deserialize((System.IO.Stream)new System.IO.MemoryStream(q));
+        }
         public static byte[] GetObjectInBytes(TextTransformActor g)
         {
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
@@ -117,12 +133,11 @@ namespace OperationalTransform
                 return _uncompensatedindex;
             }
         }
-        public TextTransformActor(TextTransformType com,int index, string data,DateTime stamp) 
+        public TextTransformActor(int index, string data,DateTime stamp) 
         {
             this._command = TextTransformType.Insert;
             this._uncompensatedindex = index;
-            if (_command == TextTransformType.Insert)
-                this.insert = data;
+            insert = data;
             this.time = stamp;
         }
         public TextTransformActor(int index, int length,DateTime stamp) 
@@ -134,7 +149,8 @@ namespace OperationalTransform
         }
         
         TextTransformType _command;
-        public TextTransformType Command { 
+        public TextTransformType Command 
+        { 
             get 
             {
                 return _command; 
@@ -150,7 +166,7 @@ namespace OperationalTransform
             info.AddValue("Command", (int)this._command);
             info.AddValue("TimeStamp", time.ToBinary());
             if (_command == TextTransformType.Insert)
-                info.AddValue("insert", insert);
+                info.AddValue("Insert", insert);
             else
                 info.AddValue("DeleteLength", this.Length);
             info.AddValue("index", this._uncompensatedindex);
