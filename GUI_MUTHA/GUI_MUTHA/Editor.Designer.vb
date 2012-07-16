@@ -56,11 +56,11 @@ Partial Class Editor
         Me.bUP = New System.Windows.Forms.Button()
         Me.ChatMessage = New System.Windows.Forms.TextBox()
         Me.lblNames = New System.Windows.Forms.Label()
-        Me.Chatbox = New System.Windows.Forms.Label()
         Me.xBox2 = New System.Windows.Forms.TextBox()
         Me.PanelUP = New System.Windows.Forms.Panel()
         Me.xBox = New System.Windows.Forms.TextBox()
         Me.BDown = New System.Windows.Forms.Button()
+        Me.Chatbox = New System.Windows.Forms.RichTextBox()
         Me.MenuStrip.SuspendLayout()
         Me.PanelDown.SuspendLayout()
         Me.PanelUP.SuspendLayout()
@@ -269,8 +269,8 @@ Partial Class Editor
         Me.PanelDown.Controls.Add(Me.bUP, 1, 0)
         Me.PanelDown.Controls.Add(Me.ChatMessage, 0, 2)
         Me.PanelDown.Controls.Add(Me.lblNames, 1, 1)
-        Me.PanelDown.Controls.Add(Me.Chatbox, 0, 1)
         Me.PanelDown.Controls.Add(Me.xBox2, 0, 0)
+        Me.PanelDown.Controls.Add(Me.Chatbox, 0, 1)
         Me.PanelDown.Location = New System.Drawing.Point(634, 42)
         Me.PanelDown.Name = "PanelDown"
         Me.PanelDown.RowCount = 3
@@ -324,18 +324,6 @@ Partial Class Editor
         Me.lblNames.TabIndex = 7
         Me.lblNames.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
-        'Chatbox
-        '
-        Me.Chatbox.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Chatbox.BackColor = System.Drawing.SystemColors.Window
-        Me.Chatbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Chatbox.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Chatbox.Location = New System.Drawing.Point(3, 27)
-        Me.Chatbox.Name = "Chatbox"
-        Me.Chatbox.Size = New System.Drawing.Size(199, 155)
-        Me.Chatbox.TabIndex = 6
-        Me.Chatbox.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        '
         'xBox2
         '
         Me.xBox2.BackColor = System.Drawing.SystemColors.Control
@@ -382,6 +370,16 @@ Partial Class Editor
         Me.BDown.Text = "^"
         Me.BDown.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.BDown.UseVisualStyleBackColor = True
+        '
+        'Chatbox
+        '
+        Me.Chatbox.Location = New System.Drawing.Point(3, 30)
+        Me.Chatbox.Name = "Chatbox"
+        Me.Chatbox.ReadOnly = True
+        Me.Chatbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
+        Me.Chatbox.Size = New System.Drawing.Size(199, 149)
+        Me.Chatbox.TabIndex = 13
+        Me.Chatbox.Text = ""
         '
         'Editor
         '
@@ -442,7 +440,6 @@ Partial Class Editor
     Friend WithEvents backButton As System.Windows.Forms.Button
     Friend WithEvents PanelDown As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents ChatMessage As System.Windows.Forms.TextBox
-    Friend WithEvents Chatbox As System.Windows.Forms.Label
     Friend WithEvents lblNames As System.Windows.Forms.Label
     Friend WithEvents PanelUP As System.Windows.Forms.Panel
     Friend WithEvents BDown As System.Windows.Forms.Button
@@ -451,5 +448,6 @@ Partial Class Editor
     Friend WithEvents bUP As System.Windows.Forms.Button
     Friend WithEvents xBox2 As System.Windows.Forms.TextBox
     Friend WithEvents Send As System.Windows.Forms.Button
+    Friend WithEvents Chatbox As System.Windows.Forms.RichTextBox
 
 End Class

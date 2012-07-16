@@ -131,6 +131,13 @@ Public Class Editor
     End Sub
 
     Private Sub Send_Click(sender As System.Object, e As System.EventArgs) Handles Send.Click
-        Chatbox.Text = "[" + NamePerson + "]: " + ChatMessage.Text
+        Dim PName As String = "[" + NamePerson + "]: "
+        Chatbox.Text = Chatbox.Text + vbCrLf + PName + ChatMessage.Text + vbCrLf + "Hello"
+        ChatMessage.Text = ""
+    End Sub
+
+    Private Sub Chatbox_TextChanged(sender As System.Object, e As System.EventArgs) Handles Chatbox.TextChanged
+        Chatbox.SelectionStart = Chatbox.Text.Length
+        Chatbox.ScrollToCaret()
     End Sub
 End Class
