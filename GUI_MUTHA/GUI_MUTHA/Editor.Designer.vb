@@ -22,6 +22,7 @@ Partial Class Editor
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Editor))
         Me.rtbText = New System.Windows.Forms.RichTextBox()
         Me.closeButton = New System.Windows.Forms.Button()
@@ -57,10 +58,11 @@ Partial Class Editor
         Me.ChatMessage = New System.Windows.Forms.TextBox()
         Me.lblNames = New System.Windows.Forms.Label()
         Me.xBox2 = New System.Windows.Forms.TextBox()
+        Me.Chatbox = New System.Windows.Forms.RichTextBox()
         Me.PanelUP = New System.Windows.Forms.Panel()
         Me.xBox = New System.Windows.Forms.TextBox()
         Me.BDown = New System.Windows.Forms.Button()
-        Me.Chatbox = New System.Windows.Forms.RichTextBox()
+        Me.tick = New System.Windows.Forms.Timer(Me.components)
         Me.MenuStrip.SuspendLayout()
         Me.PanelDown.SuspendLayout()
         Me.PanelUP.SuspendLayout()
@@ -337,6 +339,16 @@ Partial Class Editor
         Me.xBox2.Text = "x"
         Me.xBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
+        'Chatbox
+        '
+        Me.Chatbox.Location = New System.Drawing.Point(3, 30)
+        Me.Chatbox.Name = "Chatbox"
+        Me.Chatbox.ReadOnly = True
+        Me.Chatbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
+        Me.Chatbox.Size = New System.Drawing.Size(199, 149)
+        Me.Chatbox.TabIndex = 13
+        Me.Chatbox.Text = ""
+        '
         'PanelUP
         '
         Me.PanelUP.Controls.Add(Me.xBox)
@@ -371,15 +383,9 @@ Partial Class Editor
         Me.BDown.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.BDown.UseVisualStyleBackColor = True
         '
-        'Chatbox
+        'tick
         '
-        Me.Chatbox.Location = New System.Drawing.Point(3, 30)
-        Me.Chatbox.Name = "Chatbox"
-        Me.Chatbox.ReadOnly = True
-        Me.Chatbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
-        Me.Chatbox.Size = New System.Drawing.Size(199, 149)
-        Me.Chatbox.TabIndex = 13
-        Me.Chatbox.Text = ""
+        Me.tick.Interval = 500
         '
         'Editor
         '
@@ -449,5 +455,6 @@ Partial Class Editor
     Friend WithEvents xBox2 As System.Windows.Forms.TextBox
     Friend WithEvents Send As System.Windows.Forms.Button
     Friend WithEvents Chatbox As System.Windows.Forms.RichTextBox
+    Friend WithEvents tick As System.Windows.Forms.Timer
 
 End Class

@@ -4,8 +4,7 @@ Imports System.Text
 
 Public Class Startup
 
-    Dim FileName As String
-    Dim FileName2 As String
+    Dim FileName, FileName2, FileName3 As String
     Dim Dal As Boolean = False
 
     Private Sub Startup_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -24,6 +23,12 @@ Public Class Startup
         Dim info2 As Byte() = New UTF8Encoding(True).GetBytes(FileName2)
         fs2.Write(info2, 0, info2.Length)
         fs2.Close()
+
+        FileName3 = "[Random]: " + ComboBox.Text
+        Dim fs3 As FileStream = File.Create("C:\Users\user\AppData\Local\Temp\Doc.txt")
+        Dim info3 As Byte() = New UTF8Encoding(True).GetBytes(FileName3)
+        fs3.Write(info3, 0, info3.Length)
+        fs3.Close()
 
         Editor.Show()
         Me.Hide()

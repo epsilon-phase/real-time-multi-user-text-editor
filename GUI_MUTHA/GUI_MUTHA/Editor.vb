@@ -3,10 +3,8 @@ Imports System.IO
 Imports System.Text
 
 Public Class Editor
-    Private Declare Function GetAsyncKeyState Lib "user32" (ByVal vkey As Long) As Integer
-    Dim Directory As String
-    Dim NamePerson As String
-    Dim FileName As String
+    Dim Directory, NamePerson, FileName, RecvText As String
+    Dim IsThereText As Boolean
 
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
@@ -134,10 +132,21 @@ Public Class Editor
         Dim PName As String = "[" + NamePerson + "]: "
         Chatbox.Text = Chatbox.Text + vbCrLf + PName + ChatMessage.Text + vbCrLf + "Hello"
         ChatMessage.Text = ""
+
     End Sub
 
     Private Sub Chatbox_TextChanged(sender As System.Object, e As System.EventArgs) Handles Chatbox.TextChanged
         Chatbox.SelectionStart = Chatbox.Text.Length
         Chatbox.ScrollToCaret()
+    End Sub
+
+    Private Sub tick_Tick(sender As System.Object, e As System.EventArgs) Handles tick.Tick
+        If IsThereText = False Then
+            RecvText = vbCrLf
+        ElseIf IsThereText = True Then
+            RecvText = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Text.txt")
+            Chatbox.Text = Chatbox.Text + vbCrLf + RecvText
+
+        End If
     End Sub
 End Class
