@@ -16,6 +16,7 @@ namespace ChatServerLib
     {
         Socket MyServer = new Socket(SocketType.Stream, ProtocolType.IP);
         IPAddress myIP=null;
+        public const int bufferSize = 666;
         List<Socket> clients = new List<Socket>();
         List<Thread> threads = new List<Thread>();
         public ParameterizedThreadStart chatSenderThread;
@@ -71,12 +72,13 @@ namespace ChatServerLib
                 while (true)
                 {
                     try {
-                        byte[] bytes = {};
+                        byte[] bytes = new byte[bufferSize];
                         s.Receive(bytes);
-                        Console.WriteLine("Server Recieved bytes:"+Encoding.ASCII.GetString(bytes));
+                        bytes = ChatServer.noNulls(bytes);
+                        //Console.WriteLine("Server Recieved bytes:"+Encoding.ASCII.GetString(bytes));
                         cs.broadcastException(bytes,s);
                     } catch(SocketException e) {
-                        Console.WriteLine(e.StackTrace);
+                        //Console.WriteLine(e.StackTrace);
                     }
                 }
             };
@@ -92,6 +94,15 @@ namespace ChatServerLib
                 }
             };
             addThread(receptions);
+        }
+        protected static byte[] noNulls(byte[] bytes){
+            List<byte> temp = new List<byte>();
+            foreach(byte b in bytes){
+                if(!(b==null||b=='\0')){
+                    temp.Add(b);
+                }
+            }
+            return temp.ToArray();
         }
         /// <summary>
         /// Stops the server and closes all threads and connections
@@ -155,7 +166,7 @@ namespace ChatServerLib
             foreach (Socket s in clients)
             {
                 if(!(s==exception)){
-                    Console.WriteLine("Server sending bytes to Socket");
+                    //Console.WriteLine("Server sending bytes to Socket");
                     s.Send(bytes);
                 }
             }
