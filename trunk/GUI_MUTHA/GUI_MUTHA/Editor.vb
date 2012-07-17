@@ -144,4 +144,17 @@ Public Class Editor
         Chatbox.ScrollToCaret()
     End Sub
 
+    Private Sub rtbText_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyUp
+
+        Select Case e.KeyCode
+            Case Keys.Back
+                REM This is a frustrating way to do it.
+                Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart, 1)
+            Case Else
+                REM insert this single character here
+                Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart, e.KeyCode.ToString())
+        End Select
+
+
+    End Sub
 End Class

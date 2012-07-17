@@ -12,9 +12,9 @@ namespace OperationalTransform
         #endregion Fields
 
         #region Constructors
-        public TextTransformCollection() 
+        public TextTransformCollection()
         {
-            this.actions=new List<TextTransformActor>();
+            this.actions = new List<TextTransformActor>();
         }
         /// <summary>
         /// tell the text transform collection to start with a certain string;
@@ -49,6 +49,7 @@ namespace OperationalTransform
         {
             if (ax.Command == TextTransformType.Initialize)
             {
+                //set initial string and discard the actor
                 this.initial = ax.Insert;
             }
             else
@@ -91,9 +92,46 @@ namespace OperationalTransform
             }
             return e;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileyo"></param>
+        /// <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
+        public static TextTransformCollection PrepareCollectionFromLargeText(System.IO.Stream fileyo)
+        {
+            byte[] q = new byte[900];
+            List<byte[]> tik = new List<byte[]>();
+            TextTransformCollection e = new TextTransformCollection();
+            string funny;
+            int w=0;
+            while (fileyo.Position > fileyo.Length)
+            {
+                if (fileyo.Length - (fileyo.Position + 900) >= 0)
+                {
+                    fileyo.Read(q, 0, 900);
+                    funny = System.Text.Encoding.ASCII.GetChars(q).ToString();
+                }
+                else
+                {
+                    fileyo.Read(q, 0, (int)(fileyo.Length - fileyo.Position));
+                    funny = System.Text.Encoding.ASCII.GetChars(q).ToString();
+                    //replace the nulls on the string with spaces
+                    int y=funny.IndexOf('\0');
+                }
+                e.Add(new TextTransformActor(funny, w));
+            }
+            return e;
 
+        }
         private static int CompareTextActorTime(TextTransformActor a, TextTransformActor b)
         {
+            if (a.Command == TextTransformType.Append && b.Command == TextTransformType.Append)
+                return a.Index.CompareTo(b.Index);
+            //Appends are the most important part, they should be applied to 
+            if (a.Command == TextTransformType.Append && b.Command != TextTransformType.Append)
+                return -1;
+            if(a.Command != TextTransformType.Append && b.Command == TextTransformType.Append)
+                return 1;
             return DateTime.Compare(a.time, b.time);
         }
 

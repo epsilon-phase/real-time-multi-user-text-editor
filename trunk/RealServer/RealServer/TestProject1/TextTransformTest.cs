@@ -19,6 +19,7 @@
         {
             TextTransformCollection y = new TextTransformCollection("Hi");
             y.Add(new TextTransformActor(2,"Hi There"));
+            
             Assert.AreEqual("HiHi There",y.CalculateConsolidatedString());
             //delete from it
             y.Add(new TextTransformActor(0, 2));
