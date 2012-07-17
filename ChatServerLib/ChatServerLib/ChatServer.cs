@@ -115,7 +115,6 @@ namespace ChatServerLib
             foreach(Socket s in clients){
                 s.Disconnect(true);
             }
-            MyServer.Disconnect(true);
         }
         /// <summary>
         /// Starts a new chat thread
