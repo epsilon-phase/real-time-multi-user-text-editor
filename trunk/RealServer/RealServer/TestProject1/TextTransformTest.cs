@@ -1,26 +1,32 @@
-﻿
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OperationalTransform;
-namespace TestProject1
+﻿namespace TestProject1
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using OperationalTransform;
+
     [TestClass]
     public class TextTransformTest
     {
+        #region Methods
+
         [TestMethod]
         public void TestMethod1()
         {
             TextTransformCollection y = new TextTransformCollection("Hi");
-            y.add(new TextTransformActor(2,"Hi There",DateTime.Now));
+            y.Add(new TextTransformActor(2,"Hi There"));
             Assert.AreEqual("HiHi There",y.CalculateConsolidatedString());
             //delete from it
-            y.add(new TextTransformActor(0, 2, DateTime.Now));
+            y.Add(new TextTransformActor(0, 2));
             Assert.AreEqual("Hi There", y.CalculateConsolidatedString());
-            y.add(new TextTransformActor(6, " You person", DateTime.Now));
+            y.Add(new TextTransformActor(6, " You person"));
             Assert.AreEqual("Hi There You person", y.consolidated);
         }
+
+        #endregion Methods
     }
 }
