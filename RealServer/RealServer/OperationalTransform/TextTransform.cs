@@ -1,131 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace OperationalTransform
+﻿namespace OperationalTransform
 {
-    public class TextTransformCollection 
-    {
-        private static int CompareTextActorTime(TextTransformActor a, TextTransformActor b)
-        {
-            return DateTime.Compare(a.time, b.time);
-        }
-        public TextTransformCollection(string initial)
-        {
-            this.initial = initial;
-            this.actions = new List<TextTransformActor>();
-        }
-        public void add(TextTransformActor ax)
-        {
-            actions.Add(ax);
-            //Sort actions in order to keep it clear.
-            actions.Sort(CompareTextActorTime);
-        }
-        private int calculateindexoffset(TextTransformActor d)
-        {
-            int total = 0;
-            for (int i = 0; actions[i].time<d.time; i++)
-            {
-                if (actions[i].Index <= d.Index)
-                {
-                    if (actions[i].Command == TextTransformType.Insert)
-                    {
-                        total += actions[i].Length;
-                    }
-                    else
-                    {
-                        total -= actions[i].Length;
-                    }
-                }
-            }
-            return total;
-        }
-        /// <summary>
-        /// Complicated procedure, should not call unless necessary
-        /// goes through list of text transformations and applies them, calculating the necessary offsets to do so.
-        /// </summary>
-        /// <returns> The Consolidated string</returns>
-        public string CalculateConsolidatedString()
-        {
-            string e = initial;
-            int offset=0;
-            for (int i = 0; i < actions.Count; i++)
-            {
-                
-                offset=calculateindexoffset(actions[i]);
-                if (actions[i].Command == TextTransformType.Delete)
-                    e=e.Remove(actions[i].Index + offset, actions[i].Length);
-                if (actions[i].Command == TextTransformType.Insert)
-                {
-                    try
-                    {
-                        e = e.Insert(actions[i].Index + offset, actions[i].Insert);
-                    }
-                    catch (IndexOutOfRangeException q)
-                    {
-                        e = e + actions[i].Insert;
-                    }
-                }
-            }
-            return e;
-        }
-        private string initial;
-        /// <summary>
-        /// Consolidates string entry using text actor stuff.
-        /// </summary>
-        public string consolidated{
-            get
-            {
-                return CalculateConsolidatedString();
-            }
-        }
-        List<TextTransformActor> actions;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
-    }
-    public enum TextTransformType 
+    #region Enumerations
+
+    public enum TextTransformType
     {
         Insert,
-        Delete
+        Delete,
+        Initialize,
+        Append
     }
+
+    #endregion Enumerations
+
     [Serializable]
-    public class TextTransformActor:System.Runtime.Serialization.ISerializable
+    public class TextTransformActor : System.Runtime.Serialization.ISerializable
     {
+        #region Fields
+
         public DateTime time;
-        int _uncompensatedindex;
+
         string insert;
-        public string Insert
+        bool isserver;
+        int lengthtodelete;
+        TextTransformType _command;
+        int _uncompensatedindex;
+
+        #endregion Fields
+
+        #region Constructors
+
+        public TextTransformActor(int index, string data)
+        {
+            isserver = false;
+            this._command = TextTransformType.Insert;
+            this._uncompensatedindex = index;
+            insert = data;
+
+        }
+        /// <summary>
+        /// Initialize for appending
+        /// </summary>
+        /// <param name="appendix">String to append</param>
+        /// <param name="dummy">index</param>
+        public TextTransformActor(string appendix, int dummy)
+        {
+            if (dummy <= 0)
+                this._command = TextTransformType.Initialize;
+            else
+                this._command = TextTransformType.Append;
+            this._uncompensatedindex= dummy;
+            this.insert = appendix;
+        }
+        public TextTransformActor(string initialization)
+        {
+            this.insert = initialization;
+            this._command = TextTransformType.Initialize;
+        }
+
+        public TextTransformActor(int index, int length)
+        {
+            isserver = false;
+            _command = TextTransformType.Delete;
+            _uncompensatedindex = index;
+            this.lengthtodelete = length;
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        public TextTransformType Command
         {
             get
             {
-                return insert;
+                return _command;
             }
         }
-        public static TextTransformActor GetObjectFromBytes(byte[] q)
-        {
-            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            return (TextTransformActor)t.Deserialize((System.IO.Stream)new System.IO.MemoryStream(q));
-        }
-        public static byte[] GetObjectInBytes(TextTransformActor g)
-        {
-            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            System.IO.Stream y = new System.IO.MemoryStream();
-            t.Serialize(y, g);
-            byte[] q=new byte[y.Length];
-            y.Read(q,0,(int)y.Length);
-            y.Close();
-            return q;
-        }
-        public int Length 
-        {
-            get{
-                if(_command==TextTransformType.Insert)
-                    return insert.Length;
-                else
-                    return this.lengthtodelete;
-               }
-        }
-        int lengthtodelete;
+
         public int Index
         {
             get
@@ -133,43 +89,74 @@ namespace OperationalTransform
                 return _uncompensatedindex;
             }
         }
-        public TextTransformActor(int index, string data,DateTime stamp) 
+
+        public string Insert
         {
-            this._command = TextTransformType.Insert;
-            this._uncompensatedindex = index;
-            insert = data;
-            this.time = stamp;
-        }
-        public TextTransformActor(int index, int length,DateTime stamp) 
-        {
-            _command = TextTransformType.Delete;
-            _uncompensatedindex = index;
-            this.lengthtodelete = length;
-            time = stamp;
-        }
-        
-        TextTransformType _command;
-        public TextTransformType Command 
-        { 
-            get 
+            get
             {
-                return _command; 
-            } 
+                return insert;
+            }
         }
+
+        //length of modification made
+        public int Length
+        {
+            get
+            {
+                if (_command == TextTransformType.Insert)
+                    return insert.Length;
+                else
+                    return this.lengthtodelete;
+            }
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public static TextTransformActor GetObjectFromBytes(byte[] q)
+        {
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            return (TextTransformActor)t.Deserialize((System.IO.Stream)new System.IO.MemoryStream(q));
+        }
+
+        public static byte[] GetObjectInBytes(TextTransformActor g)
+        {
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            System.IO.Stream y = new System.IO.MemoryStream();
+            t.Serialize(y, g);
+            byte[] q = new byte[y.Length];
+            y.Read(q, 0, (int)y.Length);
+            y.Close();
+            return q;
+        }
+
+        public void AlterforServer()
+        {
+            this.isserver = true;
+            this.time = DateTime.Now;
+        }
+
         /// <summary>
         /// Guess What! It should work
         /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
+        /// <param name="info">Reference object to add information to.</param>
+        /// <param name="context">Not a clue</param>
         public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
         {
             info.AddValue("Command", (int)this._command);
-            info.AddValue("TimeStamp", time.ToBinary());
+            //info.AddValue("TimeStamp", time.ToBinary());
             if (_command == TextTransformType.Insert)
                 info.AddValue("Insert", insert);
             else
                 info.AddValue("DeleteLength", this.Length);
             info.AddValue("index", this._uncompensatedindex);
+            info.AddValue("isserver", this.isserver);
+            info.AddValue("time", time.ToBinary());
         }
+
+        #endregion Methods
     }
+
+
 }
