@@ -21,6 +21,7 @@ namespace ChatServerLib
     {
         Socket mySocket = new Socket(SocketType.Stream, ProtocolType.IP);
         public const int bufferSize = 666;
+        string myName = "Anonymous";
         /// <summary>
         /// This connects to a local IP supplied by the system and the specified port
         /// </summary>
@@ -68,6 +69,11 @@ namespace ChatServerLib
             };
             Thread t = new Thread(pts);
             t.Start(this);
+        }
+        public void start(MessageRecievedListener mrl,string username){
+            this.myName = username;
+            start(mrl);
+            this.send(username);
         }
         /// <summary>
         /// Sends the string to the server
