@@ -17,7 +17,7 @@ namespace ChatServerLib
         Socket MyServer = new Socket(SocketType.Stream, ProtocolType.IP);
         IPAddress myIP=null;
         public const int bufferSize = 666;
-        List<Socket> clients = new List<Socket>();
+        List<ClientInfo> clients = new List<ClientInfo>();
         List<Thread> threads = new List<Thread>();
         public ParameterizedThreadStart chatSenderThread;
         private bool running = false;
@@ -68,7 +68,12 @@ namespace ChatServerLib
                 while (!(cs.running && cs.clients.Count != 0)){
 
                 }
-                Socket s = cs.clients.Last<Socket>();
+                ClientInfo ci = cs.clients.Last<ClientInfo>();
+                Socket s = ci.socket;
+                byte[] name_bytes = new byte[bufferSize];
+                s.Receive(name_bytes);
+                ci.name = Encoding.ASCII.GetString(ChatServer.noNulls(name_bytes));
+                name_bytes = Encoding.ASCII.GetBytes(ci.name + ": ");
                 while (true)
                 {
                     try {
@@ -76,7 +81,7 @@ namespace ChatServerLib
                         s.Receive(bytes);
                         bytes = ChatServer.noNulls(bytes);
                         //Console.WriteLine("Server Recieved bytes:"+Encoding.ASCII.GetString(bytes));
-                        cs.broadcastException(bytes,s);
+                        cs.broadcastException(ChatServer.conCat(name_bytes,bytes),s);
                     } catch(SocketException e) {
                         //Console.WriteLine(e.StackTrace);
                     }
@@ -89,13 +94,25 @@ namespace ChatServerLib
                 ChatServer cs = (ChatServer)o;
                 while (running)
                 {
-                    cs.clients.Add(MyServer.Accept());
+                    cs.clients.Add(new ClientInfo(MyServer.Accept()));
                     newChatThread();
                 }
             };
             addThread(receptions);
         }
-        protected static byte[] noNulls(byte[] bytes){
+        protected static byte[] conCat(byte[] b1,byte[] b2){
+            byte[] res = new byte[b1.Length + b2.Length];
+            int i = 0;
+            for(;i<b1.Length;i++){
+                res[i] = b1[i];
+            }
+            for(;i<res.Length;i++){
+                res[i] = b2[i-b1.Length];
+            }
+            return res;
+        }
+        protected static byte[] noNulls(byte[] bytes)
+        {
             List<byte> temp = new List<byte>();
             foreach(byte b in bytes){
                 if(!(b==null||b=='\0')){
@@ -112,8 +129,8 @@ namespace ChatServerLib
             foreach(Thread t in threads){
                 t.Abort();
             }
-            foreach(Socket s in clients){
-                s.Disconnect(true);
+            foreach(ClientInfo ci in clients){
+                ci.socket.Disconnect(true);
             }
         }
         /// <summary>
@@ -162,11 +179,11 @@ namespace ChatServerLib
         /// <param name="bytes">The bytes to broadcast</param>
         /// <param name="exception">The socket you don't want to send to.</param>
         public void broadcastException(byte[] bytes, Socket exception){
-            foreach (Socket s in clients)
+            foreach (ClientInfo ci in clients)
             {
-                if(!(s==exception)){
+                if(!(ci.socket==exception)){
                     //Console.WriteLine("Server sending bytes to Socket");
-                    s.Send(bytes);
+                    ci.socket.Send(bytes);
                 }
             }
         }
