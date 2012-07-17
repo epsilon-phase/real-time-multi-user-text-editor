@@ -21,7 +21,7 @@
     public class TextTransformActor : System.Runtime.Serialization.ISerializable
     {
         #region Fields
-
+        //Not for use by the client, but, should be enough
         public DateTime time;
 
         string insert;

@@ -39,6 +39,7 @@
             public void ProcessPacket()
             {
                 OperationalTransform.TextTransformActor e=OperationalTransform.TextTransformActor.GetObjectFromBytes(this.messages.Dequeue());
+                //Set datestamp for server's sake
                 e.AlterforServer();
                 processed.Enqueue(e);
             }
@@ -117,7 +118,7 @@
         #region Methods
 
         static void Main(string[] args)
-        {
+        { 
         }
 
         #endregion Methods
@@ -126,7 +127,7 @@
     class Server
     {
         #region Fields
-
+        //associates the client to a list of operations, allowing the server to not send the operations to the client that send the message in the first place;
         System.Collections.Generic.Dictionary<RealServer.SocketHandler.clienthandler, List<OperationalTransform.TextTransformActor>> absurdity;
         List<RealServer.SocketHandler.clienthandler> clients;
         List<System.Threading.Thread> clientthreads;
@@ -141,6 +142,7 @@
             clients = new List<SocketHandler.clienthandler>();
             clientthreads = new List<System.Threading.Thread>();
             serversock = new System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.IP);
+            //Bind to port 6000 and accept connections from anywhere
             serversock.Bind(new System.Net.IPEndPoint(System.Net.IPAddress.Any, 6000));
             absurdity = new Dictionary<SocketHandler.clienthandler, List<OperationalTransform.TextTransformActor>>();
             operationslist=new OperationalTransform.TextTransformCollection();
@@ -149,7 +151,6 @@
         #endregion Constructors
 
         #region Methods
-
         public void Start()
         {
             System.Threading.Thread r = new System.Threading.Thread(new System.Threading.ThreadStart(connectionlistener));
@@ -161,8 +162,11 @@
                 {
                     while(clients[i]._clientdatareciever.processed.Count>1)
                     {
-                        lock(clients[i]._clientdatareciever.processed)
-                            this.operationslist.Add(clients[i]._clientdatareciever.processed.Dequeue());
+                        lock (clients[i]._clientdatareciever.processed)
+                        {
+                            absurdity[clients[i]].Add(clients[i]._clientdatareciever.processed.Dequeue());
+                            this.operationslist.Add(absurdity[clients[i]].Last<OperationalTransform.TextTransformActor>());
+                        }
                     }
                 }
             }

@@ -133,6 +133,12 @@
   <ItemGroup>
     <Content Include="dalek.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RealServer\RealServer\OperationalTransform\OperationalTransform.csproj">
+      <Project>{97C2FE6F-A496-4234-9173-D619704E5D88}</Project>
+      <Name>OperationalTransform</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
