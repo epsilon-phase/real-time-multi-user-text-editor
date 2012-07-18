@@ -3,7 +3,7 @@ Imports System.IO
 Imports System.Text
 
 Public Class Editor
-    Dim Directory, NamePerson, FileName As String
+    Dim Directory, NamePerson, FileName, IP As String
 
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
@@ -12,7 +12,10 @@ Public Class Editor
         rtbText.Text = My.Computer.FileSystem.ReadAllText(Directory)
         NamePerson = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Name.txt")
         lblNames.Text = NamePerson
-        Me.e = New OperationalTransform.TextTransformCollection()
+        IP = Startup.IP
+
+        'For Alex'
+        'Me.e = New OperationalTransform.TextTransformCollection()
     End Sub
 
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
@@ -147,30 +150,33 @@ Public Class Editor
         Chatbox.ScrollToCaret()
     End Sub
 
-    Dim e As OperationalTransform.TextTransformCollection
+    '====This Was Removed Because Alex Screws Around Alot===='
 
-    Private Sub rtbText_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyUp
 
-    End Sub
+    'Dim e As OperationalTransform.TextTransformCollection
 
-    Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
-        Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart, e.KeyChar.ToString())
-        a.AlterForClient()
-        REM insert this single character here
-        Me.e.Add(a)
-        'The text should not be entered through into the text ending.
-        e.Handled = True
-    End Sub
+    'Private Sub rtbText_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyUp
 
-    Private Sub ConsolidateShit()
-        rtbText.Text = e.CalculateConsolidatedString()
-    End Sub
+    'End Sub
 
-    Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
-        If e.KeyCode = Keys.Back Then
-            Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart - 1, 1)
-            a.AlterForClient()
-            Me.e.Add(a)
-        End If
-    End Sub
+    'Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
+    '    Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart, e.KeyChar.ToString())
+    '    a.AlterForClient()
+    '    REM insert this single character here
+    '    Me.e.Add(a)
+    '    'The text should not be entered through into the text ending.
+    '    e.Handled = True
+    'End Sub
+
+    'Private Sub ConsolidateShit()
+    '    rtbText.Text = e.CalculateConsolidatedString()
+    'End Sub
+
+    'Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
+    '    If e.KeyCode = Keys.Back Then
+    '        Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart - 1, 1)
+    '        a.AlterForClient()
+    '        Me.e.Add(a)
+    '    End If
+    'End Sub
 End Class
