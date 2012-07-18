@@ -16,7 +16,9 @@
     }
 
     #endregion Enumerations
-
+    /// <summary>
+    /// Text Transform holder(I.E. the instructions about where the text changes, and what that means).
+    /// </summary>
     [Serializable]
     public class TextTransformActor : System.Runtime.Serialization.ISerializable
     {
@@ -159,7 +161,7 @@
         }
 
         /// <summary>
-        /// Guess What! It should work
+        /// Obtain byte array to make it better
         /// </summary>
         /// <param name="info">Reference object to add information to.</param>
         /// <param name="context">Not a clue</param>
