@@ -40,7 +40,6 @@
             this._command = TextTransformType.Insert;
             this._uncompensatedindex = index;
             insert = data;
-
         }
         /// <summary>
         /// Initialize for appending
@@ -50,9 +49,13 @@
         public TextTransformActor(string appendix, int dummy)
         {
             if (dummy <= 0)
+            {
                 this._command = TextTransformType.Initialize;
+            }
             else
+            {
                 this._command = TextTransformType.Append;
+            }
             this._uncompensatedindex= dummy;
             this.insert = appendix;
         }
@@ -60,6 +63,12 @@
         {
             this.insert = initialization;
             this._command = TextTransformType.Initialize;
+        }
+
+        public void AlterForClient()
+        {
+            this.isserver = false;
+            this.time = DateTime.Now; 
         }
 
         public TextTransformActor(int index, int length)
@@ -109,7 +118,20 @@
                     return this.lengthtodelete;
             }
         }
-
+        public bool FromServer 
+        { 
+            get 
+            { 
+                return !isserver; 
+            } 
+        }
+        public bool FromClient 
+        {
+            get 
+            { 
+                return !isserver; 
+            } 
+        }
         #endregion Properties
 
         #region Methods
@@ -130,7 +152,6 @@
             y.Close();
             return q;
         }
-
         public void AlterforServer()
         {
             this.isserver = true;
@@ -145,11 +166,15 @@
         public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
         {
             info.AddValue("Command", (int)this._command);
-            //info.AddValue("TimeStamp", time.ToBinary());
+            info.AddValue("TimeStamp", time.ToBinary());
             if (_command == TextTransformType.Insert)
+            {
                 info.AddValue("Insert", insert);
+            }
             else
+            {
                 info.AddValue("DeleteLength", this.Length);
+            }
             info.AddValue("index", this._uncompensatedindex);
             info.AddValue("isserver", this.isserver);
             info.AddValue("time", time.ToBinary());
