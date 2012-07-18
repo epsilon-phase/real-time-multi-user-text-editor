@@ -3,3 +3,8 @@ C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-ed
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\OperationalTransform\obj\Debug\OperationalTransform.dll
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\OperationalTransform\obj\Debug\OperationalTransform.pdb
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\OperationalTransform\obj\Debug\OperationalTransform.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\OperationalTransform\bin\Debug\OperationalTransform.dll
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\OperationalTransform\bin\Debug\OperationalTransform.pdb
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\OperationalTransform\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\OperationalTransform\obj\Debug\OperationalTransform.dll
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\OperationalTransform\obj\Debug\OperationalTransform.pdb
