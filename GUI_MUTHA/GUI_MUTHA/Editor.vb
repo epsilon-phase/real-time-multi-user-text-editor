@@ -27,6 +27,9 @@ Public Class Editor
     '    Dim f As New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, Net.Sockets.SocketType.Stream)
     'End Sub
 
+    Private Sub StartClient()
+        'Dim f As New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, Net.Sockets.SocketType.Stream)
+    End Sub
     Private Sub ToolStripMenuItem3_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem3.Click
         rtbText.ZoomFactor = 0.25
     End Sub
