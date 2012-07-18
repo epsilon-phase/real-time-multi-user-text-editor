@@ -18,9 +18,11 @@ Public Class Editor
         Startup.Close()
         Me.Close()
     End Sub
-    Private Sub StartClient()
-        Dim f As New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, Net.Sockets.SocketType.Stream)
-    End Sub
+
+    'Private Sub StartClient()
+    '    Dim f As New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, Net.Sockets.SocketType.Stream)
+    'End Sub
+
     Private Sub ToolStripMenuItem3_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem3.Click
         rtbText.ZoomFactor = 0.25
     End Sub
@@ -136,14 +138,15 @@ Public Class Editor
             Chatbox.Text = Chatbox.Text + vbCrLf + SendMess
             ChatMessage.Text = ""
         End If
-
     End Sub
 
     Private Sub Chatbox_TextChanged(sender As System.Object, e As System.EventArgs) Handles Chatbox.TextChanged
         Chatbox.SelectionStart = Chatbox.Text.Length
         Chatbox.ScrollToCaret()
     End Sub
+
     Dim e As OperationalTransform.TextTransformCollection
+
     Private Sub rtbText_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyUp
 
     End Sub
@@ -156,9 +159,11 @@ Public Class Editor
         'The text should not be entered through into the text ending.
         e.Handled = True
     End Sub
+
     Private Sub ConsolidateShit()
         rtbText.Text = e.CalculateConsolidatedString()
     End Sub
+
     Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
         If e.KeyCode = Keys.Back Then
             Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart - 1, 1)
