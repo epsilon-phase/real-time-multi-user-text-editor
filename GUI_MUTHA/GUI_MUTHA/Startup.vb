@@ -3,8 +3,7 @@ Imports System.IO
 Imports System.Text
 
 Public Class Startup
-
-    Dim FileName, FileName2 As String
+    Public FileName, FileName2, IP As String
     Dim Dal As Boolean = False
     Dim Dal2 As Boolean = False
 
@@ -27,6 +26,8 @@ Public Class Startup
         Dim info2 As Byte() = New UTF8Encoding(True).GetBytes(FileName2)
         fs2.Write(info2, 0, info2.Length)
         fs2.Close()
+
+        IP = ipText.Text
 
         Editor.Show()
         Me.Hide()
