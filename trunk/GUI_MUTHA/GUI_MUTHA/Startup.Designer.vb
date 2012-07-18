@@ -28,12 +28,14 @@ Partial Class Startup
         Me.ComboBox = New System.Windows.Forms.ComboBox()
         Me.closeButton = New System.Windows.Forms.Button()
         Me.TextName = New System.Windows.Forms.TextBox()
+        Me.ipText = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Button2
         '
+        Me.Button2.Enabled = False
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(12, 65)
+        Me.Button2.Location = New System.Drawing.Point(12, 91)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(200, 22)
         Me.Button2.TabIndex = 2
@@ -42,10 +44,11 @@ Partial Class Startup
         '
         'ComboBox
         '
+        Me.ComboBox.Enabled = False
         Me.ComboBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBox.FormattingEnabled = True
         Me.ComboBox.Items.AddRange(New Object() {"Doc1", "Doc2", "Doc3", "TROLOLO"})
-        Me.ComboBox.Location = New System.Drawing.Point(12, 12)
+        Me.ComboBox.Location = New System.Drawing.Point(12, 38)
         Me.ComboBox.Name = "ComboBox"
         Me.ComboBox.Size = New System.Drawing.Size(200, 21)
         Me.ComboBox.TabIndex = 3
@@ -53,7 +56,7 @@ Partial Class Startup
         'closeButton
         '
         Me.closeButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.closeButton.Location = New System.Drawing.Point(12, 93)
+        Me.closeButton.Location = New System.Drawing.Point(12, 119)
         Me.closeButton.Name = "closeButton"
         Me.closeButton.Size = New System.Drawing.Size(200, 23)
         Me.closeButton.TabIndex = 4
@@ -62,19 +65,30 @@ Partial Class Startup
         '
         'TextName
         '
+        Me.TextName.Enabled = False
         Me.TextName.ForeColor = System.Drawing.SystemColors.GrayText
-        Me.TextName.Location = New System.Drawing.Point(12, 39)
+        Me.TextName.Location = New System.Drawing.Point(12, 65)
         Me.TextName.Name = "TextName"
         Me.TextName.Size = New System.Drawing.Size(200, 20)
         Me.TextName.TabIndex = 5
         Me.TextName.Text = "What is your name?"
         '
+        'ipText
+        '
+        Me.ipText.ForeColor = System.Drawing.SystemColors.GrayText
+        Me.ipText.Location = New System.Drawing.Point(12, 12)
+        Me.ipText.Name = "ipText"
+        Me.ipText.Size = New System.Drawing.Size(200, 20)
+        Me.ipText.TabIndex = 6
+        Me.ipText.Text = "What is the IP?"
+        '
         'Startup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(224, 122)
+        Me.ClientSize = New System.Drawing.Size(224, 154)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ipText)
         Me.Controls.Add(Me.TextName)
         Me.Controls.Add(Me.closeButton)
         Me.Controls.Add(Me.ComboBox)
@@ -95,4 +109,5 @@ Partial Class Startup
     Friend WithEvents ComboBox As System.Windows.Forms.ComboBox
     Friend WithEvents closeButton As System.Windows.Forms.Button
     Friend WithEvents TextName As System.Windows.Forms.TextBox
+    Friend WithEvents ipText As System.Windows.Forms.TextBox
 End Class

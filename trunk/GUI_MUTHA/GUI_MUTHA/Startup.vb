@@ -6,9 +6,13 @@ Public Class Startup
 
     Dim FileName, FileName2 As String
     Dim Dal As Boolean = False
+    Dim Dal2 As Boolean = False
 
     Private Sub Startup_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Editor.Hide()
+        Button2.Enabled = False
+        TextName.Enabled = False
+        ComboBox.Enabled = False
     End Sub
 
     Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
@@ -33,13 +37,29 @@ Public Class Startup
         Me.Close()
     End Sub
 
-    Private Sub TextBox1_TextChanged(sender As System.Object, e As System.EventArgs) Handles TextName.Click
+    Private Sub TextName_TextClicked(sender As System.Object, e As System.EventArgs) Handles TextName.Click
         TextName.ForeColor = Color.Black
 
         If Dal = False Then
             TextName.Text = ""
             Dal = True
         End If
+    End Sub
 
+    Private Sub ipText_TextClicked(sender As System.Object, e As System.EventArgs) Handles ipText.Click
+        ipText.ForeColor = Color.Black
+
+        If Dal2 = False Then
+            ipText.Text = ""
+            Dal2 = True
+        End If
+    End Sub
+
+    Private Sub ipText_TextChanged(sender As System.Object, e As System.EventArgs) Handles ipText.TextChanged
+        If ipText.Text <> "What is your IP?" Then
+            ComboBox.Enabled = True
+            TextName.Enabled = True
+            Button2.Enabled = True
+        End If
     End Sub
 End Class
