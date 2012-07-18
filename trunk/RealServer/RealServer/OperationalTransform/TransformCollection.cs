@@ -8,7 +8,10 @@ namespace OperationalTransform
 
         List<TextTransformActor> actions;
         private string initial;
-
+        private bool _server;
+        public bool Server { 
+            get { return _server; }
+        }
         #endregion Fields
 
         #region Constructors
@@ -16,10 +19,16 @@ namespace OperationalTransform
         {
             this.actions = new List<TextTransformActor>();
         }
+
+        public TextTransformCollection(bool Server)
+        {
+            _server = Server;
+            this.actions = new List<TextTransformActor>();
+        }
         /// <summary>
         /// tell the text transform collection to start with a certain string;
         /// </summary>
-        /// <param name="initial"></param>
+        /// <param name="initial">Initial string to start with</param>
         public TextTransformCollection(string initial)
         {
             this.initial = initial;
@@ -55,11 +64,18 @@ namespace OperationalTransform
             else
             {
                 actions.Add(ax);
-                //Sort actions in order to keep it clear.
-                actions.Sort(CompareTextActorTime);
             }
         }
 
+        /// <summary>
+        /// Checks Whether a specific transform is inside the pool
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public bool ContainsTransform(TextTransformActor t) 
+        {
+            return this.actions.Contains(t);
+        }
         /// <summary>
         /// Complicated procedure, should not call unless necessary
         /// goes through list of text transformations and applies them, calculating the necessary offsets to do so.
@@ -67,6 +83,8 @@ namespace OperationalTransform
         /// <returns> The Consolidated string</returns>
         public string CalculateConsolidatedString()
         {
+            //Sort the operations based on time or appending, just so that it must work.
+            actions.Sort(CompareTextActorTime);
             string e = initial;
             int offset = 0;
             for (int i = 0; i < actions.Count; i++)
@@ -93,7 +111,7 @@ namespace OperationalTransform
             return e;
         }
         /// <summary>
-        /// 
+        /// Transform a text file(given as a stream).
         /// </summary>
         /// <param name="fileyo"></param>
         /// <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
@@ -125,9 +143,10 @@ namespace OperationalTransform
         }
         private static int CompareTextActorTime(TextTransformActor a, TextTransformActor b)
         {
+            //If both a and b are append commands, then it should be sorted out based on index. Should not come up on client side.
             if (a.Command == TextTransformType.Append && b.Command == TextTransformType.Append)
                 return a.Index.CompareTo(b.Index);
-            //Appends are the most important part, they should be applied to 
+            //Appends are the most important part, they should be applied first
             if (a.Command == TextTransformType.Append && b.Command != TextTransformType.Append)
                 return -1;
             if(a.Command != TextTransformType.Append && b.Command == TextTransformType.Append)
