@@ -1,26 +1,26 @@
 ﻿Imports System
 Imports System.IO
 Imports System.Text
-
 Public Class Editor
     Dim Directory, NamePerson, FileName As String
 
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
-
         FileName = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Doc.txt")
         Directory = "C:\Users\user\AppData\Local\Temp\" + FileName + ".txt"
         rtbText.Text = My.Computer.FileSystem.ReadAllText(Directory)
-
         NamePerson = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Name.txt")
         lblNames.Text = NamePerson
+        Me.e = New OperationalTransform.TextTransformCollection()
     End Sub
 
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
         Startup.Close()
         Me.Close()
     End Sub
-
+    Private Sub StartClient()
+        Dim f As New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, Net.Sockets.SocketType.Stream)
+    End Sub
     Private Sub ToolStripMenuItem3_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem3.Click
         rtbText.ZoomFactor = 0.25
     End Sub
@@ -143,18 +143,27 @@ Public Class Editor
         Chatbox.SelectionStart = Chatbox.Text.Length
         Chatbox.ScrollToCaret()
     End Sub
-
+    Dim e As OperationalTransform.TextTransformCollection
     Private Sub rtbText_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyUp
 
-        Select Case e.KeyCode
-            Case Keys.Back
-                REM This is a frustrating way to do it.
-                Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart, 1)
-            Case Else
-                REM insert this single character here
-                Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart, e.KeyCode.ToString())
-        End Select
+    End Sub
 
-
+    Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
+        Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart, e.KeyChar.ToString())
+        a.AlterForClient()
+        REM insert this single character here
+        Me.e.Add(a)
+        'The text should not be entered through into the text ending.
+        e.Handled = True
+    End Sub
+    Private Sub ConsolidateShit()
+        rtbText.Text = e.CalculateConsolidatedString()
+    End Sub
+    Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
+        If e.KeyCode = Keys.Back Then
+            Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart - 1, 1)
+            a.AlterForClient()
+            Me.e.Add(a)
+        End If
     End Sub
 End Class
