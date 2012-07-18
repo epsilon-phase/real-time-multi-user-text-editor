@@ -1,6 +1,7 @@
 ﻿Imports System
 Imports System.IO
 Imports System.Text
+
 Public Class Editor
     Dim Directory, NamePerson, FileName As String
 
@@ -134,6 +135,7 @@ Public Class Editor
 
         If Chatbox.Text = "" Then
             Chatbox.Text = SendMess
+            ChatMessage.Text = ""
         Else
             Chatbox.Text = Chatbox.Text + vbCrLf + SendMess
             ChatMessage.Text = ""

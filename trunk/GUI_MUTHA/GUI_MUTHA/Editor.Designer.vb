@@ -27,7 +27,6 @@ Partial Class Editor
         Me.closeButton = New System.Windows.Forms.Button()
         Me.MenuStrip = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveFileToServerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DownloadFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -96,21 +95,15 @@ Partial Class Editor
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveFileToServerToolStripMenuItem, Me.DownloadFileToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DownloadFileToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
-        'SaveFileToServerToolStripMenuItem
-        '
-        Me.SaveFileToServerToolStripMenuItem.Name = "SaveFileToServerToolStripMenuItem"
-        Me.SaveFileToServerToolStripMenuItem.Size = New System.Drawing.Size(149, 22)
-        Me.SaveFileToServerToolStripMenuItem.Text = "Save"
-        '
         'DownloadFileToolStripMenuItem
         '
         Me.DownloadFileToolStripMenuItem.Name = "DownloadFileToolStripMenuItem"
-        Me.DownloadFileToolStripMenuItem.Size = New System.Drawing.Size(149, 22)
+        Me.DownloadFileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.DownloadFileToolStripMenuItem.Text = "Download File"
         '
         'EditToolStripMenuItem
@@ -383,6 +376,7 @@ Partial Class Editor
         '
         'Editor
         '
+        Me.AcceptButton = Me.Send
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(933, 639)
@@ -427,7 +421,6 @@ Partial Class Editor
     Friend WithEvents WeCantHelpYouToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents GetALifeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents WHYAREYOUSTILLREADINGToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents SaveFileToServerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem4 As System.Windows.Forms.ToolStripMenuItem

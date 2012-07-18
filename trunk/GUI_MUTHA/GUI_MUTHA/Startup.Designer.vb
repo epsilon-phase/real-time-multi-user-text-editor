@@ -75,6 +75,7 @@ Partial Class Startup
         '
         'ipText
         '
+        Me.ipText.AccessibleRole = System.Windows.Forms.AccessibleRole.IpAddress
         Me.ipText.ForeColor = System.Drawing.SystemColors.GrayText
         Me.ipText.Location = New System.Drawing.Point(12, 12)
         Me.ipText.Name = "ipText"
