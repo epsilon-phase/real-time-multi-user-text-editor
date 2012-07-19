@@ -16,6 +16,7 @@
     }
 
     #endregion Enumerations
+
     /// <summary>
     /// Text Transform holder(I.E. the instructions about where the text changes, and what that means).
     /// </summary>
@@ -23,6 +24,7 @@
     public class TextTransformActor : System.Runtime.Serialization.ISerializable
     {
         #region Fields
+
         //Not for use by the client, but, should be enough
         public DateTime time;
 
@@ -35,7 +37,11 @@
         #endregion Fields
 
         #region Constructors
-
+        /// <summary>
+        /// create a new TextTransform actor which is set to the insert command.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="data"></param>
         public TextTransformActor(int index, string data)
         {
             isserver = false;
@@ -43,6 +49,7 @@
             this._uncompensatedindex = index;
             insert = data;
         }
+
         /// <summary>
         /// Initialize for appending
         /// </summary>
@@ -61,16 +68,15 @@
             this._uncompensatedindex= dummy;
             this.insert = appendix;
         }
+        /// <summary>
+        /// New initialization command. Use it to set the TextTranformCollection's initial value to something
+        /// </summary>
+        /// <see cref="TextTransformCollection"/>
+        /// <param name="initialization"></param>
         public TextTransformActor(string initialization)
         {
             this.insert = initialization;
             this._command = TextTransformType.Initialize;
-        }
-
-        public void AlterForClient()
-        {
-            this.isserver = false;
-            this.time = DateTime.Now; 
         }
 
         public TextTransformActor(int index, int length)
@@ -90,6 +96,22 @@
             get
             {
                 return _command;
+            }
+        }
+
+        public bool FromClient
+        {
+            get
+            {
+                return !isserver;
+            }
+        }
+
+        public bool FromServer
+        {
+            get
+            {
+                return !isserver;
             }
         }
 
@@ -120,24 +142,15 @@
                     return this.lengthtodelete;
             }
         }
-        public bool FromServer 
-        { 
-            get 
-            { 
-                return !isserver; 
-            } 
-        }
-        public bool FromClient 
-        {
-            get 
-            { 
-                return !isserver; 
-            } 
-        }
+
         #endregion Properties
 
         #region Methods
-
+        /// <summary>
+        /// Convert byte array to TextTransformActor
+        /// </summary>
+        /// <param name="q">Array of Bytes</param>
+        /// <returns>the equivalent(or something like that) TexttransformActor</returns>
         public static TextTransformActor GetObjectFromBytes(byte[] q)
         {
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
@@ -154,6 +167,13 @@
             y.Close();
             return q;
         }
+
+        public void AlterForClient()
+        {
+            this.isserver = false;
+            this.time = DateTime.Now;
+        }
+
         public void AlterforServer()
         {
             this.isserver = true;
@@ -184,6 +204,4 @@
 
         #endregion Methods
     }
-
-
 }

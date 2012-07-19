@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
-namespace OperationalTransform
+﻿namespace OperationalTransform
 {
+    using System;
+    using System.Collections.Generic;
+
     public class TextTransformCollection
     {
         #region Fields
@@ -9,12 +10,11 @@ namespace OperationalTransform
         List<TextTransformActor> actions;
         private string initial;
         private bool _server;
-        public bool Server { 
-            get { return _server; }
-        }
+
         #endregion Fields
 
         #region Constructors
+
         public TextTransformCollection()
         {
             this.actions = new List<TextTransformActor>();
@@ -25,6 +25,7 @@ namespace OperationalTransform
             _server = Server;
             this.actions = new List<TextTransformActor>();
         }
+
         /// <summary>
         /// tell the text transform collection to start with a certain string;
         /// </summary>
@@ -50,9 +51,45 @@ namespace OperationalTransform
             }
         }
 
+        public bool Server
+        {
+            get { return _server; }
+        }
+
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// Transform a text file(given as a stream).
+        /// </summary>
+        /// <param name="fileyo"></param>
+        /// <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
+        public static TextTransformCollection PrepareCollectionFromLargeText(System.IO.Stream fileyo)
+        {
+            byte[] q = new byte[900];
+            List<byte[]> tik = new List<byte[]>();
+            TextTransformCollection e = new TextTransformCollection();
+            string funny;
+            int w=0;
+            while (fileyo.Position > fileyo.Length)
+            {
+                if (fileyo.Length - (fileyo.Position + 900) >= 0)
+                {
+                    fileyo.Read(q, 0, 900);
+                    funny = System.Text.Encoding.ASCII.GetChars(q).ToString();
+                }
+                else
+                {
+                    fileyo.Read(q, 0, (int)(fileyo.Length - fileyo.Position));
+                    funny = System.Text.Encoding.ASCII.GetChars(q).ToString();
+                    //replace the nulls on the string with spaces
+                    int y=funny.IndexOf('\0');
+                }
+                e.Add(new TextTransformActor(funny, w));
+            }
+            return e;
+        }
 
         public void Add(TextTransformActor ax)
         {
@@ -67,15 +104,6 @@ namespace OperationalTransform
             }
         }
 
-        /// <summary>
-        /// Checks Whether a specific transform is inside the pool
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public bool ContainsTransform(TextTransformActor t) 
-        {
-            return this.actions.Contains(t);
-        }
         /// <summary>
         /// Complicated procedure, should not call unless necessary
         /// goes through list of text transformations and applies them, calculating the necessary offsets to do so.
@@ -110,37 +138,17 @@ namespace OperationalTransform
             }
             return e;
         }
-        /// <summary>
-        /// Transform a text file(given as a stream).
-        /// </summary>
-        /// <param name="fileyo"></param>
-        /// <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
-        public static TextTransformCollection PrepareCollectionFromLargeText(System.IO.Stream fileyo)
-        {
-            byte[] q = new byte[900];
-            List<byte[]> tik = new List<byte[]>();
-            TextTransformCollection e = new TextTransformCollection();
-            string funny;
-            int w=0;
-            while (fileyo.Position > fileyo.Length)
-            {
-                if (fileyo.Length - (fileyo.Position + 900) >= 0)
-                {
-                    fileyo.Read(q, 0, 900);
-                    funny = System.Text.Encoding.ASCII.GetChars(q).ToString();
-                }
-                else
-                {
-                    fileyo.Read(q, 0, (int)(fileyo.Length - fileyo.Position));
-                    funny = System.Text.Encoding.ASCII.GetChars(q).ToString();
-                    //replace the nulls on the string with spaces
-                    int y=funny.IndexOf('\0');
-                }
-                e.Add(new TextTransformActor(funny, w));
-            }
-            return e;
 
+        /// <summary>
+        /// Checks Whether a specific transform is inside the pool
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public bool ContainsTransform(TextTransformActor t)
+        {
+            return this.actions.Contains(t);
         }
+
         private static int CompareTextActorTime(TextTransformActor a, TextTransformActor b)
         {
             //If both a and b are append commands, then it should be sorted out based on index. Should not come up on client side.
@@ -173,6 +181,7 @@ namespace OperationalTransform
             }
             return totaloffset;
         }
+
         #endregion Methods
     }
 }
