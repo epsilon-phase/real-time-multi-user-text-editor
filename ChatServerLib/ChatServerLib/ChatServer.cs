@@ -20,6 +20,7 @@ namespace ChatServerLib
         List<ClientInfo> clients = new List<ClientInfo>();
         List<Thread> threads = new List<Thread>();
         public ParameterizedThreadStart chatSenderThread;
+        MessageRecievedListener myMRL = null;
         private bool running = false;
         /// <summary>
         /// This constructor binds the server to an abstract EndPoint object
@@ -58,10 +59,11 @@ namespace ChatServerLib
         /// <summary>
         /// Starts the server going and taking connections
         /// </summary>
-        public void start(){
+        public void start(MessageRecievedListener mrl){
             if(running){
                 return;
             }
+            myMRL = mrl;
             chatSenderThread = delegate(object o)
             {
                 ChatServer cs = (ChatServer)o;
@@ -80,10 +82,12 @@ namespace ChatServerLib
                         byte[] bytes = new byte[bufferSize];
                         s.Receive(bytes);
                         bytes = ChatServer.noNulls(bytes);
-                        //Console.WriteLine("Server Recieved bytes:"+Encoding.ASCII.GetString(bytes));
+                        string msg = Encoding.ASCII.GetString(bytes);
+                        Console.WriteLine("Server Recieved bytes:"+msg);
+                        cs.myMRL(msg);
                         cs.broadcast(ChatServer.conCat(name_bytes,bytes)/*,s*/);
                     } catch(SocketException e) {
-                        //Console.WriteLine(e.StackTrace);
+                        Console.WriteLine(e.StackTrace);
                     }
                 }
             };
@@ -100,7 +104,7 @@ namespace ChatServerLib
             };
             addThread(receptions);
         }
-        protected static byte[] conCat(byte[] b1,byte[] b2){
+        public static byte[] conCat(byte[] b1,byte[] b2){
             byte[] res = new byte[b1.Length + b2.Length];
             int i = 0;
             for(;i<b1.Length;i++){
@@ -111,7 +115,7 @@ namespace ChatServerLib
             }
             return res;
         }
-        protected static byte[] noNulls(byte[] bytes)
+        public static byte[] noNulls(byte[] bytes)
         {
             List<byte> temp = new List<byte>();
             foreach(byte b in bytes){
@@ -182,7 +186,7 @@ namespace ChatServerLib
             foreach (ClientInfo ci in clients)
             {
                 if(!(ci.socket==exception)){
-                    //Console.WriteLine("Server sending bytes to Socket");
+                    Console.WriteLine("Server sending bytes to Socket");
                     ci.socket.Send(bytes);
                 }
             }

@@ -17,13 +17,20 @@ namespace ChatTesting
                 Console.WriteLine("Port?");
                 int port = getInt();
                 ChatServer cs = new ChatServer(port);
-                cs.start();
+                MessageRecievedListener mrl = delegate(string s)
+                {
+                    Console.WriteLine(s);
+                };
+                cs.start(mrl);
                 Console.WriteLine("Server started on port "+port+" type \"/quit\" to close.");
                 while(true){
-                    if(Console.ReadLine().ToUpper()=="/QUIT"){
+                    response = Console.ReadLine();
+                    if(response.ToUpper()=="/QUIT"){
                         cs.stop();
                         Environment.Exit(0);
                         break;
+                    }else{
+                        cs.broadcast("SERVER ADMIN:"+response);
                     }
                 }
             }else if (response.ToUpper() == "CLIENT"){
