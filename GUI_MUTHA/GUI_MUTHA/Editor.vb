@@ -46,11 +46,7 @@ Public Class Editor
     End Sub
 
     Private Sub copy()
-        If Len(rtbText.SelectedText) < 900 Then
-            My.Computer.Clipboard.SetText(rtbText.SelectedText)
-        ElseIf Len(rtbText.SelectedText) >= 900 Then
-            MessageBox.Show("Sorry! We don't support this action!")
-        End If
+        My.Computer.Clipboard.SetText(rtbText.SelectedText)
     End Sub
 
     Private Sub CopyToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CopyToolStripMenuItem.Click
@@ -58,13 +54,9 @@ Public Class Editor
     End Sub
 
     Private Sub cut()
-        If Len(rtbText.SelectedText) < 900 Then
-            Me.clienthandlingthingies.CutAdd(rtbText.SelectionStart, rtbText.SelectionLength + rtbText.SelectionStart)
-            My.Computer.Clipboard.SetText(rtbText.SelectedText)
-            rtbText.SelectedText = ""
-        ElseIf Len(rtbText.SelectedText) >= 900 Then
-            MessageBox.Show("Sorry! We don't support this action!")
-        End If
+        Me.clienthandlingthingies.CutAdd(rtbText.SelectionStart, rtbText.SelectionLength + rtbText.SelectionStart)
+        My.Computer.Clipboard.SetText(rtbText.SelectedText)
+        rtbText.SelectedText = ""
     End Sub
 
     Private Sub CutToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CutToolStripMenuItem.Click
@@ -144,9 +136,6 @@ Public Class Editor
 
 #End Region
 
-    Private Sub StartClient()
-        'Dim f As New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, Net.Sockets.SocketType.Stream)
-    End Sub
 
 #Region "Zoom"
 
