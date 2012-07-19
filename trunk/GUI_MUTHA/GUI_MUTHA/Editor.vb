@@ -11,66 +11,6 @@ Public Class Editor
 
     #End Region 'Fields
 
-    #Region "Methods"
-
-    Private Sub backButton_Click(sender As System.Object, e As System.EventArgs) Handles backButton.Click
-        rtbText.Text = ""
-        My.Computer.FileSystem.DeleteFile("C:\Users\user\AppData\Local\Temp\Doc.txt")
-        Startup.Show()
-        Me.Hide()
-        Me.Close()
-    End Sub
-
-    Private Sub BDown_Click(sender As System.Object, e As System.EventArgs) Handles BDown.Click
-        PanelUP.Visible = False
-        PanelDown.Visible = True
-    End Sub
-
-    Private Sub bUP_Click(sender As System.Object, e As System.EventArgs)
-        PanelUP.Visible = True
-        PanelDown.Visible = False
-    End Sub
-
-    Private Sub bUP_Click_1(sender As System.Object, e As System.EventArgs) Handles bUP.Click
-        PanelUP.Visible = True
-        PanelDown.Visible = False
-    End Sub
-
-    Private Sub Chatbox_TextChanged(sender As System.Object, e As System.EventArgs) Handles Chatbox.TextChanged
-        Chatbox.SelectionStart = Chatbox.Text.Length
-        Chatbox.ScrollToCaret()
-    End Sub
-
-    Private Sub ChatToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChatToolStripMenuItem.Click
-        If PanelUP.Visible = False And PanelDown.Visible = False Then
-            PanelUP.Visible = True
-            PanelDown.Visible = False
-        End If
-    End Sub
-
-    Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
-        Startup.Close()
-        Me.Close()
-    End Sub
-
-    Private Sub copy()
-        My.Computer.Clipboard.SetText(rtbText.SelectedText)
-    End Sub
-
-    Private Sub CopyToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CopyToolStripMenuItem.Click
-        copy()
-    End Sub
-
-    Private Sub cut()
-        Me.clienthandlingthingies.CutAdd(rtbText.SelectionStart, rtbText.SelectionLength + rtbText.SelectionStart)
-        My.Computer.Clipboard.SetText(rtbText.SelectedText)
-        rtbText.SelectedText = ""
-    End Sub
-
-    Private Sub CutToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CutToolStripMenuItem.Click
-        cut()
-    End Sub
-
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
         FileName = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Doc.txt")
@@ -90,6 +30,47 @@ Public Class Editor
         'Me.e = New OperationalTransform.TextTransformCollection()
     End Sub
 
+    #Region "Methods"
+
+    Private Sub backButton_Click(sender As System.Object, e As System.EventArgs) Handles backButton.Click
+        rtbText.Text = ""
+        My.Computer.FileSystem.DeleteFile("C:\Users\user\AppData\Local\Temp\Doc.txt")
+        Startup.Show()
+        Me.Hide()
+        Me.Close()
+    End Sub
+
+    Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
+        Startup.Close()
+        Me.Close()
+    End Sub
+
+    Private Sub copy()
+        If Len(rtbText.SelectedText) < 900 Then
+            My.Computer.Clipboard.SetText(rtbText.SelectedText)
+        ElseIf Len(rtbText.SelectedText) >= 900 Then
+            MessageBox.Show("Sorry! We don't support this action!")
+        End If
+    End Sub
+
+    Private Sub CopyToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CopyToolStripMenuItem.Click
+        copy()
+    End Sub
+
+    Private Sub cut()
+        If Len(rtbText.SelectedText) < 900 Then
+            Me.clienthandlingthingies.CutAdd(rtbText.SelectionStart, rtbText.SelectionLength + rtbText.SelectionStart)
+            My.Computer.Clipboard.SetText(rtbText.SelectedText)
+            rtbText.SelectedText = ""
+        ElseIf Len(rtbText.SelectedText) >= 900 Then
+            MessageBox.Show("Sorry! We don't support this action!")
+        End If
+    End Sub
+
+    Private Sub CutToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CutToolStripMenuItem.Click
+        cut()
+    End Sub
+
     Private Sub paste()
         'Add clipboard contents to the client buffery thingy
         Me.clienthandlingthingies.PasteAdd(rtbText.SelectionStart, My.Computer.Clipboard.GetText())
@@ -100,6 +81,7 @@ Public Class Editor
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
         paste()
     End Sub
+
 
     '====This Was Removed Because Alex Screws Around Alot===='
     'Dim e As OperationalTransform.TextTransformCollection
@@ -123,6 +105,7 @@ Public Class Editor
     '        Me.e.Add(a)
     '    End If
     'End Sub
+
     Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
         e.Handled = True
         Me.clienthandlingthingies.KeyPressadd(e, rtbText.SelectionStart)
@@ -140,6 +123,8 @@ Public Class Editor
         selectall()
     End Sub
 
+#Region "Chat"
+
     Private Sub Send_Click(sender As System.Object, e As System.EventArgs) Handles Send.Click
         Dim SendMess As String = "[" + NamePerson + "]: " + ChatMessage.Text
 
@@ -152,16 +137,18 @@ Public Class Editor
         End If
     End Sub
 
-    'Private Sub StartClient()
-    '    Dim f As New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, Net.Sockets.SocketType.Stream)
-    'End Sub
+    Private Sub Chatbox_TextChanged(sender As System.Object, e As System.EventArgs) Handles Chatbox.TextChanged
+        Chatbox.SelectionStart = Chatbox.Text.Length
+        Chatbox.ScrollToCaret()
+    End Sub
+
+#End Region
+
     Private Sub StartClient()
         'Dim f As New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, Net.Sockets.SocketType.Stream)
     End Sub
 
-    Private Sub ToolStripMenuItem10_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem10.Click
-        rtbText.ZoomFactor = 2.0
-    End Sub
+#Region "Zoom"
 
     Private Sub ToolStripMenuItem3_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem3.Click
         rtbText.ZoomFactor = 0.25
@@ -191,6 +178,36 @@ Public Class Editor
         rtbText.ZoomFactor = 1.75
     End Sub
 
+    Private Sub ToolStripMenuItem10_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem10.Click
+        rtbText.ZoomFactor = 2.0
+    End Sub
+
+#End Region
+
+#Region "ChatBox"
+
+    Private Sub BDown_Click(sender As System.Object, e As System.EventArgs) Handles BDown.Click
+        PanelUP.Visible = False
+        PanelDown.Visible = True
+    End Sub
+
+    Private Sub ChatToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChatToolStripMenuItem.Click
+        If PanelUP.Visible = False And PanelDown.Visible = False Then
+            PanelUP.Visible = True
+            PanelDown.Visible = False
+        End If
+    End Sub
+
+    Private Sub bUP_Click(sender As System.Object, e As System.EventArgs)
+        PanelUP.Visible = True
+        PanelDown.Visible = False
+    End Sub
+
+    Private Sub bUP_Click_1(sender As System.Object, e As System.EventArgs) Handles bUP.Click
+        PanelUP.Visible = True
+        PanelDown.Visible = False
+    End Sub
+
     Private Sub xBox2_TextChanged(sender As System.Object, e As System.EventArgs) Handles xBox2.Click
         PanelUP.Visible = False
         PanelDown.Visible = False
@@ -201,6 +218,8 @@ Public Class Editor
         PanelDown.Visible = False
     End Sub
 
-    #End Region 'Methods
+#End Region
+
+#End Region 'Methods
 
 End Class
