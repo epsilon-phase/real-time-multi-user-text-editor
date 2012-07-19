@@ -63,17 +63,17 @@ namespace ChatServerLib
                 ChatClient cc = (ChatClient)o;
                 while(true){
                     string s = cc.recieve();
-                    Console.WriteLine("Client recieved bytes:"+s);
+                    //Console.WriteLine("Client recieved bytes:"+s);
                     mrl(s);
                 }
             };
             Thread t = new Thread(pts);
             t.Start(this);
+            this.send(this.myName);
         }
         public void start(MessageRecievedListener mrl,string username){
             this.myName = username;
             start(mrl);
-            this.send(username);
         }
         /// <summary>
         /// Sends the string to the server
@@ -82,7 +82,7 @@ namespace ChatServerLib
         public void send(string s){
             if(s.Length<=bufferSize){
                 mySocket.Send(Encoding.ASCII.GetBytes(s));
-                Console.WriteLine("Client sent bytes.");
+                //Console.WriteLine("Client sent bytes.");
             }else{
                 send(s.Substring(0,bufferSize));
                 send(s.Remove(0, bufferSize));

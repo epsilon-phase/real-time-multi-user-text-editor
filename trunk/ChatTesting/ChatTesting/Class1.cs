@@ -43,12 +43,20 @@ namespace ChatTesting
                 Console.WriteLine("Port?");
                 int port = getInt();
                 ChatClient cc = new ChatClient(ip, port);
-                Console.WriteLine("Connected to server. You are free to chat.");
+                Console.WriteLine("Connected to server. Do you want to use a username? Y/N");
+                response = Console.ReadLine();
+                
                 MessageRecievedListener mrl = delegate(string str)
                 {
                     Console.WriteLine(str);
                 };
-                cc.start(mrl);
+                if (response.ToUpper() == "Y" || response.ToUpper() == "YES"){
+                    Console.WriteLine("Well type it in then.");
+                    cc.start(mrl,Console.ReadLine());
+                }else{
+                    cc.start(mrl);
+                }
+                Console.WriteLine("Chat is now open.");
                 response = Console.ReadLine();
                 while(!(response.ToUpper()=="/QUIT")){
                     cc.send(response);

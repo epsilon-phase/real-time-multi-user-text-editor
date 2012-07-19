@@ -83,11 +83,11 @@ namespace ChatServerLib
                         s.Receive(bytes);
                         bytes = ChatServer.noNulls(bytes);
                         string msg = Encoding.ASCII.GetString(bytes);
-                        Console.WriteLine("Server Recieved bytes:"+msg);
-                        cs.myMRL(msg);
-                        cs.broadcast(ChatServer.conCat(name_bytes,bytes)/*,s*/);
+                        //Console.WriteLine("Server Recieved bytes:"+msg);
+                        cs.myMRL(ChatServer.getTimeStamp()+" "+ ci.name+": "+msg);
+                        cs.broadcast(ChatServer.conCat(name_bytes,bytes),s);
                     } catch(SocketException e) {
-                        Console.WriteLine(e.StackTrace);
+                        //Console.WriteLine(e.StackTrace);
                     }
                 }
             };
@@ -104,6 +104,18 @@ namespace ChatServerLib
             };
             addThread(receptions);
         }
+        public static string getTimeStamp(){
+            string res = "[";
+            DateTime now = DateTime.Now;
+            res+=now.Day+"/"+now.Month+"/"+now.Year+" "+now.Hour+":"+now.Minute+":"+now.Second+"."+now.Millisecond+"]";
+            return res;
+        }
+        /// <summary>
+        /// Concatenates two byte arrays in the order b1, b2
+        /// </summary>
+        /// <param name="b1">The first part of the resultant array</param>
+        /// <param name="b2">The second part of the resultant array</param>
+        /// <returns>byte array of size equal to the sum of the sizes of b1 and b2</returns>
         public static byte[] conCat(byte[] b1,byte[] b2){
             byte[] res = new byte[b1.Length + b2.Length];
             int i = 0;
@@ -115,6 +127,11 @@ namespace ChatServerLib
             }
             return res;
         }
+        /// <summary>
+        /// Removes empty or null bytes from a null array.
+        /// </summary>
+        /// <param name="bytes">The byte array to be used</param>
+        /// <returns>A new array without empty bytes</returns>
         public static byte[] noNulls(byte[] bytes)
         {
             List<byte> temp = new List<byte>();
@@ -186,7 +203,7 @@ namespace ChatServerLib
             foreach (ClientInfo ci in clients)
             {
                 if(!(ci.socket==exception)){
-                    Console.WriteLine("Server sending bytes to Socket");
+                    //Console.WriteLine("Server sending bytes to Socket");
                     ci.socket.Send(bytes);
                 }
             }
