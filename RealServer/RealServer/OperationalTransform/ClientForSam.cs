@@ -29,7 +29,6 @@
         #endregion Fields
 
         #region Constructors
-
         /// <summary>
         /// Create new client with the target IP address as a goal
         /// </summary>
@@ -100,12 +99,14 @@
             if (key.KeyCode == Keys.Back)
             {//Backspace, delete the character before the cursor.
                 req = new TextTransformActor(SelectionIndex - 1, 1);
+                req.AlterForClient();
                 queue.Add(req);
                 thingy.Enqueue(req);
             }
             if (key.KeyCode == Keys.Delete)
             {//Delete key, deletes the character in front of the cursor
                 req = new TextTransformActor(SelectionIndex, 1);
+                req.AlterForClient();
                 queue.Add(req);
                 thingy.Enqueue(req);
             }
@@ -117,12 +118,20 @@
             if (insertedtext.Length <= 900)
             {
                 r = new TextTransformActor(selectionstart, insertedtext);
+                queue.Add(r);
             }
             else 
             {
+                string[] e = new string[insertedtext.Length / 900];
                 for (int i = 0; i * 900 <= insertedtext.Length; i++) 
                 {
-                   
+                    e[i]=insertedtext.Substring(0 + i * 900, 899 + i * 900);
+                    
+                }
+                for (int i = 0; i < e.Length; i++)
+                {
+                    r = new TextTransformActor(selectionstart+i * 900,e[i]);
+                    this.queue.Add(r);
                 }
             }
         }
