@@ -19,7 +19,7 @@ namespace ChatServerLib
     /// </summary>
     public class ChatClient
     {
-        Socket mySocket = new Socket(SocketType.Stream, ProtocolType.IP);
+        Socket mySocket = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.IP);
         public const int bufferSize = 666;
         string myName = "Anonymous";
         /// <summary>
