@@ -12,7 +12,7 @@ namespace ChatTesting
         public static void Main()
         {
             ChatServer server = new ChatServer(1341);
-            server.start();
+            //server.start();
             ChatClient client = new ChatClient("144.118.118.68",1341);
             MessageRecievedListener mrl = delegate(string s)
             {
