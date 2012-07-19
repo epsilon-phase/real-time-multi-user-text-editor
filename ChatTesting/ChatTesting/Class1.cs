@@ -36,6 +36,7 @@ namespace ChatTesting
                 Console.WriteLine("Port?");
                 int port = getInt();
                 ChatClient cc = new ChatClient(ip, port);
+                Console.WriteLine("Connected to server. You are free to chat.");
                 MessageRecievedListener mrl = delegate(string str)
                 {
                     Console.WriteLine(str);

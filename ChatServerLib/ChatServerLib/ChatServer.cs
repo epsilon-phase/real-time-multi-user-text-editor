@@ -14,7 +14,7 @@ namespace ChatServerLib
     /// </summary>
     public class ChatServer
     {
-        Socket MyServer = new Socket(SocketType.Stream, ProtocolType.IP);
+        Socket MyServer = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.IP);
         IPAddress myIP=null;
         public const int bufferSize = 666;
         List<ClientInfo> clients = new List<ClientInfo>();
@@ -81,7 +81,7 @@ namespace ChatServerLib
                         s.Receive(bytes);
                         bytes = ChatServer.noNulls(bytes);
                         //Console.WriteLine("Server Recieved bytes:"+Encoding.ASCII.GetString(bytes));
-                        cs.broadcastException(ChatServer.conCat(name_bytes,bytes),s);
+                        cs.broadcast(ChatServer.conCat(name_bytes,bytes)/*,s*/);
                     } catch(SocketException e) {
                         //Console.WriteLine(e.StackTrace);
                     }
@@ -115,7 +115,7 @@ namespace ChatServerLib
         {
             List<byte> temp = new List<byte>();
             foreach(byte b in bytes){
-                if(!(b==null||b=='\0')){
+                if(!(b=='\0')){
                     temp.Add(b);
                 }
             }
@@ -171,14 +171,14 @@ namespace ChatServerLib
         /// <param name="s">The byte array to send</param>
         public void broadcast(byte[] bytes)
         {
-            broadcastException(bytes, null);
+            broadcast(bytes, null);
         }
         /// <summary>
         /// Broadcasts to all sockets not equal to the parameter "exception"
         /// </summary>
         /// <param name="bytes">The bytes to broadcast</param>
         /// <param name="exception">The socket you don't want to send to.</param>
-        public void broadcastException(byte[] bytes, Socket exception){
+        public void broadcast(byte[] bytes,Socket exception){
             foreach (ClientInfo ci in clients)
             {
                 if(!(ci.socket==exception)){
