@@ -5,7 +5,9 @@
     using System.Linq;
     using System.Text;
     using System.Windows.Forms;
-
+    /// <summary>
+    /// Client fo rthe sake of Sam, our resident(other than adam) VB coder and GUI designer.
+    /// </summary>
     public class ClientForSam
     {
         #region Fields
@@ -111,8 +113,20 @@
 
         public void PasteAdd(int selectionstart, string insertedtext)
         {
-            TextTransformActor r = new TextTransformActor(selectionstart, insertedtext);
+            TextTransformActor r;
+            if (insertedtext.Length <= 900)
+            {
+                r = new TextTransformActor(selectionstart, insertedtext);
+            }
+            else 
+            {
+                for (int i = 0; i * 900 <= insertedtext.Length; i++) 
+                {
+                   
+                }
+            }
         }
+
 
         public void Start()
         {
@@ -132,7 +146,6 @@
                     queue.Add(TextTransformActor.GetObjectFromBytes(buffery));
             }
         }
-
         private void SendTextTransformation()
         {
             while (true)
