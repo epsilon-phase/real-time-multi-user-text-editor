@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Text
 
+
 Public Class Startup
 
     #Region "Fields"
@@ -37,12 +38,6 @@ Public Class Startup
             'Otherwise tell the user that they did it wrong.
             MessageBox.Show("Your IP address is not formatted correctly. The correct form is xxx.xxx.xxx.xxx")
         End If
-
-        Try
-            OperationalTransform.ClientForSam.ValidateIPAddress(IP)
-        Catch ex As Exception
-            MessageBox.Show("Your IP address is not formatted correctly. The correct form is xxx.xxx.xxx.xxx")
-        End Try
     End Sub
 
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
