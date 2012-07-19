@@ -159,7 +159,6 @@
         public void Start()
         {
             System.Threading.Thread r = new System.Threading.Thread(new System.Threading.ThreadStart(connectionlistener));
-
             r.Start();
             while (true)
             {
@@ -170,8 +169,12 @@
                         lock (clients[i]._clientdatareciever.processed)
                         {
                             absurdity[clients[i]].Add(clients[i]._clientdatareciever.processed.Dequeue());
-                            this.operationslist.Add(absurdity[clients[i]].Last<OperationalTransform.TextTransformActor>());
                         }
+                        //Set that the operation has been touched by the server
+                        absurdity[clients[i]][absurdity[clients[i]].Count - 1].AlterforServer();
+                        if (operationslist.ContainsTransform(absurdity[clients[i]][absurdity[clients[i]].Count - 1])) 
+                            operationslist.Add(absurdity[clients[i]].Last<OperationalTransform.TextTransformActor>());
+                        
                     }
                 }
             }
