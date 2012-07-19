@@ -55,6 +55,7 @@
             }
 
             System.Threading.Thread clientdatarecp;
+
             /// <summary>
             /// Status of the thread. Returns whether or not the "Start" function has concluded.
             /// </summary>
@@ -118,7 +119,7 @@
         #region Methods
 
         static void Main(string[] args)
-        { 
+        {
         }
 
         #endregion Methods
@@ -127,14 +128,17 @@
     class Server
     {
         #region Fields
+
         //associates the client to a list of operations, allowing the server to not send the operations to the client that send the message in the first place;
         System.Collections.Generic.Dictionary<RealServer.SocketHandler.clienthandler, List<OperationalTransform.TextTransformActor>> absurdity;
         List<RealServer.SocketHandler.clienthandler> clients;
         List<System.Threading.Thread> clientthreads;
+        OperationalTransform.TextTransformCollection operationslist;
         System.Net.Sockets.Socket serversock;
         System.Threading.Thread timesyncthread;
-        OperationalTransform.TextTransformCollection operationslist;
+
         #endregion Fields
+
         #region Constructors
 
         public Server()
@@ -147,14 +151,15 @@
             absurdity = new Dictionary<SocketHandler.clienthandler, List<OperationalTransform.TextTransformActor>>();
             operationslist=new OperationalTransform.TextTransformCollection();
         }
-        
+
         #endregion Constructors
 
         #region Methods
+
         public void Start()
         {
             System.Threading.Thread r = new System.Threading.Thread(new System.Threading.ThreadStart(connectionlistener));
-            
+
             r.Start();
             while (true)
             {
