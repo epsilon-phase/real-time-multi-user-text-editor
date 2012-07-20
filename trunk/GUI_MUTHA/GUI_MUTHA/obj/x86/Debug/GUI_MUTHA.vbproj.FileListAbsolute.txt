@@ -38,3 +38,4 @@ C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\b
 C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\OperationalTransform.dll
 C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\OperationalTransform.pdb
 C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\GUI_MUTHA.exe.config
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\OperationalTransform.xml
