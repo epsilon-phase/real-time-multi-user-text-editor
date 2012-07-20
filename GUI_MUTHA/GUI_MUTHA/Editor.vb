@@ -8,9 +8,8 @@ Public Class Editor
 
     Dim clienthandlingthingies As OperationalTransform.ClientForSam
     Dim Directory, NamePerson, FileName, IP As String
-
+    Dim go As System.Threading.Thread
     #End Region 'Fields
-
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
         FileName = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Doc.txt")
@@ -22,16 +21,20 @@ Public Class Editor
         'Parse the IPaddress
         Try
             Me.clienthandlingthingies = New OperationalTransform.ClientForSam(System.Net.IPAddress.Parse(IP))
+            Dim s As New System.Threading.ThreadStart(AddressOf clienthandlingthingies.Start)
+            'if it turns out to be valid, make the thread instance
+            go = New System.Threading.Thread(s)
+            'start the thread
+            go.Start()
         Catch except As System.Net.Sockets.SocketException
-            MessageBox.Show("Congrats, you've managed to screw this simple operation up, you goddamned bonehead.")
+            MessageBox.Show(except.Message)
+            Startup.Show()
+            Me.Hide()
         End Try
-
         'For Alex'
         'Me.e = New OperationalTransform.TextTransformCollection()
     End Sub
-
     #Region "Methods"
-
     Private Sub backButton_Click(sender As System.Object, e As System.EventArgs) Handles backButton.Click
         rtbText.Text = ""
         My.Computer.FileSystem.DeleteFile("C:\Users\user\AppData\Local\Temp\Doc.txt")
@@ -39,30 +42,24 @@ Public Class Editor
         Me.Hide()
         Me.Close()
     End Sub
-
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
         Startup.Close()
         Me.Close()
     End Sub
-
     Private Sub copy()
         My.Computer.Clipboard.SetText(rtbText.SelectedText)
     End Sub
-
     Private Sub CopyToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CopyToolStripMenuItem.Click
         copy()
     End Sub
-
     Private Sub cut()
         Me.clienthandlingthingies.CutAdd(rtbText.SelectionStart, rtbText.SelectionLength + rtbText.SelectionStart)
         My.Computer.Clipboard.SetText(rtbText.SelectedText)
         rtbText.SelectedText = ""
     End Sub
-
     Private Sub CutToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CutToolStripMenuItem.Click
         cut()
     End Sub
-
     Private Sub paste()
         'Add clipboard contents to the client buffery thingy
         Me.clienthandlingthingies.PasteAdd(rtbText.SelectionStart, My.Computer.Clipboard.GetText())
@@ -73,8 +70,6 @@ Public Class Editor
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
         paste()
     End Sub
-
-
     '====This Was Removed Because Alex Screws Around Alot===='
     'Dim e As OperationalTransform.TextTransformCollection
     'Private Sub rtbText_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyUp
@@ -101,16 +96,15 @@ Public Class Editor
     Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
         e.Handled = True
         Me.clienthandlingthingies.KeyPressadd(e, rtbText.SelectionStart)
+        Me.rtbText.Text = Me.clienthandlingthingies.getconsolidatedstring()
     End Sub
 
     Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
         Me.clienthandlingthingies.KeyPressDelete(e, rtbText.SelectionStart)
     End Sub
-
     Private Sub selectall()
         rtbText.SelectAll()
     End Sub
-
     Private Sub SelectAllToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles SelectAllToolStripMenuItem.Click
         selectall()
     End Sub
@@ -119,7 +113,6 @@ Public Class Editor
 
     Private Sub Send_Click(sender As System.Object, e As System.EventArgs) Handles Send.Click
         Dim SendMess As String = "[" + NamePerson + "]: " + ChatMessage.Text
-
         If Chatbox.Text = "" Then
             Chatbox.Text = SendMess
             ChatMessage.Text = ""
@@ -142,35 +135,27 @@ Public Class Editor
     Private Sub ToolStripMenuItem3_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem3.Click
         rtbText.ZoomFactor = 0.25
     End Sub
-
     Private Sub ToolStripMenuItem4_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem4.Click
         rtbText.ZoomFactor = 0.5
     End Sub
-
     Private Sub ToolStripMenuItem5_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem5.Click
         rtbText.ZoomFactor = 0.75
     End Sub
-
     Private Sub ToolStripMenuItem6_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem6.Click
         rtbText.ZoomFactor = 1.0
     End Sub
-
     Private Sub ToolStripMenuItem7_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem7.Click
         rtbText.ZoomFactor = 1.25
     End Sub
-
     Private Sub ToolStripMenuItem8_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem8.Click
         rtbText.ZoomFactor = 1.5
     End Sub
-
     Private Sub ToolStripMenuItem9_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem9.Click
         rtbText.ZoomFactor = 1.75
     End Sub
-
     Private Sub ToolStripMenuItem10_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem10.Click
         rtbText.ZoomFactor = 2.0
     End Sub
-
 #End Region
 
 #Region "ChatBox"
@@ -210,5 +195,20 @@ Public Class Editor
 #End Region
 
 #End Region 'Methods
+    Dim somenolescence As String
+    Private Sub Consolidator_DoWork(sender As System.Object, e As System.ComponentModel.DoWorkEventArgs) Handles Consolidator.DoWork
+        Try
+            somenolescence = clienthandlingthingies.getconsolidatedstring()
+        Catch except As ArgumentException
 
+        End Try
+    End Sub
+
+    Private Sub consolidatetimer_Tick(sender As System.Object, e As System.EventArgs) Handles consolidatetimer.Tick
+        Consolidator.RunWorkerAsync()
+    End Sub
+
+    Private Sub Consolidator_RunWorkerCompleted(sender As System.Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles Consolidator.RunWorkerCompleted
+        rtbText.Text = somenolescence
+    End Sub
 End Class
