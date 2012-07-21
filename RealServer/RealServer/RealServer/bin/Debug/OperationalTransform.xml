@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OperationalTransform</name>
+    </assembly>
+    <members>
+        <member name="M:OperationalTransform.TextTransformCollection.#ctor(System.String)">
+            <summary>
+            tell the text transform collection to start with a certain string;
+            </summary>
+            <param name="initial">Initial string to start with</param>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.PrepareCollectionFromLargeText(System.IO.Stream)">
+            <summary>
+            Transform a text file(given as a stream).
+            </summary>
+            <param name="fileyo"></param>
+            <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.CalculateConsolidatedString">
+            <summary>
+            Complicated procedure, should not call unless necessary
+            goes through list of text transformations and applies them, calculating the necessary offsets to do so.
+            </summary>
+            <returns> The Consolidated string</returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.ContainsTransform(OperationalTransform.TextTransformActor)">
+            <summary>
+            Checks Whether a specific transform is inside the pool
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.CompareTextActorTime(OperationalTransform.TextTransformActor,OperationalTransform.TextTransformActor)">
+            <summary>
+            
+            </summary>
+            <param name="a">this is foo</param>
+            <param name="b">this is bar</param>
+            <returns>The comparison, context sensitive of course, used to order the list.</returns>
+        </member>
+        <member name="P:OperationalTransform.TextTransformCollection.consolidated">
+            <summary>
+            Consolidates string entry using text actor stuff.
+            </summary>
+        </member>
+        <member name="T:OperationalTransform.ClientForSam">
+            <summary>
+            Client fo rthe sake of Sam, our resident(other than adam) VB coder and GUI designer.
+            </summary>
+        </member>
+        <member name="F:OperationalTransform.ClientForSam.queue">
+            <summary>
+            Not a Queue by any means
+            </summary>
+        </member>
+        <member name="F:OperationalTransform.ClientForSam.server">
+            <summary>
+            Server socket to be sure boss
+            </summary>
+        </member>
+        <member name="F:OperationalTransform.ClientForSam.thingy">
+            <summary>
+            Some... thingy... of a kind
+            </summary>
+        </member>
+        <member name="M:OperationalTransform.ClientForSam.#ctor(System.Net.IPAddress)">
+            <summary>
+            Create new client with the target IP address as a goal
+            </summary>
+            <remarks>
+            Please put this in a try-catch block, if you use it right Sam, you should be able to force the client to show a proper error message and demand that the user enter a new IPaddress</remarks>
+            <param name="target">the IP address of the target server.</param>
+        </member>
+        <member name="M:OperationalTransform.ClientForSam.ValidateIPAddress(System.String)">
+            <summary>
+            Test if the entered string is a valid IPaddress
+            </summary>
+            <param name="input">the input string</param>
+            <returns> whether or not the ipaddress is valid</returns>
+        </member>
+        <member name="M:OperationalTransform.ClientForSam.CutAdd(System.Int32,System.Int32)">
+            <summary>
+            add text transformation for the "cut" operation
+            </summary>
+            <param name="selectionstart">Selection where the text was cut from</param>
+            <param name="selectionend">Selection where the cut ended.</param>
+        </member>
+        <member name="M:OperationalTransform.ClientForSam.KeyPressadd(System.Windows.Forms.KeyPressEventArgs,System.Int32)">
+            <summary>
+            Call from rtbtext keypress event.
+            </summary>
+            <remarks>
+            Please set the event argument's .handled=true.
+            </remarks>
+            <param name="q">the keypress arguments</param>
+            <param name="selectionindex">index of the cursor</param>
+        </member>
+        <member name="M:OperationalTransform.ClientForSam.KeyPressDelete(System.Windows.Forms.PreviewKeyDownEventArgs,System.Int32)">
+            <summary>
+            Add text Transformation for backspace/Delete
+            Call from rtbtext.previewkeydown(which is important)
+            </summary>
+            <param name="key">The keypress event</param>
+            <param name="SelectionIndex">The index of the cursor</param>
+        </member>
+        <member name="T:OperationalTransform.TextTransformActor">
+            <summary>
+            Text Transform holder(I.E. the instructions about where the text changes, and what that means).
+            </summary>
+        </member>
+        <member name="M:OperationalTransform.TextTransformActor.#ctor(System.Int32,System.String)">
+            <summary>
+            create a new TextTransform actor which is set to the insert command.
+            </summary>
+            <param name="index"></param>
+            <param name="data"></param>
+        </member>
+        <member name="M:OperationalTransform.TextTransformActor.#ctor(System.String,System.Int32)">
+            <summary>
+            Initialize for appending
+            </summary>
+            <param name="appendix">String to append</param>
+            <param name="dummy">index</param>
+        </member>
+        <member name="M:OperationalTransform.TextTransformActor.#ctor(System.String)">
+            <summary>
+            New initialization command. Use it to set the TextTranformCollection's initial value to something
+            </summary>
+            <see cref="T:OperationalTransform.TextTransformCollection"/>
+            <param name="initialization"></param>
+        </member>
+        <member name="M:OperationalTransform.TextTransformActor.GetObjectFromBytes(System.Byte[])">
+            <summary>
+            Convert byte array to TextTransformActor
+            </summary>
+            <param name="q">Array of Bytes</param>
+            <returns>the equivalent(or something like that) TexttransformActor</returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformActor.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Obtain byte array to make it better
+            </summary>
+            <param name="info">Reference object to add information to.</param>
+            <param name="context">Not a clue</param>
+        </member>
+    </members>
+</doc>

@@ -52,7 +52,7 @@
     <ApplicationIcon>dalek.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChatServerLib">
+    <Reference Include="ChatServerLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\ChatServerLib\ChatServerLib\bin\Debug\ChatServerLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
