@@ -1,6 +1,8 @@
 ﻿Imports System
 Imports System.IO
 Imports System.Text
+Imports ChatServerLib
+
 
 Public Class Editor
 
@@ -9,6 +11,8 @@ Public Class Editor
     Dim clienthandlingthingies As OperationalTransform.ClientForSam
     Dim Directory, NamePerson, FileName, IP As String
     Dim go As System.Threading.Thread
+    Dim chatClient As ChatClient = New ChatClient(Startup.ipText.Text, 3341)
+
 #End Region 'Fields
 
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -34,6 +38,8 @@ Public Class Editor
         End Try
         'For Alex'
         'Me.e = New OperationalTransform.TextTransformCollection()
+        Dim mrl As MessageRecievedListener = New MessageRecievedListener(AddressOf Me.messageRecieved)
+        chatClient.start(mrl)
     End Sub
 
     #Region "Methods"
@@ -129,6 +135,9 @@ Public Class Editor
         Chatbox.ScrollToCaret()
     End Sub
 
+    Public Sub messageRecieved(ByVal s As String)
+        Chatbox.AppendText(s)
+    End Sub
 #End Region
 
 
