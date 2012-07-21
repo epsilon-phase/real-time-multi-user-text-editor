@@ -6,7 +6,14 @@ GUI_MUTHA
 </name>
 </assembly>
 <members>
-<member name="P:GUI_MUTHA.My.Resources.Resources.ResourceManager">
+<member name="M:GUI_MUTHA.Editor.Editor_Load(System.Object,System.EventArgs)">
+	<summary>
+ Runs on startup, initializes form
+ </summary>
+	<param name="sender">The object triggering the event</param>
+	<param name="e">Details of the event</param>
+	<remarks></remarks>
+</member><member name="P:GUI_MUTHA.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
 </summary>

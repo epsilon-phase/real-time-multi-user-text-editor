@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
+    using ChatServerLib;
     namespace SocketHandler
     {
         using System.Net.Sockets;
@@ -117,9 +117,14 @@
     class Program
     {
         #region Methods
-
+        static ChatServer chatServer = new ChatServer(3341);
         static void Main(string[] args)
         {
+            MessageRecievedListener mrl = delegate(string s)
+            {
+                //TODO add code here
+            };
+            chatServer.start(mrl);
         }
 
         #endregion Methods
