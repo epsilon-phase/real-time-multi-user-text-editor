@@ -9,7 +9,8 @@ Public Class Editor
     Dim clienthandlingthingies As OperationalTransform.ClientForSam
     Dim Directory, NamePerson, FileName, IP As String
     Dim go As System.Threading.Thread
-    #End Region 'Fields
+#End Region 'Fields
+
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
         FileName = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Doc.txt")
@@ -34,6 +35,7 @@ Public Class Editor
         'For Alex'
         'Me.e = New OperationalTransform.TextTransformCollection()
     End Sub
+
     #Region "Methods"
     Private Sub backButton_Click(sender As System.Object, e As System.EventArgs) Handles backButton.Click
         rtbText.Text = ""
@@ -96,7 +98,7 @@ Public Class Editor
     Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
         e.Handled = True
         Me.clienthandlingthingies.KeyPressadd(e, rtbText.SelectionStart)
-        Me.rtbText.Text = Me.clienthandlingthingies.getconsolidatedstring()
+        'Me.rtbText.Text = Me.clienthandlingthingies.getconsolidatedstring()
     End Sub
 
     Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
@@ -195,14 +197,16 @@ Public Class Editor
 #End Region
 
 #End Region 'Methods
-    Dim somenolescence As String
-    Private Sub Consolidator_DoWork(sender As System.Object, e As System.ComponentModel.DoWorkEventArgs) Handles Consolidator.DoWork
-        Try
-            somenolescence = clienthandlingthingies.getconsolidatedstring()
-        Catch except As ArgumentException
 
-        End Try
-    End Sub
+    Dim somenolescence As String
+
+    'Private Sub Consolidator_DoWork(sender As System.Object, e As System.ComponentModel.DoWorkEventArgs) Handles Consolidator.DoWork
+    '    Try
+    '        somenolescence = clienthandlingthingies.getconsolidatedstring()
+    '    Catch except As ArgumentException
+
+    '    End Try
+    'End Sub
 
     Private Sub consolidatetimer_Tick(sender As System.Object, e As System.EventArgs) Handles consolidatetimer.Tick
         Consolidator.RunWorkerAsync()
@@ -210,5 +214,15 @@ Public Class Editor
 
     Private Sub Consolidator_RunWorkerCompleted(sender As System.Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles Consolidator.RunWorkerCompleted
         rtbText.Text = somenolescence
+    End Sub
+
+    Private Sub DownloadFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DownloadFileToolStripMenuItem.Click
+        Dim filePath As String
+        Try
+            filePath = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.MyDocuments, Startup.ComboBox.Text + ".txt")
+            My.Computer.FileSystem.WriteAllText(filePath, rtbText.Text, True)
+        Catch fileException As Exception
+            Throw fileException
+        End Try
     End Sub
 End Class
