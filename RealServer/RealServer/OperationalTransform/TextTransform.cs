@@ -20,7 +20,7 @@
     /// <summary>
     /// Text Transform holder(I.E. the instructions about where the text changes, and what that means).
     /// </summary>
-    [Serializable]
+    [Serializable()]
     public class TextTransformActor : System.Runtime.Serialization.ISerializable
     {
         #region Fields
@@ -78,7 +78,11 @@
             this.insert = initialization;
             this._command = TextTransformType.Initialize;
         }
-
+        /// <summary>
+        /// Initialization for the sake of deletion
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="length"></param>
         public TextTransformActor(int index, int length)
         {
             isserver = false;
@@ -154,16 +158,23 @@
         public static TextTransformActor GetObjectFromBytes(byte[] q)
         {
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            return (TextTransformActor)t.Deserialize((System.IO.Stream)new System.IO.MemoryStream(q));
+            return (TextTransformActor)t.Deserialize(new System.IO.MemoryStream(q));
         }
-
+        /// <summary>
+        /// Almost in the fashion of java constructors
+        /// </summary>
+        /// <returns>The altered transform</returns>
+        public TextTransformActor GetWithServerAlteration() 
+        {
+            this.AlterforServer();
+            return this;
+        }
         public static byte[] GetObjectInBytes(TextTransformActor g)
         {
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             System.IO.Stream y = new System.IO.MemoryStream();
-            t.Serialize(y, g);
-            byte[] q = new byte[y.Length];
-            y.Read(q, 0, (int)y.Length);
+            t.Serialize(y,g);
+            byte[] q = ((System.IO.MemoryStream)y).ToArray();
             y.Close();
             return q;
         }
@@ -179,6 +190,15 @@
             this.isserver = true;
             this.time = DateTime.Now;
         }
+        public TextTransformActor(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) 
+        {
+            this._command = (TextTransformType)info.GetInt32("Command");
+            this._uncompensatedindex = info.GetInt32("index");
+            this.insert = info.GetString("Insert");
+            this.isserver = info.GetBoolean("isserver");
+            this.time = DateTime.FromBinary(info.GetInt64("time"));
+            this.lengthtodelete =info.GetInt32( "DeleteLength");
+        }
 
         /// <summary>
         /// Obtain byte array to make it better
@@ -188,15 +208,8 @@
         public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
         {
             info.AddValue("Command", (int)this._command);
-            info.AddValue("TimeStamp", time.ToBinary());
-            if (_command == TextTransformType.Insert)
-            {
-                info.AddValue("Insert", insert);
-            }
-            else
-            {
-                info.AddValue("DeleteLength", this.Length);
-            }
+            info.AddValue("Insert", insert);
+            info.AddValue("DeleteLength", this.Length);
             info.AddValue("index", this._uncompensatedindex);
             info.AddValue("isserver", this.isserver);
             info.AddValue("time", time.ToBinary());

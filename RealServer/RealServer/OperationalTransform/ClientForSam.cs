@@ -16,7 +16,7 @@
         /// <summary>
         /// Not a Queue by any means
         /// </summary>
-        TextTransformCollection queue;
+        TextTransformCollection TransformPool;
         /// <summary>
         /// Server socket to be sure boss
         /// </summary>
@@ -39,15 +39,14 @@
         {
             thingy = new Queue<TextTransformActor>();
             //intialize the text transform collection into a non server profile
-            queue = new TextTransformCollection(false);
-            this.server = new System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.IPv4);
+            TransformPool = new TextTransformCollection(false);
+            this.server = new System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork,
+                System.Net.Sockets.SocketType.Stream,
+                System.Net.Sockets.ProtocolType.IP);
             this.server.Connect(new System.Net.IPEndPoint(target, 6000));
         }
-
         #endregion Constructors
-
         #region Methods
-
         /// <summary>
         /// Test if the entered string is a valid IPaddress
         /// </summary>
@@ -58,7 +57,13 @@
             System.Net.IPAddress e;
             return System.Net.IPAddress.TryParse(input, out e);
         }
-
+        /// <summary>
+        /// Close connection to the server Once the client is done
+        /// </summary>
+        public void CloseConnection() 
+        {
+            this.server.Close();
+        }
         /// <summary>
         /// add text transformation for the "cut" operation
         /// </summary>
@@ -67,10 +72,9 @@
         public void CutAdd(int selectionstart, int selectionend)
         {
             TextTransformActor t = new TextTransformActor(selectionstart, selectionend);
-            queue.Add(t);
+            TransformPool.Add(t);
             this.thingy.Enqueue(t);
         }
-
         /// <summary>
         /// Call from rtbtext keypress event.
         /// </summary>
@@ -81,9 +85,10 @@
         /// <param name="selectionindex">index of the cursor</param>
         public void KeyPressadd(System.Windows.Forms.KeyPressEventArgs q, int selectionindex)
         {
+            Console.WriteLine("KeyPress Event called");
             TextTransformActor req;
-            req = new TextTransformActor(selectionindex, q.KeyChar);
-            queue.Add(req);
+            req = new TextTransformActor(selectionindex, q.KeyChar.ToString());
+            //queue.Add(req);
             thingy.Enqueue(req);
         }
 
@@ -100,25 +105,24 @@
             {//Backspace, delete the character before the cursor.
                 req = new TextTransformActor(SelectionIndex - 1, 1);
                 req.AlterForClient();
-                queue.Add(req);
+               //queue.Add(req);
                 thingy.Enqueue(req);
             }
             if (key.KeyCode == Keys.Delete)
             {//Delete key, deletes the character in front of the cursor
                 req = new TextTransformActor(SelectionIndex, 1);
                 req.AlterForClient();
-                queue.Add(req);
+                //queue.Add(req);
                 thingy.Enqueue(req);
             }
         }
-
         public void PasteAdd(int selectionstart, string insertedtext)
         {
             TextTransformActor r;
             if (insertedtext.Length <= 900)
             {
                 r = new TextTransformActor(selectionstart, insertedtext);
-                queue.Add(r);
+                thingy.Enqueue(r);
             }
             else 
             {
@@ -131,12 +135,13 @@
                 for (int i = 0; i < e.Length; i++)
                 {
                     r = new TextTransformActor(selectionstart+i * 900,e[i]);
-                    this.queue.Add(r);
+                    this.thingy.Enqueue(r);
                 }
             }
         }
-
-
+        /// <summary>
+        /// Start listening, handing everything off to two new threads.
+        /// </summary>
         public void Start()
         {
             a = new System.Threading.Thread(new System.Threading.ThreadStart(SendTextTransformation));
@@ -144,16 +149,34 @@
             a.Start();
             b.Start();
         }
-
         private void RecieveandConsolidate()
         {
             byte[] buffery=new byte[1024];
             while (true)
             {
-                server.Receive(buffery);
-                lock(queue)
-                    queue.Add(TextTransformActor.GetObjectFromBytes(buffery));
+                try
+                {
+                    server.Receive(buffery);
+                    lock (TransformPool)
+                    {
+                        TransformPool.Add(TextTransformActor.GetObjectFromBytes(buffery));
+                        consolidated = TransformPool.CalculateConsolidatedString();
+                    }
+                }
+                catch (System.Net.Sockets.SocketException e) 
+                {
+                    MessageBox.Show("Server at {0} has dropped your connection",server.LocalEndPoint.ToString());
+                }
             }
+        }
+        private string consolidated;
+        /// <summary>
+        /// gets the calculated consolidated string
+        /// </summary>
+        /// <returns>The consolidated string</returns>
+        public string getconsolidatedstring() 
+        {
+                return consolidated;
         }
         private void SendTextTransformation()
         {

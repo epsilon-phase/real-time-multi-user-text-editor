@@ -120,8 +120,6 @@
 
             string e = initial;
             int offset = 0;
-            lock (actions)
-            {
                 actions.Sort(CompareTextActorTime);
                 for (int i = 0; i < actions.Count; i++)
                 {
@@ -136,6 +134,7 @@
                         }
                         catch (IndexOutOfRangeException q)
                         {
+                            
                             e = e + actions[i].Insert;
                         }
                     }
@@ -143,7 +142,7 @@
                     {
                         e += actions[i].Insert;
                     }
-                }
+                
             }
             return e;
         }
@@ -158,7 +157,7 @@
             return this.actions.Contains(t);
         }
         /// <summary>
-        /// 
+        /// Comparison between two text actors, allowing proper sorting.
         /// </summary>
         /// <param name="a">this is foo</param>
         /// <param name="b">this is bar</param>

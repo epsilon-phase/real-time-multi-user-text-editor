@@ -52,9 +52,6 @@
     <ApplicationIcon>dalek.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChatServerLib">
-      <HintPath>..\..\ChatServerLib\ChatServerLib\bin\Debug\ChatServerLib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
