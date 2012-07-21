@@ -14,3 +14,6 @@ C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer
 C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\bin\Debug\OperationalTransform.dll
 C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\bin\Debug\OperationalTransform.pdb
 C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\bin\Debug\ChatServerLib.dll
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\bin\Debug\OperationalTransform.xml
+C:\Users\user\Desktop\SVN\real-time-multi-user-text-editor\RealServer\RealServer\RealServer\bin\Debug\ChatServerLib.pdb
