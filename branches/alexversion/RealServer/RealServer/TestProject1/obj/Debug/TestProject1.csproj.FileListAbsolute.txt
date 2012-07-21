@@ -1,0 +1,7 @@
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\TestProject1\bin\Debug\TestProject1.dll
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\TestProject1\bin\Debug\TestProject1.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\TestProject1\bin\Debug\OperationalTransform.dll
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\TestProject1\bin\Debug\OperationalTransform.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\TestProject1\obj\Debug\TestProject1.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\TestProject1\obj\Debug\TestProject1.dll
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\RealServer\RealServer\TestProject1\obj\Debug\TestProject1.pdb
