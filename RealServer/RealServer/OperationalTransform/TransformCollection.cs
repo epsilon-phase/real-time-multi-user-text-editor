@@ -18,14 +18,16 @@
         public TextTransformCollection()
         {
             this.actions = new List<TextTransformActor>();
+            initial = "";
         }
 
         public TextTransformCollection(bool Server)
         {
             _server = Server;
             this.actions = new List<TextTransformActor>();
+            initial = "";
         }
-
+        
         /// <summary>
         /// tell the text transform collection to start with a certain string;
         /// </summary>
@@ -115,27 +117,27 @@
         /// <returns> The Consolidated string</returns>
         public string CalculateConsolidatedString()
         {
-
             //Sort the operations based on time or appending, just so that it must work.
-
             string e = initial;
             int offset = 0;
                 actions.Sort(CompareTextActorTime);
                 for (int i = 0; i < actions.Count; i++)
                 {
-                    offset = CalculateIndexOffset(actions[i]);
+                    //offset = CalculateIndexOffset(actions[i]);
                     if (actions[i].Command == TextTransformType.Delete)
-                        e = e.Remove(actions[i].Index + offset, actions[i].Length);
+                        if (actions[i].Index >= 0)
+                            e = e.Remove(actions[i].Index + offset, actions[i].Length);
+                        else//Remove defective delete key
+                            actions.RemoveAt(i);
                     if (actions[i].Command == TextTransformType.Insert)
                     {
                         try
                         {
                             e = e.Insert(actions[i].Index + offset, actions[i].Insert);
                         }
-                        catch (IndexOutOfRangeException q)
+                        catch (ArgumentOutOfRangeException q)
                         {
-                            
-                            e = e + actions[i].Insert;
+                            e = e.Insert(e.Length - 1, actions[i].Insert);
                         }
                     }
                     if (actions[i].Command == TextTransformType.Append)
@@ -185,6 +187,30 @@
                     {
                         totaloffset += actions[i].Length;
                     }
+                    else if (actions[i].Command==TextTransformType.Delete)
+                    {
+                        totaloffset -= actions[i].Length;
+                    }
+                }
+            }
+            return totaloffset;
+        }
+        /// <summary>
+        /// Provides faculty for calculating the cursor position based on changes.
+        /// </summary>
+        /// <param name="Selectionstart">The initial position of the cursor</param>
+        /// <returns>the corrected position of the cursor</returns>
+        public int CalculateOffsetCursorPosition(int Selectionstart) 
+        {
+            int totaloffset = Selectionstart;
+            for (int i = 0; i<actions.Count; i++)
+            {
+                if (actions[i].Index <= Selectionstart)
+                {
+                    if (actions[i].Command == TextTransformType.Insert)
+                    {
+                        totaloffset += actions[i].Length;
+                    }
                     else
                     {
                         totaloffset -= actions[i].Length;
@@ -193,7 +219,6 @@
             }
             return totaloffset;
         }
-
         #endregion Methods
     }
 }

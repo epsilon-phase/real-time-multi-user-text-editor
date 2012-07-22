@@ -27,6 +27,8 @@ Public Class Editor
             'start the thread
             go.Start()
             MessageBox.Show("Connected Successfully")
+            'start the timer
+            consolidatetimer.Enabled = True
         Catch except As System.Net.Sockets.SocketException
             MessageBox.Show(except.Message)
             Startup.Show()
@@ -65,7 +67,7 @@ Public Class Editor
         'Add clipboard contents to the client buffery thingy
         Me.clienthandlingthingies.PasteAdd(rtbText.SelectionStart, My.Computer.Clipboard.GetText())
         Dim text As String = My.Computer.Clipboard.GetText()
-        rtbText.SelectedText = text
+        'rtbText.SelectedText = text
     End Sub
 
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
@@ -94,14 +96,24 @@ Public Class Editor
     '    End If
     'End Sub
 
-    Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
-        e.Handled = True
-        Me.clienthandlingthingies.KeyPressadd(e, rtbText.SelectionStart)
-        Me.rtbText.Text = Me.clienthandlingthingies.getconsolidatedstring()
-    End Sub
 
+    Dim awkward As Boolean
     Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
         Me.clienthandlingthingies.KeyPressDelete(e, rtbText.SelectionStart)
+        Select Case e.KeyCode
+            Case Keys.Delete
+            Case Keys.Back
+            Case Keys.Left
+            Case Keys.Right
+            Case Keys.Up
+            Case Keys.Down
+                e.IsInputKey = False
+
+            Case Else
+                e.IsInputKey = True
+
+        End Select
+        Me.lastkey = e.KeyCode
     End Sub
     Private Sub selectall()
         rtbText.SelectAll()
@@ -204,20 +216,58 @@ Public Class Editor
 
         End Try
     End Sub
-
+    Dim selectionstore As Integer
+    Dim lastkey As Keys
     Private Sub consolidatetimer_Tick(sender As System.Object, e As System.EventArgs) Handles consolidatetimer.Tick
-        If Not Consolidator.IsBusy Then
+        If Not Consolidator.IsBusy And clienthandlingthingies.changed Then
+            selectionstore = rtbText.SelectionStart
             Consolidator.RunWorkerAsync()
         End If
 
     End Sub
 
     Private Sub Consolidator_RunWorkerCompleted(sender As System.Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles Consolidator.RunWorkerCompleted
-        rtbText.Text = somenolescence
+        Try
+            rtbText.Text = somenolescence
+            Select Case lastkey
+                Case Keys.Delete
+                Case Keys.Back
+                    rtbText.SelectionStart = selectionstore - 1
+                    'Don't allow the arrow keys to be misinterpreted as another character.
+                Case Keys.Right
+                Case Keys.Left
+                Case Keys.Up
+                Case Keys.Down
+
+                Case Else
+                    'seems to work just fine.
+                    rtbText.SelectionStart = selectionstore + 1
+            End Select
+        Catch ex As NullReferenceException
+
+        End Try
+        
     End Sub
 
     Private Sub Editor_FormClosed(sender As System.Object, e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
         'Closes socket connection
         clienthandlingthingies.CloseConnection()
+        Startup.Close()
+        Me.Close()
+    End Sub
+
+    Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
+        clienthandlingthingies.KeyPressadd(e, rtbText.SelectionStart)
+    End Sub
+
+    Private Sub rtbText_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyDown
+        Select Case e.KeyCode
+            Case Keys.Delete
+            Case Keys.Back
+                e.SuppressKeyPress = True
+
+            Case Else
+                e.SuppressKeyPress = False
+        End Select
     End Sub
 End Class

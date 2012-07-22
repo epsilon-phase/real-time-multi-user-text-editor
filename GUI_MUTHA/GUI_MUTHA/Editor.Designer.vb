@@ -382,8 +382,7 @@ Partial Class Editor
         '
         'consolidatetimer
         '
-        Me.consolidatetimer.Enabled = True
-        Me.consolidatetimer.Interval = 300
+        Me.consolidatetimer.Interval = 10
         '
         'Editor
         '

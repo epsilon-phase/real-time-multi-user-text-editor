@@ -6,7 +6,7 @@
     using System.Text;
     using System.Windows.Forms;
     /// <summary>
-    /// Client fo rthe sake of Sam, our resident(other than adam) VB coder and GUI designer.
+    /// Client for the sake of Sam, our resident(other than adam) VB coder and GUI designer.
     /// </summary>
     public class ClientForSam
     {
@@ -85,13 +85,13 @@
         /// <param name="selectionindex">index of the cursor</param>
         public void KeyPressadd(System.Windows.Forms.KeyPressEventArgs q, int selectionindex)
         {
-            Console.WriteLine("KeyPress Event called");
             TextTransformActor req;
             req = new TextTransformActor(selectionindex, q.KeyChar.ToString());
+            req.AlterForClient();
             //queue.Add(req);
             thingy.Enqueue(req);
         }
-
+        public Boolean changed;
         /// <summary>
         /// Add text Transformation for backspace/Delete
         /// Call from rtbtext.previewkeydown(which is important)
@@ -108,7 +108,7 @@
                //queue.Add(req);
                 thingy.Enqueue(req);
             }
-            if (key.KeyCode == Keys.Delete)
+            else if (key.KeyCode == Keys.Delete)
             {//Delete key, deletes the character in front of the cursor
                 req = new TextTransformActor(SelectionIndex, 1);
                 req.AlterForClient();
@@ -149,6 +149,10 @@
             a.Start();
             b.Start();
         }
+        public int GetOffsetCursorPosition(int selectionstart) 
+        {
+           return TransformPool.CalculateOffsetCursorPosition(selectionstart);
+        }
         private void RecieveandConsolidate()
         {
             byte[] buffery=new byte[1024];
@@ -161,11 +165,14 @@
                     {
                         TransformPool.Add(TextTransformActor.GetObjectFromBytes(buffery));
                         consolidated = TransformPool.CalculateConsolidatedString();
+                        changed = true;
                     }
                 }
                 catch (System.Net.Sockets.SocketException e) 
                 {
-                    MessageBox.Show("Server at {0} has dropped your connection",server.LocalEndPoint.ToString());
+                    MessageBox.Show("The server has dropped your connection");
+                    //escape the loop, allowing the thread to end.
+                    return;
                 }
             }
         }
@@ -176,6 +183,7 @@
         /// <returns>The consolidated string</returns>
         public string getconsolidatedstring() 
         {
+                this.changed = false;
                 return consolidated;
         }
         private void SendTextTransformation()
@@ -184,7 +192,14 @@
             {
                 while (thingy.Count > 0)
                 {
-                    server.Send(TextTransformActor.GetObjectInBytes(this.thingy.Dequeue()));
+                    try
+                    {
+                        server.Send(TextTransformActor.GetObjectInBytes(this.thingy.Dequeue()));
+                    }
+                    catch (System.Net.Sockets.SocketException serverproblem) 
+                    {//end the thread quickly when there is a socket error.
+                        return;
+                    }
                 }
             }
         }
