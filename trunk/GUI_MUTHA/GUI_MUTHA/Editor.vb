@@ -78,6 +78,14 @@ Public Class Editor
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
         paste()
     End Sub
+
+    Public Sub find(ByVal s As String, Optional ByVal start As Integer = 0)
+        For i As Integer = start To rtbText.Text.Length - 1
+            If s = rtbText.Text.Substring(i, s.Length) Then
+                rtbText.Select(i, s.Length)
+            End If
+        Next
+    End Sub
     '====This Was Removed Because Alex Screws Around Alot===='
     'Dim e As OperationalTransform.TextTransformCollection
     'Private Sub rtbText_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyUp
