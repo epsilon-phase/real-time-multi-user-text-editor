@@ -106,7 +106,7 @@ Partial Class Editor
         'DownloadFileToolStripMenuItem
         '
         Me.DownloadFileToolStripMenuItem.Name = "DownloadFileToolStripMenuItem"
-        Me.DownloadFileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DownloadFileToolStripMenuItem.Size = New System.Drawing.Size(149, 22)
         Me.DownloadFileToolStripMenuItem.Text = "Download File"
         '
         'EditToolStripMenuItem
@@ -406,6 +406,7 @@ Partial Class Editor
         Me.Name = "Editor"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Text Editor"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
         Me.PanelDown.ResumeLayout(False)
