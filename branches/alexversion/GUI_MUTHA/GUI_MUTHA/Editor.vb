@@ -32,7 +32,7 @@ Public Class Editor
         Catch except As System.Net.Sockets.SocketException
             MessageBox.Show(except.Message)
             Startup.Show()
-            Me.Hide()
+            Me.Close()
         End Try
         'For Alex'
         'Me.e = New OperationalTransform.TextTransformCollection()
@@ -216,6 +216,11 @@ Public Class Editor
 
         End Try
     End Sub
+    ''' <summary>
+    ''' Selection store for the update process 
+    ''' Updated whenever the world sees fit to do so
+    ''' </summary>
+    ''' <remarks></remarks>
     Dim selectionstore As Integer
     Dim lastkey As Keys
     Private Sub consolidatetimer_Tick(sender As System.Object, e As System.EventArgs) Handles consolidatetimer.Tick
@@ -242,6 +247,7 @@ Public Class Editor
                 Case Else
                     'seems to work just fine.
                     rtbText.SelectionStart = selectionstore + 1
+
             End Select
         Catch ex As NullReferenceException
 
