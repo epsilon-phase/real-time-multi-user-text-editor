@@ -6,7 +6,13 @@ GUI_MUTHA
 </name>
 </assembly>
 <members>
-<member name="P:GUI_MUTHA.My.Resources.Resources.ResourceManager">
+<member name="F:GUI_MUTHA.Editor.selectionstore">
+	<summary>
+ Selection store for the update process 
+ Updated whenever the world sees fit to do so
+ </summary>
+	<remarks></remarks>
+</member><member name="P:GUI_MUTHA.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
 </summary>

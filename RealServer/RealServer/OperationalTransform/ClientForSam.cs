@@ -72,7 +72,6 @@
         public void CutAdd(int selectionstart, int selectionend)
         {
             TextTransformActor t = new TextTransformActor(selectionstart, selectionend);
-            TransformPool.Add(t);
             this.thingy.Enqueue(t);
         }
         /// <summary>
@@ -86,7 +85,11 @@
         public void KeyPressadd(System.Windows.Forms.KeyPressEventArgs q, int selectionindex)
         {
             TextTransformActor req;
-            req = new TextTransformActor(selectionindex, q.KeyChar.ToString());
+            if(q.KeyChar!='\r')//go about it as through it was the same as anything else.
+                req = new TextTransformActor(selectionindex, q.KeyChar.ToString());
+            else//replace cartridge return with proper windows newline character
+                req=new TextTransformActor(selectionindex,"\r\n");
+            //just to ensure that the datetime is registered correctly. which really shouldn't be needed now that I think about it.
             req.AlterForClient();
             //queue.Add(req);
             thingy.Enqueue(req);
@@ -105,20 +108,23 @@
             {//Backspace, delete the character before the cursor.
                 req = new TextTransformActor(SelectionIndex - 1, 1);
                 req.AlterForClient();
-               //queue.Add(req);
+                //Add to the list of things to send to the server
                 thingy.Enqueue(req);
             }
             else if (key.KeyCode == Keys.Delete)
-            {//Delete key, deletes the character in front of the cursor
+            {
+                //Delete key, deletes the character in front of the cursor
                 req = new TextTransformActor(SelectionIndex, 1);
                 req.AlterForClient();
-                //queue.Add(req);
+                //Add to the list of things to send to hte server
                 thingy.Enqueue(req);
             }
         }
+        //Handle pasting things
         public void PasteAdd(int selectionstart, string insertedtext)
         {
             TextTransformActor r;
+            //nine hundred bytes should prevent 1024 byte long packets from being too little
             if (insertedtext.Length <= 900)
             {
                 r = new TextTransformActor(selectionstart, insertedtext);
@@ -126,12 +132,15 @@
             }
             else 
             {
+                //TODO find the right way to do this
                 string[] e = new string[insertedtext.Length / 900];
                 for (int i = 0; i * 900 <= insertedtext.Length; i++) 
                 {
-                    e[i]=insertedtext.Substring(0 + i * 900, 899 + i * 900);
+                    //get the selection of nine hundred characters and put it in the array
+                    e[i]=insertedtext.Substring(0 + i * 900,900);
                     
                 }
+                //add each of the new transforms to the queue
                 for (int i = 0; i < e.Length; i++)
                 {
                     r = new TextTransformActor(selectionstart+i * 900,e[i]);
@@ -140,7 +149,8 @@
             }
         }
         /// <summary>
-        /// Start listening, handing everything off to two new threads.
+        /// Start listening, handing everything off to two ne
+        /// \w threads.
         /// </summary>
         public void Start()
         {
@@ -153,6 +163,9 @@
         {
            return TransformPool.CalculateOffsetCursorPosition(selectionstart);
         }
+        /// <summary>
+        /// Consolidate thread, listen for messages, and change the "changed" flag to notify the user's thingy.
+        /// </summary>
         private void RecieveandConsolidate()
         {
             byte[] buffery=new byte[1024];
@@ -160,6 +173,8 @@
             {
                 try
                 {
+                    //Blocking call, minimizes the amount of work that the thread does needlessly, 
+                    //now only if I could find something like it for the queue
                     server.Receive(buffery);
                     lock (TransformPool)
                     {
@@ -175,6 +190,13 @@
                     return;
                 }
             }
+        }
+        public void Generatereplace(int selectionstart, int selectionlength,string insertion) 
+        {
+            TextTransformActor deletion = new TextTransformActor(selectionstart, selectionlength);
+            TextTransformActor insert = new TextTransformActor(selectionstart, insertion);
+            thingy.Enqueue(deletion);
+            thingy.Enqueue(insert);
         }
         private string consolidated;
         /// <summary>

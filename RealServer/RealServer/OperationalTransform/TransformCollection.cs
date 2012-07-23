@@ -27,7 +27,7 @@
             this.actions = new List<TextTransformActor>();
             initial = "";
         }
-        
+
         /// <summary>
         /// tell the text transform collection to start with a certain string;
         /// </summary>
@@ -120,13 +120,26 @@
             //Sort the operations based on time or appending, just so that it must work.
             string e = initial;
             int offset = 0;
+            lock (actions)
+            {
                 actions.Sort(CompareTextActorTime);
                 for (int i = 0; i < actions.Count; i++)
                 {
                     //offset = CalculateIndexOffset(actions[i]);
                     if (actions[i].Command == TextTransformType.Delete)
                         if (actions[i].Index >= 0)
-                            e = e.Remove(actions[i].Index + offset, actions[i].Length);
+                            try
+                            {
+                                e = e.Remove(actions[i].Index + offset, actions[i].Length);
+                            }
+                            catch (ArgumentOutOfRangeException error)
+                            {
+                                //Sorry, no message for you
+                                //remove the offending action
+                                actions.RemoveAt(i);
+                                //decrement
+                                i--;
+                            }
                         else//Remove defective delete key
                             actions.RemoveAt(i);
                     if (actions[i].Command == TextTransformType.Insert)
@@ -144,9 +157,10 @@
                     {
                         e += actions[i].Insert;
                     }
-                
+
+                }
+                return e;
             }
-            return e;
         }
 
         /// <summary>
@@ -187,7 +201,7 @@
                     {
                         totaloffset += actions[i].Length;
                     }
-                    else if (actions[i].Command==TextTransformType.Delete)
+                    else if (actions[i].Command == TextTransformType.Delete)
                     {
                         totaloffset -= actions[i].Length;
                     }
@@ -200,10 +214,10 @@
         /// </summary>
         /// <param name="Selectionstart">The initial position of the cursor</param>
         /// <returns>the corrected position of the cursor</returns>
-        public int CalculateOffsetCursorPosition(int Selectionstart) 
+        public int CalculateOffsetCursorPosition(int Selectionstart)
         {
             int totaloffset = Selectionstart;
-            for (int i = 0; i<actions.Count; i++)
+            for (int i = 0; i < actions.Count; i++)
             {
                 if (actions[i].Index <= Selectionstart)
                 {
