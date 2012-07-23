@@ -13,3 +13,5 @@ C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-ed
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.exe
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.xml
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\ChatServerLib.dll
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\ChatServerLib.pdb
