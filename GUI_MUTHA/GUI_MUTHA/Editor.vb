@@ -69,7 +69,6 @@ Public Class Editor
         Dim text As String = My.Computer.Clipboard.GetText()
         'rtbText.SelectedText = text
     End Sub
-
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
         paste()
     End Sub
