@@ -134,6 +134,13 @@ Public Class Editor
         selectall()
     End Sub
 
+    Public Sub find(ByVal s As String, Optional ByVal start As Integer = 0)
+        For i As Integer = start To rtbText.Text.Length - 1
+            If s = rtbText.Text.Substring(i, s.Length) Then
+                rtbText.Select(i, s.Length)
+            End If
+        Next
+    End Sub
 #Region "Chat"
 
     Private Sub Send_Click(sender As System.Object, e As System.EventArgs) Handles Send.Click
@@ -298,5 +305,14 @@ Public Class Editor
         q = Encoding.UTF8.GetBytes(clienthandlingthingies.getconsolidatedstring())
         re.Write(q, 0,q.Length)
         re.Close()
+    End Sub
+
+    Private Sub Editor_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If My.Computer.Keyboard.CtrlKeyDown Then
+            If e.KeyCode = Keys.F Then
+                FindAndReplace.Show()
+            End If
+            'TODO add more hotkeys here
+        End If
     End Sub
 End Class
