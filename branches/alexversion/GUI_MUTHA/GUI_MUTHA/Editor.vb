@@ -9,6 +9,7 @@ Public Class Editor
     Dim clienthandlingthingies As OperationalTransform.ClientForSam
     Dim Directory, NamePerson, FileName, IP As String
     Dim go As System.Threading.Thread
+    Dim d As ChatServerLib.ChatClient
     #End Region 'Fields
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
@@ -26,6 +27,9 @@ Public Class Editor
             go = New System.Threading.Thread(ThreadHandle)
             'start the thread
             go.Start()
+            d = New ChatServerLib.ChatClient(IP, 3410)
+            d.start(New ChatServerLib.MessageRecievedListener(AddressOf messagerecieved))
+
             MessageBox.Show("Connected Successfully")
             'start the timer
             consolidatetimer.Enabled = True
@@ -37,7 +41,19 @@ Public Class Editor
         'For Alex'
         'Me.e = New OperationalTransform.TextTransformCollection()
     End Sub
-    #Region "Methods"
+    Sub messagerecieved(msg As String)
+        Me.AppendText(msg)
+    End Sub
+    Private Delegate Sub settextdelegate(a As String)
+    Private Sub AppendText(a As String)
+        If Chatbox.InvokeRequired Then
+            Dim c As New settextdelegate(AddressOf AppendText)
+            Me.Invoke(c, New Object() {[a]})
+        Else
+            Me.Chatbox.AppendText(vbCrLf + a)
+        End If
+    End Sub
+#Region "Methods"
     Private Sub backButton_Click(sender As System.Object, e As System.EventArgs) Handles backButton.Click
         rtbText.Text = ""
         My.Computer.FileSystem.DeleteFile("C:\Users\user\AppData\Local\Temp\Doc.txt")
@@ -94,9 +110,6 @@ Public Class Editor
     '        Me.e.Add(a)
     '    End If
     'End Sub
-
-
-    Dim awkward As Boolean
     Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
         Me.clienthandlingthingies.KeyPressDelete(e, rtbText.SelectionStart)
         Select Case e.KeyCode
@@ -125,6 +138,7 @@ Public Class Editor
 
     Private Sub Send_Click(sender As System.Object, e As System.EventArgs) Handles Send.Click
         Dim SendMess As String = "[" + NamePerson + "]: " + ChatMessage.Text
+        d.send(SendMess)
         If Chatbox.Text = "" Then
             Chatbox.Text = SendMess
             ChatMessage.Text = ""
@@ -234,7 +248,6 @@ Public Class Editor
         Try
             rtbText.Text = somenolescence
             Select Case lastkey
-                Case Keys.Delete
                 Case Keys.Back
                     rtbText.SelectionStart = selectionstore - 1
                     'Don't allow the arrow keys to be misinterpreted as another character.
@@ -243,6 +256,8 @@ Public Class Editor
                 Case Keys.Up
                 Case Keys.Down
 
+                Case Keys.Enter
+                    rtbText.SelectionStart = selectionstore + 2
                 Case Else
                     'seems to work just fine.
                     rtbText.SelectionStart = selectionstore + 1
@@ -251,7 +266,7 @@ Public Class Editor
         Catch ex As NullReferenceException
 
         End Try
-        
+
     End Sub
 
     Private Sub Editor_FormClosed(sender As System.Object, e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
@@ -274,5 +289,14 @@ Public Class Editor
             Case Else
                 e.SuppressKeyPress = False
         End Select
+    End Sub
+
+    Private Sub DownloadFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DownloadFileToolStripMenuItem.Click
+        Dim re As FileStream
+        re = File.Create(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\" + FileName)
+        Dim q As Byte()
+        q = Encoding.UTF8.GetBytes(clienthandlingthingies.getconsolidatedstring())
+        re.Write(q, 0,q.Length)
+        re.Close()
     End Sub
 End Class
