@@ -86,6 +86,10 @@
       <DependentUpon>Editor.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FindAndReplace.Designer.vb" />
+    <Compile Include="FindAndReplace.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -112,6 +116,7 @@
     <EmbeddedResource Include="Editor.resx">
       <DependentUpon>Editor.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FindAndReplace.resx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
