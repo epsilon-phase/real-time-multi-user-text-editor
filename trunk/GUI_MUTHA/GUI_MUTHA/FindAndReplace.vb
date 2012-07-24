@@ -2,7 +2,7 @@
 
     Private Sub txtFind_TextChanged(sender As Object, e As EventArgs) Handles txtFind.TextChanged
         Dim count As Integer = Editor.rtbText.Find(txtFind.Text)
-        lblCount.Text = "Found " + count + " occurences"
+        lblCount.Text = "Found " + count + " occurences."
     End Sub
 
     Private Sub btnReplaceAll_Click(sender As Object, e As EventArgs) Handles btnReplaceAll.Click

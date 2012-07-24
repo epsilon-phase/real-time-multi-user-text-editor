@@ -242,4 +242,8 @@ Public Class Editor
             Throw fileException
         End Try
     End Sub
+
+    Private Sub HistoryToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles HistoryToolStripMenuItem.Click
+        History.Show()
+    End Sub
 End Class

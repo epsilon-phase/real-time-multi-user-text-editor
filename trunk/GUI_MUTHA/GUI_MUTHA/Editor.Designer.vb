@@ -63,6 +63,7 @@ Partial Class Editor
         Me.BDown = New System.Windows.Forms.Button()
         Me.Consolidator = New System.ComponentModel.BackgroundWorker()
         Me.consolidatetimer = New System.Windows.Forms.Timer(Me.components)
+        Me.HistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip.SuspendLayout()
         Me.PanelDown.SuspendLayout()
         Me.PanelUP.SuspendLayout()
@@ -142,7 +143,7 @@ Partial Class Editor
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ChatToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.HistoryToolStripMenuItem, Me.ChatToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.ViewToolStripMenuItem.Text = "View"
@@ -151,7 +152,7 @@ Partial Class Editor
         '
         Me.ToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem10})
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(106, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(152, 22)
         Me.ToolStripMenuItem2.Text = "Zoom"
         '
         'ToolStripMenuItem3
@@ -205,7 +206,7 @@ Partial Class Editor
         'ChatToolStripMenuItem
         '
         Me.ChatToolStripMenuItem.Name = "ChatToolStripMenuItem"
-        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
+        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ChatToolStripMenuItem.Text = "Chat"
         '
         'HelpToolStripMenuItem
@@ -385,6 +386,12 @@ Partial Class Editor
         Me.consolidatetimer.Enabled = True
         Me.consolidatetimer.Interval = 300
         '
+        'HistoryToolStripMenuItem
+        '
+        Me.HistoryToolStripMenuItem.Name = "HistoryToolStripMenuItem"
+        Me.HistoryToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.HistoryToolStripMenuItem.Text = "Changelog"
+        '
         'Editor
         '
         Me.AcceptButton = Me.Send
@@ -405,8 +412,7 @@ Partial Class Editor
         Me.MinimizeBox = False
         Me.Name = "Editor"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Text Editor"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
+        Me.Text = "                                                    "
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
         Me.PanelDown.ResumeLayout(False)
@@ -456,5 +462,6 @@ Partial Class Editor
     Friend WithEvents Chatbox As System.Windows.Forms.RichTextBox
     Friend WithEvents Consolidator As System.ComponentModel.BackgroundWorker
     Friend WithEvents consolidatetimer As System.Windows.Forms.Timer
+    Friend WithEvents HistoryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

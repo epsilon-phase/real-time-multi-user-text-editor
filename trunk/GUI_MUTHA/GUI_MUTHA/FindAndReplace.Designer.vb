@@ -30,12 +30,13 @@ Partial Class FindAndReplace
         Me.btnFind = New System.Windows.Forms.Button()
         Me.btnReplace = New System.Windows.Forms.Button()
         Me.btnReplaceAll = New System.Windows.Forms.Button()
+        Me.Close = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(13, 13)
+        Me.Label1.Location = New System.Drawing.Point(54, 13)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(30, 13)
         Me.Label1.TabIndex = 0
@@ -43,9 +44,9 @@ Partial Class FindAndReplace
         '
         'txtFind
         '
-        Me.txtFind.Location = New System.Drawing.Point(49, 10)
+        Me.txtFind.Location = New System.Drawing.Point(90, 10)
         Me.txtFind.Name = "txtFind"
-        Me.txtFind.Size = New System.Drawing.Size(460, 20)
+        Me.txtFind.Size = New System.Drawing.Size(321, 20)
         Me.txtFind.TabIndex = 1
         '
         'Label2
@@ -53,15 +54,15 @@ Partial Class FindAndReplace
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(12, 39)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(72, 13)
+        Me.Label2.Size = New System.Drawing.Size(75, 13)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Replace with:"
+        Me.Label2.Text = "Replace With:"
         '
         'txtReplace
         '
         Me.txtReplace.Location = New System.Drawing.Point(90, 36)
         Me.txtReplace.Name = "txtReplace"
-        Me.txtReplace.Size = New System.Drawing.Size(419, 20)
+        Me.txtReplace.Size = New System.Drawing.Size(321, 20)
         Me.txtReplace.TabIndex = 3
         '
         'lblCount
@@ -69,42 +70,54 @@ Partial Class FindAndReplace
         Me.lblCount.AutoSize = True
         Me.lblCount.Location = New System.Drawing.Point(13, 74)
         Me.lblCount.Name = "lblCount"
-        Me.lblCount.Size = New System.Drawing.Size(105, 13)
+        Me.lblCount.Size = New System.Drawing.Size(108, 13)
         Me.lblCount.TabIndex = 4
-        Me.lblCount.Text = "Found 0 occurences"
+        Me.lblCount.Text = "Found 0 occurences."
         '
         'btnFind
         '
         Me.btnFind.Location = New System.Drawing.Point(124, 69)
         Me.btnFind.Name = "btnFind"
-        Me.btnFind.Size = New System.Drawing.Size(120, 23)
+        Me.btnFind.Size = New System.Drawing.Size(75, 25)
         Me.btnFind.TabIndex = 5
         Me.btnFind.Text = "Find Next"
         Me.btnFind.UseVisualStyleBackColor = True
         '
         'btnReplace
         '
-        Me.btnReplace.Location = New System.Drawing.Point(250, 69)
+        Me.btnReplace.Location = New System.Drawing.Point(205, 68)
         Me.btnReplace.Name = "btnReplace"
-        Me.btnReplace.Size = New System.Drawing.Size(126, 23)
+        Me.btnReplace.Size = New System.Drawing.Size(75, 25)
         Me.btnReplace.TabIndex = 6
         Me.btnReplace.Text = "Replace"
         Me.btnReplace.UseVisualStyleBackColor = True
         '
         'btnReplaceAll
         '
-        Me.btnReplaceAll.Location = New System.Drawing.Point(382, 68)
+        Me.btnReplaceAll.Location = New System.Drawing.Point(286, 68)
         Me.btnReplaceAll.Name = "btnReplaceAll"
-        Me.btnReplaceAll.Size = New System.Drawing.Size(127, 23)
+        Me.btnReplaceAll.Size = New System.Drawing.Size(75, 25)
         Me.btnReplaceAll.TabIndex = 7
         Me.btnReplaceAll.Text = "Replace All"
         Me.btnReplaceAll.UseVisualStyleBackColor = True
         '
+        'Close
+        '
+        Me.Close.Location = New System.Drawing.Point(367, 68)
+        Me.Close.Name = "Close"
+        Me.Close.Size = New System.Drawing.Size(44, 25)
+        Me.Close.TabIndex = 8
+        Me.Close.Text = "Close"
+        Me.Close.UseVisualStyleBackColor = True
+        '
         'FindAndReplace
         '
+        Me.AcceptButton = Me.Close
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(521, 106)
+        Me.ClientSize = New System.Drawing.Size(423, 106)
+        Me.ControlBox = False
+        Me.Controls.Add(Me.Close)
         Me.Controls.Add(Me.btnReplaceAll)
         Me.Controls.Add(Me.btnReplace)
         Me.Controls.Add(Me.btnFind)
@@ -113,7 +126,9 @@ Partial Class FindAndReplace
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.txtFind)
         Me.Controls.Add(Me.Label1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "FindAndReplace"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FindAndReplace"
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -127,4 +142,5 @@ Partial Class FindAndReplace
     Friend WithEvents btnFind As System.Windows.Forms.Button
     Friend WithEvents btnReplace As System.Windows.Forms.Button
     Friend WithEvents btnReplaceAll As System.Windows.Forms.Button
+    Friend WithEvents Close As System.Windows.Forms.Button
 End Class
