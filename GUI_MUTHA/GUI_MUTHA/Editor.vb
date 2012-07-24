@@ -311,8 +311,15 @@ Public Class Editor
         If My.Computer.Keyboard.CtrlKeyDown Then
             If e.KeyCode = Keys.F Then
                 FindAndReplace.Show()
+            ElseIf e.KeyCode = Keys.P Then
+                addParentheses()
             End If
             'TODO add more hotkeys here
         End If
+    End Sub
+
+    Private Sub addParentheses()
+        Dim text As String = rtbText.SelectedText
+        rtbText.SelectedText = "(" + text + ")"
     End Sub
 End Class
