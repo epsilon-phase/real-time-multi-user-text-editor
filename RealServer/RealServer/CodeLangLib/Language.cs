@@ -9,16 +9,16 @@ namespace CodeLangLib
 {
     public class Language
     {
-        public static string[] keywords;
-        public static string commentChar;
-        public static string multiLineCommentStart;
-        public static string multiLineCommentEnd;
-        public static bool supportsMultiLineComments = false;
-        public static string fileExtension = "";
-        public static Color keywordColor = Color.Blue;
-        public static Color stringColor = Color.Salmon;
-        public static Color commentColor = Color.LightGreen;
-        public static Color numberColor = Color.Black;
+        public string[] keywords;
+        public string commentChar;
+        public string multiLineCommentStart;
+        public string multiLineCommentEnd;
+        public bool supportsMultiLineComments = false;
+        public string fileExtension = "";
+        public Color keywordColor = Color.Blue;
+        public Color stringColor = Color.Salmon;
+        public Color commentColor = Color.LightGreen;
+        public Color numberColor = Color.Black;
 
         public static readonly Language LangC = new C();
         public static readonly Language LangCSharp = new CSharp();
