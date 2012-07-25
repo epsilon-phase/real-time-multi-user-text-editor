@@ -106,10 +106,6 @@ Public Class Editor
         selectall()
     End Sub
 
-    Private Sub HistoryToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles HistoryToolStripMenuItem.Click
-        History.Show()
-    End Sub
-
     Private Sub FindToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles FindToolStripMenuItem.Click
         FindAndReplace.Show()
     End Sub

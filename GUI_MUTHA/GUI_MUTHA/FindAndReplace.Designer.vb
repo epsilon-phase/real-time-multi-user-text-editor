@@ -134,6 +134,7 @@ Partial Class FindAndReplace
         Me.Name = "FindAndReplace"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Find And Replace"
+        Me.TopMost = True
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
