@@ -15,6 +15,7 @@
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -66,6 +66,7 @@
   <PropertyGroup>
     <ApplicationIcon>dalek.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -159,11 +160,16 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\VisualBasic" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dalek.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RealServer\RealServer\CodeLangLib\CodeLangLib.csproj">
+      <Project>{a64d074f-d936-4995-b23b-a7e98b904df9}</Project>
+      <Name>CodeLangLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\RealServer\RealServer\OperationalTransform\OperationalTransform.csproj">
       <Project>{97C2FE6F-A496-4234-9173-D619704E5D88}</Project>
       <Name>OperationalTransform</Name>

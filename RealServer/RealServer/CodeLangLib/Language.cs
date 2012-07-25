@@ -25,5 +25,6 @@ namespace CodeLangLib
         public static readonly Language LangCPlusPlus = new CPlusPlus();
         public static readonly Language LangPython = new Python();
         public static readonly Language LangJava = new Java();
+        public static readonly Language LangVBdotNET = new VBdotNET();
     }
 }

@@ -1,6 +1,7 @@
 ﻿Imports System
 Imports System.IO
 Imports System.Text
+Imports CodeLangLib
 
 Public Class Editor
 
@@ -10,6 +11,8 @@ Public Class Editor
     Dim Directory, NamePerson, FileName, IP As String
     Dim go As System.Threading.Thread
     Dim d As ChatServerLib.ChatClient
+    Dim lang As CodeLangLib.Language
+    Dim langset As Boolean = False
 #End Region 'Fields
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
@@ -28,7 +31,7 @@ Public Class Editor
             'start the thread
             go.Start()
             d = New ChatServerLib.ChatClient(IP, 3410)
-            d.start(New ChatServerLib.MessageRecievedListener(AddressOf messagerecieved))
+            d.start(New ChatServerLib.MessageRecievedListener(AddressOf messagerecieved), Startup.TextName.Text)
 
             MessageBox.Show("Connected Successfully")
             'start the timer
@@ -40,6 +43,30 @@ Public Class Editor
         End Try
         'For Alex'
         'Me.e = New OperationalTransform.TextTransformCollection()
+        'Setup langauges
+        cbxLang.Items.Add(Language.LangC)
+        cbxLang.Items.Add(Language.LangCPlusPlus)
+        cbxLang.Items.Add(Language.LangCSharp)
+        cbxLang.Items.Add(Language.LangJava)
+        cbxLang.Items.Add(Language.LangPython)
+        cbxLang.Items.Add(Language.LangVBdotNET)
+        'Get Language
+        If Startup.ComboBox.Text.EndsWith(Language.LangC.fileExtension) Then
+            lang = Language.LangC
+        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangCPlusPlus.fileExtension) Then
+            lang = Language.LangCPlusPlus
+        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangCSharp.fileExtension) Then
+            lang = Language.LangCSharp
+        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangJava.fileExtension) Then
+            lang = Language.LangJava
+        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangPython.fileExtension) Then
+            lang = Language.LangPython
+        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangVBdotNET.fileExtension) Then
+            lang = Language.LangVBdotNET
+        End If
+        cbxLang.SelectedItem = lang
+        langset = True
+        updateColoring()
     End Sub
     Sub messagerecieved(msg As String)
         Me.AppendText(msg)
@@ -135,7 +162,7 @@ Public Class Editor
     End Sub
 
     Public Sub find(ByVal s As String, Optional ByVal start As Integer = 0)
-        For i As Integer = start To rtbText.Text.Length - s.Length
+        For i As Integer = start To rtbText.Text.Length - 1
             If s = rtbText.Text.Substring(i, s.Length) Then
                 rtbText.Select(i, s.Length)
             End If
@@ -331,5 +358,77 @@ Public Class Editor
 
     Private Sub FindAndReplaceToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles FindAndReplaceToolStripMenuItem.Click
         FindAndReplace.Show()
+    End Sub
+
+    Private Sub cbxLang_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxLang.SelectedIndexChanged
+        lang = cbxLang.SelectedItem
+        updateColoring()
+    End Sub
+
+    Private Sub updateColoring()
+        Dim index As Integer = rtbText.SelectionStart
+        Dim length As Integer = rtbText.SelectionLength
+
+        'Color keywords
+        For Each keyword As String In lang.keywords
+            find(keyword)
+            While Not rtbText.SelectionColor = lang.keywordColor
+                rtbText.SelectionColor = lang.keywordColor
+                find(keyword, rtbText.SelectionStart + 1)
+            End While
+        Next
+        'Color numbers
+        For i As Integer = 0 To 10
+            find(Str(i))
+            While Not rtbText.SelectionColor = lang.numberColor
+                rtbText.SelectionColor = lang.numberColor
+                find(Str(i), rtbText.SelectionStart)
+            End While
+        Next
+        'Color strings
+        For i As Integer = 0 To rtbText.Text.Length
+            Dim c As Char = rtbText.Text.Chars(i)
+            Dim inquote As Boolean = False
+            If c = """" Then
+                inquote = Not inquote
+            End If
+            If inquote Or c = """" Then
+                rtbText.Select(i, 1)
+                rtbText.SelectionColor = lang.stringColor
+            End If
+        Next
+        'Color comments
+        find(lang.commentChar)
+        While Not rtbText.SelectionColor = lang.commentColor
+            If Not rtbText.SelectionColor = lang.stringColor Then
+                rtbText.SelectionColor = lang.commentColor
+                Dim i As Integer = rtbText.SelectionStart
+                Dim c As Char = rtbText.Text.Chars(i)
+                While Not (c = vbCrLf Or i = rtbText.TextLength)
+                    c = rtbText.Text.Chars(i)
+                    rtbText.Select(i, 1)
+                    rtbText.SelectionColor = lang.commentColor
+                    i += 1
+                End While
+            End If
+            find(lang.commentChar, rtbText.SelectionStart)
+        End While
+        If lang.supportsMultiLineComments Then
+            For i As Integer = 0 To rtbText.TextLength
+                find(lang.multiLineCommentStart, i)
+                Dim start As Integer = rtbText.SelectionStart
+                find(lang.multiLineCommentEnd, i)
+                Dim endindex As Integer = rtbText.SelectionStart + lang.multiLineCommentEnd.Length
+                rtbText.Select(start, endindex - start)
+                rtbText.SelectionColor = lang.commentColor
+                i = endindex
+            Next
+        End If
+        'reset selection
+        rtbText.Select(index, length)
+    End Sub
+
+    Private Sub rtbText_TextChanged(sender As Object, e As EventArgs) Handles rtbText.TextChanged
+        updateColoring()
     End Sub
 End Class
