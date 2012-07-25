@@ -114,12 +114,11 @@ Public Class Editor
         Me.clienthandlingthingies.KeyPressDelete(e, rtbText.SelectionStart,rtbText.SelectionLength)
         Select Case e.KeyCode
             Case Keys.Delete
-            Case Keys.Back
+                'Case Keys.Back
             Case Keys.Left
             Case Keys.Right
             Case Keys.Up
             Case Keys.Down
-            Case Keys.Enter
                 e.IsInputKey = False
 
             Case Else
@@ -256,7 +255,10 @@ Public Class Editor
             rtbText.Text = somenolescence
             Select Case lastkey
                 Case Keys.Back
-                    rtbText.SelectionStart = selectionstore - 1
+                    If selectionstore > 0 Then
+                        rtbText.SelectionStart = selectionstore - 1
+                    End If
+
                     'Don't allow the arrow keys to be misinterpreted as another character.
                 Case Keys.Right
                 Case Keys.Left
@@ -269,7 +271,7 @@ Public Class Editor
                     rtbText.SelectionStart = selectionstore + 2
                 Case Else
                     'seems to work just fine.
-                    rtbText.SelectionStart = selectionstore + 1
+                    rtbText.SelectionStart = selectionstore
 
             End Select
         Catch ex As NullReferenceException
@@ -302,9 +304,19 @@ Public Class Editor
 
     Private Sub DownloadFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DownloadFileToolStripMenuItem.Click
         Dim re As FileStream
-        re = File.Create(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\" + FileName)
-        Dim q As Byte()
-        q = Encoding.UTF8.GetBytes(clienthandlingthingies.getconsolidatedstring())
+        If Startup.FileName = "" Then
+            Dim a As New SaveFileDialog()
+            a.ShowDialog()
+            FileName = a.FileName
+            re = File.Create(FileName)
+        Else
+            re = File.Create(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\" + FileName)
+        End If
+
+
+        Dim q() As Byte
+
+        q = Encoding.UTF8.GetBytes(rtbText.Text.ToCharArray())
         re.Write(q, 0, q.Length)
         re.Close()
     End Sub
