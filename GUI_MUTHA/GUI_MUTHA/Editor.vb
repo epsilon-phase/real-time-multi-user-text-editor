@@ -10,7 +10,7 @@ Public Class Editor
     Dim Directory, NamePerson, FileName, IP As String
     Dim go As System.Threading.Thread
     Dim d As ChatServerLib.ChatClient
-    #End Region 'Fields
+#End Region 'Fields
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
         'FileName = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Doc.txt")
@@ -111,7 +111,7 @@ Public Class Editor
     '    End If
     'End Sub
     Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
-        Me.clienthandlingthingies.KeyPressDelete(e, rtbText.SelectionStart)
+        Me.clienthandlingthingies.KeyPressDelete(e, rtbText.SelectionStart,rtbText.SelectionLength)
         Select Case e.KeyCode
             Case Keys.Delete
             Case Keys.Back
@@ -119,11 +119,11 @@ Public Class Editor
             Case Keys.Right
             Case Keys.Up
             Case Keys.Down
+            Case Keys.Enter
                 e.IsInputKey = False
 
             Case Else
                 e.IsInputKey = True
-
         End Select
         Me.lastkey = e.KeyCode
     End Sub
@@ -262,6 +262,8 @@ Public Class Editor
                 Case Keys.Left
                 Case Keys.Up
                 Case Keys.Down
+                Case Keys.Delete
+
 
                 Case Keys.Enter
                     rtbText.SelectionStart = selectionstore + 2
@@ -303,7 +305,7 @@ Public Class Editor
         re = File.Create(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\" + FileName)
         Dim q As Byte()
         q = Encoding.UTF8.GetBytes(clienthandlingthingies.getconsolidatedstring())
-        re.Write(q, 0,q.Length)
+        re.Write(q, 0, q.Length)
         re.Close()
     End Sub
 
@@ -317,9 +319,17 @@ Public Class Editor
             'TODO add more hotkeys here
         End If
     End Sub
-
+    Public Sub ReplaceSelection(ByVal replacer As String)
+        clienthandlingthingies.Generatereplace(rtbText.SelectionStart, rtbText.SelectionLength, replacer)
+    End Sub
     Private Sub addParentheses()
-        Dim text As String = rtbText.SelectedText
-        rtbText.SelectedText = "(" + text + ")"
+        'Dim text As String = rtbText.SelectedText
+        Dim startex As Integer = rtbText.SelectionStart
+        Dim endex As Integer = rtbText.SelectionLength + startex
+        clienthandlingthingies.AddParenthesis(startex, endex)
+    End Sub
+
+    Private Sub FindAndReplaceToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles FindAndReplaceToolStripMenuItem.Click
+        FindAndReplace.Show()
     End Sub
 End Class

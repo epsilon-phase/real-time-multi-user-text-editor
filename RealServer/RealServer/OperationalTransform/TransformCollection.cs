@@ -95,26 +95,51 @@
             }
             return e;
         }
-
+        public List<TextTransformActor> getlist() { return actions; }
+        /// <summary>
+        /// Add new operations to the collection so that the computer can mull over it.
+        /// </summary>
+        /// <param name="ax"></param>
+        /// <remarks>Handles the removal of operations when the count surpasses one hundred,
+        /// consolidating the value to the initial value</remarks>
         public void Add(TextTransformActor ax)
         {
-            if (ax.Command == TextTransformType.Initialize)
+            if (actions.Count < 100)
             {
-                //set initial string and discard the actor
-                this.initial = ax.Insert;
-                ax = null;
+                if (ax.Command == TextTransformType.Initialize)
+                {
+                    //set initial string and discard the actor
+                    this.initial = ax.Insert;
+                    ax = null;
+                }
+                else
+                {
+                    actions.Add(ax);
+                }
             }
-            else
+            else 
             {
-                actions.Add(ax);
+                if (ax.Command == TextTransformType.Initialize)
+                {
+                    //set initial string and discard the actor
+                    this.initial = ax.Insert;
+                    ax = null;
+                }
+                else
+                {
+                    actions.Add(ax);
+                }
+                //If more than one hundred operations, set initial equal to whatever value there is and clear list
+                this.initial = CalculateConsolidatedString();
+                actions.Clear();
             }
         }
 
         /// <summary>
-        /// Complicated procedure, should not call unless necessary
-        /// goes through list of text transformations and applies them, calculating the necessary offsets to do so.
+        /// Calculate the end result of all the transformations that occur to the string
         /// </summary>
         /// <returns> The Consolidated string</returns>
+        /// <remarks></remarks>
         public string CalculateConsolidatedString()
         {
             //Sort the operations based on time or appending, just so that it must work.
@@ -164,52 +189,6 @@
         }
 
         /// <summary>
-        /// Checks Whether a specific transform is inside the pool
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public bool ContainsTransform(TextTransformActor t)
-        {
-            return this.actions.Contains(t);
-        }
-        /// <summary>
-        /// Comparison between two text actors, allowing proper sorting.
-        /// </summary>
-        /// <param name="a">this is foo</param>
-        /// <param name="b">this is bar</param>
-        /// <returns>The comparison, context sensitive of course, used to order the list.</returns>
-        private static int CompareTextActorTime(TextTransformActor a, TextTransformActor b)
-        {
-            //If both a and b are append commands, then it should be sorted out based on index. Should not come up on client side.
-            if (a.Command == TextTransformType.Append && b.Command == TextTransformType.Append)
-                return a.Index.CompareTo(b.Index);
-            //Appends are the most important part, they should be applied first
-            if (a.Command == TextTransformType.Append && b.Command != TextTransformType.Append)
-                return -1;
-            if (a.Command != TextTransformType.Append && b.Command == TextTransformType.Append)
-                return 1;
-            return DateTime.Compare(a.time, b.time);
-        }
-        private int CalculateIndexOffset(TextTransformActor d)
-        {
-            int totaloffset = 0;
-            for (int i = 0; actions[i].time < d.time; i++)
-            {
-                if (actions[i].Index <= d.Index)
-                {
-                    if (actions[i].Command == TextTransformType.Insert)
-                    {
-                        totaloffset += actions[i].Length;
-                    }
-                    else if (actions[i].Command == TextTransformType.Delete)
-                    {
-                        totaloffset -= actions[i].Length;
-                    }
-                }
-            }
-            return totaloffset;
-        }
-        /// <summary>
         /// Provides faculty for calculating the cursor position based on changes.
         /// </summary>
         /// <param name="Selectionstart">The initial position of the cursor</param>
@@ -233,6 +212,56 @@
             }
             return totaloffset;
         }
+
+        /// <summary>
+        /// Checks Whether a specific transform is inside the pool
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public bool ContainsTransform(TextTransformActor t)
+        {
+            return this.actions.Contains(t);
+        }
+
+        /// <summary>
+        /// Comparison between two text actors, allowing proper sorting.
+        /// </summary>
+        /// <param name="a">this is foo</param>
+        /// <param name="b">this is bar</param>
+        /// <returns>The comparison, context sensitive of course, used to order the list.</returns>
+        private static int CompareTextActorTime(TextTransformActor a, TextTransformActor b)
+        {
+            //If both a and b are append commands, then it should be sorted out based on index. Should not come up on client side.
+            if (a.Command == TextTransformType.Append && b.Command == TextTransformType.Append)
+                return a.Index.CompareTo(b.Index);
+            //Appends are the most important part, they should be applied first
+            if (a.Command == TextTransformType.Append && b.Command != TextTransformType.Append)
+                return -1;
+            if (a.Command != TextTransformType.Append && b.Command == TextTransformType.Append)
+                return 1;
+            return DateTime.Compare(a.time, b.time);
+        }
+
+        private int CalculateIndexOffset(TextTransformActor d)
+        {
+            int totaloffset = 0;
+            for (int i = 0; actions[i].time < d.time; i++)
+            {
+                if (actions[i].Index <= d.Index)
+                {
+                    if (actions[i].Command == TextTransformType.Insert)
+                    {
+                        totaloffset += actions[i].Length;
+                    }
+                    else if (actions[i].Command == TextTransformType.Delete)
+                    {
+                        totaloffset -= actions[i].Length;
+                    }
+                }
+            }
+            return totaloffset;
+        }
+
         #endregion Methods
     }
 }

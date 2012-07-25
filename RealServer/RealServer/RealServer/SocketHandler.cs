@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+
     namespace SocketHandler
     {
         using System.Net.Sockets;
@@ -18,6 +19,7 @@
                 this.messages = new Queue<byte[]>();
                 processed = new System.Collections.Concurrent.ConcurrentQueue<OperationalTransform.TextTransformActor>();
             }
+
             Queue<byte[]> messages;
             public System.Collections.Concurrent.ConcurrentQueue<OperationalTransform.TextTransformActor> processed;
 
@@ -29,10 +31,15 @@
                 r.Start();
                 while (true)
                 {
-                    _recptionsocket.Receive(buffer);
-                    messages.Enqueue(buffer);
+                    try
+                    {
+                        _recptionsocket.Receive(buffer);
+                        messages.Enqueue(buffer);
+                    }
+                    catch (SocketException e) { return; }
                 }
             }
+
             /// <summary>
             /// Alters for server.
             /// </summary>
@@ -50,7 +57,7 @@
                         Console.WriteLine("Message recieved");
                         Console.WriteLine("Message contains {0} command", e.Command);
                     }
-                    else 
+                    else
                     {//Might reduce the processor load a bit
                         System.Threading.Thread.Sleep(5);
                     }
@@ -110,7 +117,7 @@
                             }
                         }
                         else {
-                            System.Threading.Thread.Sleep(5); 
+                            System.Threading.Thread.Sleep(5);
                         }
                     }
                 }
@@ -122,6 +129,7 @@
                     clientdatarecp = null;
                 }
             }
+
             public receptionhandler _clientdatareciever;
             Socket _transmissionsocket;
             System.Collections.Concurrent.ConcurrentQueue<byte[]> _pendingmessage;

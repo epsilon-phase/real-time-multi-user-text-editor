@@ -33,3 +33,4 @@ C:\Users\user\Desktop\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\D
 C:\Users\user\Desktop\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\OperationalTransform.pdb
 C:\Users\user\Desktop\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\OperationalTransform.xml
 C:\Users\user\Desktop\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\bin\Debug\ChatServerLib.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.FindAndReplace.resources
