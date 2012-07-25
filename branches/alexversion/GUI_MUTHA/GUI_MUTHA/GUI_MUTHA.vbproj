@@ -163,6 +163,10 @@
     <Content Include="dalek.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RealServer\RealServer\CodeLangLib\CodeLangLib.csproj">
+      <Project>{a64d074f-d936-4995-b23b-a7e98b904df9}</Project>
+      <Name>CodeLangLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\RealServer\RealServer\OperationalTransform\OperationalTransform.csproj">
       <Project>{97C2FE6F-A496-4234-9173-D619704E5D88}</Project>
       <Name>OperationalTransform</Name>
