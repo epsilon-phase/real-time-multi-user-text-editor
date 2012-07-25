@@ -4,6 +4,61 @@
         <name>OperationalTransform</name>
     </assembly>
     <members>
+        <member name="M:OperationalTransform.TextTransformCollection.#ctor(System.String)">
+            <summary>
+            tell the text transform collection to start with a certain string;
+            </summary>
+            <param name="initial">Initial string to start with</param>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.PrepareCollectionFromLargeText(System.IO.Stream)">
+            <summary>
+            Transform a text file(given as a stream).
+            </summary>
+            <param name="fileyo"></param>
+            <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.Add(OperationalTransform.TextTransformActor)">
+            <summary>
+            Add new operations to the collection so that the computer can mull over it.
+            </summary>
+            <param name="ax"></param>
+            <remarks>Handles the removal of operations when the count surpasses one hundred,
+            consolidating the value to the initial value</remarks>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.CalculateConsolidatedString">
+            <summary>
+            Calculate the end result of all the transformations that occur to the string
+            </summary>
+            <returns> The Consolidated string</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.CalculateOffsetCursorPosition(System.Int32)">
+            <summary>
+            Provides faculty for calculating the cursor position based on changes.
+            </summary>
+            <param name="Selectionstart">The initial position of the cursor</param>
+            <returns>the corrected position of the cursor</returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.ContainsTransform(OperationalTransform.TextTransformActor)">
+            <summary>
+            Checks Whether a specific transform is inside the pool
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.CompareTextActorTime(OperationalTransform.TextTransformActor,OperationalTransform.TextTransformActor)">
+            <summary>
+            Comparison between two text actors, allowing proper sorting.
+            </summary>
+            <param name="a">this is foo</param>
+            <param name="b">this is bar</param>
+            <returns>The comparison, context sensitive of course, used to order the list.</returns>
+        </member>
+        <member name="P:OperationalTransform.TextTransformCollection.consolidated">
+            <summary>
+            Consolidates string entry using text actor stuff.
+            </summary>
+        </member>
         <member name="T:OperationalTransform.ClientForSam">
             <summary>
             Client for the sake of Sam, our resident(other than adam) VB coder and GUI designer.
@@ -167,61 +222,6 @@
             Almost in the fashion of java constructors
             </summary>
             <returns>The altered transform</returns>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.#ctor(System.String)">
-            <summary>
-            tell the text transform collection to start with a certain string;
-            </summary>
-            <param name="initial">Initial string to start with</param>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.PrepareCollectionFromLargeText(System.IO.Stream)">
-            <summary>
-            Transform a text file(given as a stream).
-            </summary>
-            <param name="fileyo"></param>
-            <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.Add(OperationalTransform.TextTransformActor)">
-            <summary>
-            Add new operations to the collection so that the computer can mull over it.
-            </summary>
-            <param name="ax"></param>
-            <remarks>Handles the removal of operations when the count surpasses one hundred,
-            consolidating the value to the initial value</remarks>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.CalculateConsolidatedString">
-            <summary>
-            Calculate the end result of all the transformations that occur to the string
-            </summary>
-            <returns> The Consolidated string</returns>
-            <remarks></remarks>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.CalculateOffsetCursorPosition(System.Int32)">
-            <summary>
-            Provides faculty for calculating the cursor position based on changes.
-            </summary>
-            <param name="Selectionstart">The initial position of the cursor</param>
-            <returns>the corrected position of the cursor</returns>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.ContainsTransform(OperationalTransform.TextTransformActor)">
-            <summary>
-            Checks Whether a specific transform is inside the pool
-            </summary>
-            <param name="t"></param>
-            <returns></returns>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.CompareTextActorTime(OperationalTransform.TextTransformActor,OperationalTransform.TextTransformActor)">
-            <summary>
-            Comparison between two text actors, allowing proper sorting.
-            </summary>
-            <param name="a">this is foo</param>
-            <param name="b">this is bar</param>
-            <returns>The comparison, context sensitive of course, used to order the list.</returns>
-        </member>
-        <member name="P:OperationalTransform.TextTransformCollection.consolidated">
-            <summary>
-            Consolidates string entry using text actor stuff.
-            </summary>
         </member>
     </members>
 </doc>

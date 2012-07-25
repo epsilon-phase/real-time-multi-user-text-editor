@@ -159,11 +159,6 @@
                             }
                             catch (ArgumentOutOfRangeException error)
                             {
-                                //Sorry, no message for you
-                                //remove the offending action
-                                actions.RemoveAt(i);
-                                //decrement
-                                i--;
                             }
                         else//Remove defective delete key
                             actions.RemoveAt(i);
