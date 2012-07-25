@@ -1,7 +1,6 @@
 ﻿Imports System
 Imports System.IO
 Imports System.Text
-Imports CodeLangLib
 
 Public Class Editor
 
@@ -11,8 +10,6 @@ Public Class Editor
     Dim Directory, NamePerson, FileName, IP As String
     Dim go As System.Threading.Thread
     Dim d As ChatServerLib.ChatClient
-    Dim lang As CodeLangLib.Language
-    Dim langset As Boolean = False
 #End Region 'Fields
     Private Sub Editor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Startup.Hide()
@@ -31,7 +28,7 @@ Public Class Editor
             'start the thread
             go.Start()
             d = New ChatServerLib.ChatClient(IP, 3410)
-            d.start(New ChatServerLib.MessageRecievedListener(AddressOf messagerecieved), Startup.TextName.Text)
+            d.start(New ChatServerLib.MessageRecievedListener(AddressOf messagerecieved))
 
             MessageBox.Show("Connected Successfully")
             'start the timer
@@ -43,30 +40,6 @@ Public Class Editor
         End Try
         'For Alex'
         'Me.e = New OperationalTransform.TextTransformCollection()
-        'Setup langauges
-        cbxLang.Items.Add(Language.LangC)
-        cbxLang.Items.Add(Language.LangCPlusPlus)
-        cbxLang.Items.Add(Language.LangCSharp)
-        cbxLang.Items.Add(Language.LangJava)
-        cbxLang.Items.Add(Language.LangPython)
-        cbxLang.Items.Add(Language.LangVBdotNET)
-        'Get Language
-        If Startup.ComboBox.Text.EndsWith(Language.LangC.fileExtension) Then
-            lang = Language.LangC
-        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangCPlusPlus.fileExtension) Then
-            lang = Language.LangCPlusPlus
-        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangCSharp.fileExtension) Then
-            lang = Language.LangCSharp
-        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangJava.fileExtension) Then
-            lang = Language.LangJava
-        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangPython.fileExtension) Then
-            lang = Language.LangPython
-        ElseIf Startup.ComboBox.Text.EndsWith(Language.LangVBdotNET.fileExtension) Then
-            lang = Language.LangVBdotNET
-        End If
-        cbxLang.SelectedItem = lang
-        langset = True
-        updateColoring()
     End Sub
     Sub messagerecieved(msg As String)
         Me.AppendText(msg)
@@ -162,7 +135,7 @@ Public Class Editor
     End Sub
 
     Public Sub find(ByVal s As String, Optional ByVal start As Integer = 0)
-        For i As Integer = start To rtbText.Text.Length - 1
+        For i As Integer = start To rtbText.Text.Length - s.Length
             If s = rtbText.Text.Substring(i, s.Length) Then
                 rtbText.Select(i, s.Length)
             End If
@@ -358,18 +331,5 @@ Public Class Editor
 
     Private Sub FindAndReplaceToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles FindAndReplaceToolStripMenuItem.Click
         FindAndReplace.Show()
-    End Sub
-
-    Private Sub cbxLang_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxLang.SelectedIndexChanged
-        lang = cbxLang.SelectedItem
-        updateColoring()
-    End Sub
-
-    Private Sub updateColoring()
-
-    End Sub
-
-    Private Sub rtbText_TextChanged(sender As Object, e As EventArgs) Handles rtbText.TextChanged
-        updateColoring()
     End Sub
 End Class

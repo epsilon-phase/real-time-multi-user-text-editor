@@ -16,7 +16,7 @@
         List<RealServer.SocketHandler.clienthandler> clients;
         System.Threading.Thread ClientSendthread;
         List<System.Threading.Thread> clientthreads;
-
+        bool ReadingFromFile;
         //OperationalTransform.TextTransformCollection operationslist;
         /// <summary>
         /// The socket used to accept clients on the server
