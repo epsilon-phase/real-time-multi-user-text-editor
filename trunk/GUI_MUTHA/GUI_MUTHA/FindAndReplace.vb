@@ -24,4 +24,8 @@
             Editor.find(txtFind.Text, Editor.rtbText.SelectionStart + 1)
         End If
     End Sub
+
+    Private Sub Close_Click(sender As System.Object, e As System.EventArgs) Handles Close.Click
+        Me.Hide()
+    End Sub
 End Class

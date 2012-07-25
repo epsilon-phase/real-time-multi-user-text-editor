@@ -79,12 +79,6 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="History.Designer.vb">
-      <DependentUpon>History.vb</DependentUpon>
-    </Compile>
-    <Compile Include="History.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Editor.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -121,9 +115,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="History.resx">
-      <DependentUpon>History.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Editor.resx">
       <DependentUpon>Editor.vb</DependentUpon>
     </EmbeddedResource>
