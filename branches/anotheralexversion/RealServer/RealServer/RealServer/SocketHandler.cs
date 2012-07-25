@@ -36,7 +36,7 @@
                         _recptionsocket.Receive(buffer);
                         messages.Enqueue(buffer);
                     }
-                    catch (SocketException e) { return; }
+                    catch (SocketException e) { r.Abort(); return; }
                 }
             }
 
@@ -56,6 +56,8 @@
                         processed.Enqueue(e);
                         Console.WriteLine("Message recieved");
                         Console.WriteLine("Message contains {0} command", e.Command);
+                        if(e.Command==OperationalTransform.TextTransformType.Insert)
+                        Console.WriteLine(e.Insert);
                     }
                     else
                     {//Might reduce the processor load a bit
@@ -127,6 +129,7 @@
                     _running = false;
                     clientdatarecp.Abort();
                     clientdatarecp = null;
+                    return;
                 }
             }
 

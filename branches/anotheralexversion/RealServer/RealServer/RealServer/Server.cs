@@ -97,6 +97,16 @@
                     }
                     System.Threading.Thread.Sleep(3);
                 }
+                /*for (int i = 0; i < clients.Count; i++)
+                {
+                    if (clients[i].Running == false)
+                    {
+                        clients.RemoveAt(i);
+                        clientthreads.RemoveAt(i);
+                        lock(absurdity){
+                        absurdity.RemoveAt(i);}
+                    }
+                }*/
             }
         }
 
@@ -119,20 +129,23 @@
                         }
                         for (int i = 0; i < absurdity[a].Count; i++)
                         {
-                            for (int v = 0; v < clients.Count; v++)
+                            lock (absurdity)
                             {
-                                //If the client does not have a given transform, send it to them and add it to
-                                //their array.
-                                if (!absurdity[v].Contains(absurdity[a][i]))
+                                for (int v = 0; v < clients.Count; v++)
                                 {
-                                    clients[v].AddMessage(absurdity[a][i]);
-                                    absurdity[v].Add(absurdity[a][i]);
-                                    Console.WriteLine("Client has had message added correctly");
-                                    Console.WriteLine("Client {0} added change to Client {1}", a, v);
-                                }
-                                else
-                                {
-                                    System.Threading.Thread.Sleep(5);
+                                    //If the client does not have a given transform, send it to them and add it to
+                                    //their array.
+                                    if (!absurdity[v].Contains(absurdity[a][i]))
+                                    {
+                                        clients[v].AddMessage(absurdity[a][i]);
+                                        absurdity[v].Add(absurdity[a][i]);
+                                        Console.WriteLine("Client has had message added correctly");
+                                        Console.WriteLine("Client {0} added change to Client {1}", a, v);
+                                    }
+                                    else
+                                    {
+                                        System.Threading.Thread.Sleep(5);
+                                    }
                                 }
                             }
                         }

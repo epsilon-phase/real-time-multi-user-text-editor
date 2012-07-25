@@ -147,16 +147,14 @@
         /// <param name="SelectionIndex">The index of the cursor</param>
         public void KeyPressDelete(System.Windows.Forms.PreviewKeyDownEventArgs key,int SelectionIndex,int selectionlength)
         {
-            TextTransformActor req;
+            TextTransformActor req=null;
             if (key.KeyCode == Keys.Back)
             {//Backspace, delete the character before the cursor.
-                if(selectionlength>0)
-                    req = new TextTransformActor(SelectionIndex, selectionlength);
-                else
+                
                     req = new TextTransformActor(SelectionIndex - 1, 1);
                 req.AlterForClient();
                 //Add to the list of things to send to the server
-                thingy.Enqueue(req);
+                
             }
             else if (key.KeyCode == Keys.Delete)
             {
@@ -168,47 +166,36 @@
                 else
                     req = new TextTransformActor(SelectionIndex, 1);
                 //Add to the list of things to send to hte server
-                thingy.Enqueue(req);
+                
             }
-            else if (key.KeyCode == Keys.Enter)
+            /*else if (key.KeyCode == Keys.Enter)
             {
                 req = new TextTransformActor(SelectionIndex, "\r\n");
+                
+            }*/
+            if(req!=null)
                 thingy.Enqueue(req);
-            }
         }
 
         //Handle pasting things
         public void PasteAdd(int selectionstart, string insertedtext)
         {
-            //TextTransformActor r;
-            ////nine hundred bytes should prevent 1024 byte long packets from being too little
-            //if (insertedtext.Length <= 900)
-            //{
-            //    r = new TextTransformActor(selectionstart, insertedtext);
-            //    thingy.Enqueue(r);
-            //}
-            //else
-            //{
-            //    //TODO find the right way to do this
-            //    string[] e = new string[insertedtext.Length / 900];
-            //    for (int i = 0; i * 900 <= insertedtext.Length; i++)
-            //    {
-            //        //get the selection of nine hundred characters and put it in the array
-            //        e[i]=insertedtext.Substring(0 + i * 900,900);
-
-            //    }
-            //    //add each of the new transforms to the queue
-            //    for (int i = 0; i < e.Length; i++)
-            //    {
-            //        r = new TextTransformActor(selectionstart+i * 900,e[i]);
-            //        this.thingy.Enqueue(r);
-            //    }
-            //}
-            var len = 900;
-            var arr = Enumerable.Range(0, insertedtext.Length / len).Select(x => insertedtext.Substring(x * len, len)).ToArray();
-            for (int a=0;a<arr.Length;a++) 
+            TextTransformActor r;
+            //nine hundred bytes should prevent 1024 byte long packets from being too little
+            if (insertedtext.Length <= 900)
             {
-                thingy.Enqueue(new TextTransformActor(selectionstart + a * 900, arr[a]));
+                r = new TextTransformActor(selectionstart, insertedtext);
+                thingy.Enqueue(r);
+            }
+            else
+            {
+
+                var len = 900;
+                var arr = Enumerable.Range(0, insertedtext.Length / len).Select(x => insertedtext.Substring(x * len, len)).ToArray();
+                for (int a = 0; a < arr.Length; a++)
+                {
+                    thingy.Enqueue(new TextTransformActor(selectionstart + a * 900, arr[a]));
+                }
             }
         }
 

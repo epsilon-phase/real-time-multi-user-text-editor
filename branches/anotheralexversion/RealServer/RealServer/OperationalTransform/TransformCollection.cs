@@ -160,17 +160,16 @@
                             catch (ArgumentOutOfRangeException error)
                             {
                             }
-                        else//Remove defective delete key
-                            actions.RemoveAt(i);
                     if (actions[i].Command == TextTransformType.Insert)
                     {
+                        
                         try
                         {
                             e = e.Insert(actions[i].Index + offset, actions[i].Insert);
                         }
                         catch (ArgumentOutOfRangeException q)
                         {
-                            e = e.Insert(e.Length - 1, actions[i].Insert);
+                            e = e + actions[i].Insert;
                         }
                     }
                     if (actions[i].Command == TextTransformType.Append)

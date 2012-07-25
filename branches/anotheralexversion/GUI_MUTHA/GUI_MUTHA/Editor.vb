@@ -111,15 +111,16 @@ Public Class Editor
     '    End If
     'End Sub
     Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
-        Me.clienthandlingthingies.KeyPressDelete(e, rtbText.SelectionStart,rtbText.SelectionLength)
+        Me.clienthandlingthingies.KeyPressDelete(e, rtbText.SelectionStart, rtbText.SelectionLength)
         Select Case e.KeyCode
             Case Keys.Delete
-                'Case Keys.Back
-            Case Keys.Left
-            Case Keys.Right
-            Case Keys.Up
-            Case Keys.Down
+            Case Keys.Back
                 e.IsInputKey = False
+                'Case Keys.Left
+                'Case Keys.Right
+                'Case Keys.Up
+                'Case Keys.Down
+                '    e.IsInputKey = False
 
             Case Else
                 e.IsInputKey = True
@@ -271,7 +272,7 @@ Public Class Editor
                     rtbText.SelectionStart = selectionstore + 2
                 Case Else
                     'seems to work just fine.
-                    rtbText.SelectionStart = selectionstore
+                    rtbText.SelectionStart = selectionstore + 1
 
             End Select
         Catch ex As NullReferenceException

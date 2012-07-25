@@ -146,6 +146,10 @@
             {
                 return insert;
             }
+            set 
+            { 
+                this.insert = value;
+            }
         }
 
         //length of modification made
