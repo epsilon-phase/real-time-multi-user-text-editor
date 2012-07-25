@@ -18,12 +18,14 @@
         public TextTransformCollection()
         {
             this.actions = new List<TextTransformActor>();
+            initial = "";
         }
 
         public TextTransformCollection(bool Server)
         {
             _server = Server;
             this.actions = new List<TextTransformActor>();
+            initial = "";
         }
 
         /// <summary>
@@ -93,31 +95,54 @@
             }
             return e;
         }
-
+        public List<TextTransformActor> getlist() { return actions; }
+        /// <summary>
+        /// Add new operations to the collection so that the computer can mull over it.
+        /// </summary>
+        /// <param name="ax"></param>
+        /// <remarks>Handles the removal of operations when the count surpasses one hundred,
+        /// consolidating the value to the initial value</remarks>
         public void Add(TextTransformActor ax)
         {
-            if (ax.Command == TextTransformType.Initialize)
+            if (actions.Count < 100)
             {
-                //set initial string and discard the actor
-                this.initial = ax.Insert;
-                ax = null;
+                if (ax.Command == TextTransformType.Initialize)
+                {
+                    //set initial string and discard the actor
+                    this.initial = ax.Insert;
+                    ax = null;
+                }
+                else
+                {
+                    actions.Add(ax);
+                }
             }
-            else
+            else 
             {
-                actions.Add(ax);
+                if (ax.Command == TextTransformType.Initialize)
+                {
+                    //set initial string and discard the actor
+                    this.initial = ax.Insert;
+                    ax = null;
+                }
+                else
+                {
+                    actions.Add(ax);
+                }
+                //If more than one hundred operations, set initial equal to whatever value there is and clear list
+                this.initial = CalculateConsolidatedString();
+                actions.Clear();
             }
         }
 
         /// <summary>
-        /// Complicated procedure, should not call unless necessary
-        /// goes through list of text transformations and applies them, calculating the necessary offsets to do so.
+        /// Calculate the end result of all the transformations that occur to the string
         /// </summary>
         /// <returns> The Consolidated string</returns>
+        /// <remarks></remarks>
         public string CalculateConsolidatedString()
         {
-
             //Sort the operations based on time or appending, just so that it must work.
-
             string e = initial;
             int offset = 0;
             lock (actions)
@@ -125,27 +150,62 @@
                 actions.Sort(CompareTextActorTime);
                 for (int i = 0; i < actions.Count; i++)
                 {
-                    offset = CalculateIndexOffset(actions[i]);
+                    //offset = CalculateIndexOffset(actions[i]);
                     if (actions[i].Command == TextTransformType.Delete)
-                        e = e.Remove(actions[i].Index + offset, actions[i].Length);
+                        if (actions[i].Index >= 0)
+                            try
+                            {
+                                e = e.Remove(actions[i].Index + offset, actions[i].Length);
+                            }
+                            catch (ArgumentOutOfRangeException error)
+                            {
+                            }
+                        else//Remove defective delete key
+                            actions.RemoveAt(i);
                     if (actions[i].Command == TextTransformType.Insert)
                     {
                         try
                         {
                             e = e.Insert(actions[i].Index + offset, actions[i].Insert);
                         }
-                        catch (IndexOutOfRangeException q)
+                        catch (ArgumentOutOfRangeException q)
                         {
-                            e = e + actions[i].Insert;
+                            e = e.Insert(e.Length - 1, actions[i].Insert);
                         }
                     }
                     if (actions[i].Command == TextTransformType.Append)
                     {
                         e += actions[i].Insert;
                     }
+
+                }
+                return e;
+            }
+        }
+
+        /// <summary>
+        /// Provides faculty for calculating the cursor position based on changes.
+        /// </summary>
+        /// <param name="Selectionstart">The initial position of the cursor</param>
+        /// <returns>the corrected position of the cursor</returns>
+        public int CalculateOffsetCursorPosition(int Selectionstart)
+        {
+            int totaloffset = Selectionstart;
+            for (int i = 0; i < actions.Count; i++)
+            {
+                if (actions[i].Index <= Selectionstart)
+                {
+                    if (actions[i].Command == TextTransformType.Insert)
+                    {
+                        totaloffset += actions[i].Length;
+                    }
+                    else
+                    {
+                        totaloffset -= actions[i].Length;
+                    }
                 }
             }
-            return e;
+            return totaloffset;
         }
 
         /// <summary>
@@ -157,8 +217,9 @@
         {
             return this.actions.Contains(t);
         }
+
         /// <summary>
-        /// 
+        /// Comparison between two text actors, allowing proper sorting.
         /// </summary>
         /// <param name="a">this is foo</param>
         /// <param name="b">this is bar</param>
@@ -175,6 +236,7 @@
                 return 1;
             return DateTime.Compare(a.time, b.time);
         }
+
         private int CalculateIndexOffset(TextTransformActor d)
         {
             int totaloffset = 0;
@@ -186,7 +248,7 @@
                     {
                         totaloffset += actions[i].Length;
                     }
-                    else
+                    else if (actions[i].Command == TextTransformType.Delete)
                     {
                         totaloffset -= actions[i].Length;
                     }

@@ -30,14 +30,11 @@ Partial Class Editor
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DownloadFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.FindToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FindAndReplaceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
@@ -48,7 +45,6 @@ Partial Class Editor
         Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GoAwayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -68,6 +64,7 @@ Partial Class Editor
         Me.BDown = New System.Windows.Forms.Button()
         Me.Consolidator = New System.ComponentModel.BackgroundWorker()
         Me.consolidatetimer = New System.Windows.Forms.Timer(Me.components)
+        Me.cbxLang = New System.Windows.Forms.ComboBox()
         Me.MenuStrip.SuspendLayout()
         Me.PanelDown.SuspendLayout()
         Me.PanelUP.SuspendLayout()
@@ -85,9 +82,9 @@ Partial Class Editor
         'closeButton
         '
         Me.closeButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.closeButton.Location = New System.Drawing.Point(467, 604)
+        Me.closeButton.Location = New System.Drawing.Point(616, 604)
         Me.closeButton.Name = "closeButton"
-        Me.closeButton.Size = New System.Drawing.Size(454, 23)
+        Me.closeButton.Size = New System.Drawing.Size(305, 23)
         Me.closeButton.TabIndex = 1
         Me.closeButton.Text = "Close"
         Me.closeButton.UseVisualStyleBackColor = True
@@ -116,60 +113,45 @@ Partial Class Editor
         '
         'EditToolStripMenuItem
         '
-        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.ToolStripSeparator2, Me.SelectAllToolStripMenuItem, Me.ToolStripSeparator1, Me.FindToolStripMenuItem})
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopyToolStripMenuItem, Me.CutToolStripMenuItem, Me.PasteToolStripMenuItem, Me.SelectAllToolStripMenuItem, Me.FindAndReplaceToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
         Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.EditToolStripMenuItem.Text = "Edit"
         '
-        'CutToolStripMenuItem
-        '
-        Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
-        Me.CutToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.CutToolStripMenuItem.Text = "Cut                Ctrl+X"
-        '
         'CopyToolStripMenuItem
         '
         Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.CopyToolStripMenuItem.Text = "Copy             Ctrl+C"
+        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.CopyToolStripMenuItem.Text = "Copy"
+        '
+        'CutToolStripMenuItem
+        '
+        Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
+        Me.CutToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.CutToolStripMenuItem.Text = "Cut"
         '
         'PasteToolStripMenuItem
         '
+        Me.PasteToolStripMenuItem.Enabled = False
         Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
-        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.PasteToolStripMenuItem.Text = "Paste             Ctrl+V"
-        '
-        'DeleteToolStripMenuItem
-        '
-        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.DeleteToolStripMenuItem.Text = "Delete                 Del"
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(173, 6)
+        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.PasteToolStripMenuItem.Text = "Paste"
         '
         'SelectAllToolStripMenuItem
         '
         Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
-        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.SelectAllToolStripMenuItem.Text = "Select All      Ctrl+A"
+        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.SelectAllToolStripMenuItem.Text = "Select All"
         '
-        'ToolStripSeparator1
+        'FindAndReplaceToolStripMenuItem
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(173, 6)
-        '
-        'FindToolStripMenuItem
-        '
-        Me.FindToolStripMenuItem.Name = "FindToolStripMenuItem"
-        Me.FindToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.FindToolStripMenuItem.Text = "Find              Ctrl+F"
+        Me.FindAndReplaceToolStripMenuItem.Name = "FindAndReplaceToolStripMenuItem"
+        Me.FindAndReplaceToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.FindAndReplaceToolStripMenuItem.Text = "Find and Replace"
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.HistoryToolStripMenuItem, Me.ChatToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ChatToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.ViewToolStripMenuItem.Text = "View"
@@ -178,7 +160,7 @@ Partial Class Editor
         '
         Me.ToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem10})
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(152, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(106, 22)
         Me.ToolStripMenuItem2.Text = "Zoom"
         '
         'ToolStripMenuItem3
@@ -229,16 +211,10 @@ Partial Class Editor
         Me.ToolStripMenuItem10.Size = New System.Drawing.Size(102, 22)
         Me.ToolStripMenuItem10.Text = "200%"
         '
-        'HistoryToolStripMenuItem
-        '
-        Me.HistoryToolStripMenuItem.Name = "HistoryToolStripMenuItem"
-        Me.HistoryToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.HistoryToolStripMenuItem.Text = "Changelog"
-        '
         'ChatToolStripMenuItem
         '
         Me.ChatToolStripMenuItem.Name = "ChatToolStripMenuItem"
-        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
         Me.ChatToolStripMenuItem.Text = "Chat"
         '
         'HelpToolStripMenuItem
@@ -281,7 +257,7 @@ Partial Class Editor
         Me.backButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.backButton.Location = New System.Drawing.Point(12, 604)
         Me.backButton.Name = "backButton"
-        Me.backButton.Size = New System.Drawing.Size(454, 23)
+        Me.backButton.Size = New System.Drawing.Size(305, 23)
         Me.backButton.TabIndex = 3
         Me.backButton.Text = "Back"
         Me.backButton.UseVisualStyleBackColor = True
@@ -357,7 +333,6 @@ Partial Class Editor
         '
         Me.xBox2.BackColor = System.Drawing.SystemColors.Control
         Me.xBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.xBox2.Cursor = System.Windows.Forms.Cursors.Default
         Me.xBox2.Location = New System.Drawing.Point(3, 3)
         Me.xBox2.Name = "xBox2"
         Me.xBox2.ReadOnly = True
@@ -389,7 +364,6 @@ Partial Class Editor
         '
         Me.xBox.BackColor = System.Drawing.SystemColors.Control
         Me.xBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.xBox.Cursor = System.Windows.Forms.Cursors.Default
         Me.xBox.Location = New System.Drawing.Point(3, 3)
         Me.xBox.Name = "xBox"
         Me.xBox.ReadOnly = True
@@ -415,8 +389,16 @@ Partial Class Editor
         '
         'consolidatetimer
         '
-        Me.consolidatetimer.Enabled = True
-        Me.consolidatetimer.Interval = 300
+        Me.consolidatetimer.Interval = 10
+        '
+        'cbxLang
+        '
+        Me.cbxLang.FormattingEnabled = True
+        Me.cbxLang.Location = New System.Drawing.Point(323, 606)
+        Me.cbxLang.Name = "cbxLang"
+        Me.cbxLang.Size = New System.Drawing.Size(287, 21)
+        Me.cbxLang.TabIndex = 7
+        Me.cbxLang.Text = "Language..."
         '
         'Editor
         '
@@ -425,6 +407,7 @@ Partial Class Editor
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(933, 639)
         Me.ControlBox = False
+        Me.Controls.Add(Me.cbxLang)
         Me.Controls.Add(Me.PanelUP)
         Me.Controls.Add(Me.backButton)
         Me.Controls.Add(Me.closeButton)
@@ -438,7 +421,7 @@ Partial Class Editor
         Me.MinimizeBox = False
         Me.Name = "Editor"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Editor                                        "
+        Me.Text = "Text Editor"
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
         Me.PanelDown.ResumeLayout(False)
@@ -488,10 +471,7 @@ Partial Class Editor
     Friend WithEvents Chatbox As System.Windows.Forms.RichTextBox
     Friend WithEvents Consolidator As System.ComponentModel.BackgroundWorker
     Friend WithEvents consolidatetimer As System.Windows.Forms.Timer
-    Friend WithEvents HistoryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents FindToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FindAndReplaceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents cbxLang As System.Windows.Forms.ComboBox
 
 End Class
