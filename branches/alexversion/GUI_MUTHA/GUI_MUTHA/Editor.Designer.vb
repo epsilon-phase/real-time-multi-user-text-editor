@@ -64,6 +64,7 @@ Partial Class Editor
         Me.BDown = New System.Windows.Forms.Button()
         Me.Consolidator = New System.ComponentModel.BackgroundWorker()
         Me.consolidatetimer = New System.Windows.Forms.Timer(Me.components)
+        Me.cbxLang = New System.Windows.Forms.ComboBox()
         Me.MenuStrip.SuspendLayout()
         Me.PanelDown.SuspendLayout()
         Me.PanelUP.SuspendLayout()
@@ -76,13 +77,14 @@ Partial Class Editor
         Me.rtbText.Name = "rtbText"
         Me.rtbText.Size = New System.Drawing.Size(909, 571)
         Me.rtbText.TabIndex = 0
+        Me.rtbText.Text = ""
         '
         'closeButton
         '
         Me.closeButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.closeButton.Location = New System.Drawing.Point(467, 604)
+        Me.closeButton.Location = New System.Drawing.Point(616, 604)
         Me.closeButton.Name = "closeButton"
-        Me.closeButton.Size = New System.Drawing.Size(454, 23)
+        Me.closeButton.Size = New System.Drawing.Size(305, 23)
         Me.closeButton.TabIndex = 1
         Me.closeButton.Text = "Close"
         Me.closeButton.UseVisualStyleBackColor = True
@@ -158,7 +160,7 @@ Partial Class Editor
         '
         Me.ToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem10})
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(152, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(106, 22)
         Me.ToolStripMenuItem2.Text = "Zoom"
         '
         'ToolStripMenuItem3
@@ -212,7 +214,7 @@ Partial Class Editor
         'ChatToolStripMenuItem
         '
         Me.ChatToolStripMenuItem.Name = "ChatToolStripMenuItem"
-        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
         Me.ChatToolStripMenuItem.Text = "Chat"
         '
         'HelpToolStripMenuItem
@@ -255,7 +257,7 @@ Partial Class Editor
         Me.backButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.backButton.Location = New System.Drawing.Point(12, 604)
         Me.backButton.Name = "backButton"
-        Me.backButton.Size = New System.Drawing.Size(454, 23)
+        Me.backButton.Size = New System.Drawing.Size(305, 23)
         Me.backButton.TabIndex = 3
         Me.backButton.Text = "Back"
         Me.backButton.UseVisualStyleBackColor = True
@@ -347,6 +349,7 @@ Partial Class Editor
         Me.Chatbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
         Me.Chatbox.Size = New System.Drawing.Size(199, 149)
         Me.Chatbox.TabIndex = 13
+        Me.Chatbox.Text = ""
         '
         'PanelUP
         '
@@ -388,6 +391,15 @@ Partial Class Editor
         '
         Me.consolidatetimer.Interval = 10
         '
+        'cbxLang
+        '
+        Me.cbxLang.FormattingEnabled = True
+        Me.cbxLang.Location = New System.Drawing.Point(323, 606)
+        Me.cbxLang.Name = "cbxLang"
+        Me.cbxLang.Size = New System.Drawing.Size(287, 21)
+        Me.cbxLang.TabIndex = 7
+        Me.cbxLang.Text = "Language..."
+        '
         'Editor
         '
         Me.AcceptButton = Me.Send
@@ -395,6 +407,7 @@ Partial Class Editor
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(933, 639)
         Me.ControlBox = False
+        Me.Controls.Add(Me.cbxLang)
         Me.Controls.Add(Me.PanelUP)
         Me.Controls.Add(Me.backButton)
         Me.Controls.Add(Me.closeButton)
@@ -459,5 +472,6 @@ Partial Class Editor
     Friend WithEvents Consolidator As System.ComponentModel.BackgroundWorker
     Friend WithEvents consolidatetimer As System.Windows.Forms.Timer
     Friend WithEvents FindAndReplaceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents cbxLang As System.Windows.Forms.ComboBox
 
 End Class
