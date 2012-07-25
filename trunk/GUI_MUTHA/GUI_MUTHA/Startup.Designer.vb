@@ -100,7 +100,7 @@ Partial Class Startup
         Me.MinimizeBox = False
         Me.Name = "Startup"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "File Selection"
+        Me.Text = "Startup"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

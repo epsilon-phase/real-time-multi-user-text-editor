@@ -36,8 +36,6 @@ Public Class Editor
             Startup.Show()
             Me.Hide()
         End Try
-        'For Alex'
-        'Me.e = New OperationalTransform.TextTransformCollection()
         Dim mrl As MessageRecievedListener = New MessageRecievedListener(AddressOf Me.messageRecieved)
         chatClient.start(mrl)
     End Sub
@@ -50,24 +48,30 @@ Public Class Editor
         Me.Hide()
         Me.Close()
     End Sub
+
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
         Startup.Close()
         Me.Close()
     End Sub
+
     Private Sub copy()
         My.Computer.Clipboard.SetText(rtbText.SelectedText)
     End Sub
+
     Private Sub CopyToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CopyToolStripMenuItem.Click
         copy()
     End Sub
+
     Private Sub cut()
         Me.clienthandlingthingies.CutAdd(rtbText.SelectionStart, rtbText.SelectionLength + rtbText.SelectionStart)
         My.Computer.Clipboard.SetText(rtbText.SelectedText)
         rtbText.SelectedText = ""
     End Sub
+
     Private Sub CutToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CutToolStripMenuItem.Click
         cut()
     End Sub
+
     Private Sub paste()
         'Add clipboard contents to the client buffery thingy
         Me.clienthandlingthingies.PasteAdd(rtbText.SelectionStart, My.Computer.Clipboard.GetText())
@@ -86,33 +90,10 @@ Public Class Editor
             End If
         Next
     End Sub
-    '====This Was Removed Because Alex Screws Around Alot===='
-    'Dim e As OperationalTransform.TextTransformCollection
-    'Private Sub rtbText_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyUp
-    'End Sub
-    'Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
-    '    Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart, e.KeyChar.ToString())
-    '    a.AlterForClient()
-    '    REM insert this single character here
-    '    Me.e.Add(a)
-    '    'The text should not be entered through into the text ending.
-    '    e.Handled = True
-    'End Sub
-    'Private Sub ConsolidateShit()
-    '    rtbText.Text = e.CalculateConsolidatedString()
-    'End Sub
-    'Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
-    '    If e.KeyCode = Keys.Back Then
-    '        Dim a As New OperationalTransform.TextTransformActor(rtbText.SelectionStart - 1, 1)
-    '        a.AlterForClient()
-    '        Me.e.Add(a)
-    '    End If
-    'End Sub
 
     Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
         e.Handled = True
         Me.clienthandlingthingies.KeyPressadd(e, rtbText.SelectionStart)
-        'Me.rtbText.Text = Me.clienthandlingthingies.getconsolidatedstring()
     End Sub
 
     Private Sub rtbText_PreviewKeyDown(sender As System.Object, e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles rtbText.PreviewKeyDown
@@ -123,6 +104,33 @@ Public Class Editor
     End Sub
     Private Sub SelectAllToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles SelectAllToolStripMenuItem.Click
         selectall()
+    End Sub
+
+    Private Sub HistoryToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles HistoryToolStripMenuItem.Click
+        History.Show()
+    End Sub
+
+    Private Sub FindToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles FindToolStripMenuItem.Click
+        FindAndReplace.Show()
+    End Sub
+
+    Private Sub del()
+        Me.clienthandlingthingies.CutAdd(rtbText.SelectionStart, rtbText.SelectionLength + rtbText.SelectionStart)
+        rtbText.SelectedText = ""
+    End Sub
+
+    Private Sub DeleteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DeleteToolStripMenuItem.Click
+        del()
+    End Sub
+
+    Private Sub DownloadFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DownloadFileToolStripMenuItem.Click
+        Dim filePath As String
+        Try
+            filePath = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.MyDocuments, Startup.ComboBox.Text + ".txt")
+            My.Computer.FileSystem.WriteAllText(filePath, rtbText.Text, True)
+        Catch fileException As Exception
+            Throw fileException
+        End Try
     End Sub
 
 #Region "Chat"
@@ -147,7 +155,6 @@ Public Class Editor
         Chatbox.AppendText(s)
     End Sub
 #End Region
-
 
 #Region "Zoom"
 
@@ -217,14 +224,6 @@ Public Class Editor
 
     Dim somenolescence As String
 
-    'Private Sub Consolidator_DoWork(sender As System.Object, e As System.ComponentModel.DoWorkEventArgs) Handles Consolidator.DoWork
-    '    Try
-    '        somenolescence = clienthandlingthingies.getconsolidatedstring()
-    '    Catch except As ArgumentException
-
-    '    End Try
-    'End Sub
-
     Private Sub consolidatetimer_Tick(sender As System.Object, e As System.EventArgs) Handles consolidatetimer.Tick
         Consolidator.RunWorkerAsync()
     End Sub
@@ -233,17 +232,4 @@ Public Class Editor
         rtbText.Text = somenolescence
     End Sub
 
-    Private Sub DownloadFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DownloadFileToolStripMenuItem.Click
-        Dim filePath As String
-        Try
-            filePath = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.MyDocuments, Startup.ComboBox.Text + ".txt")
-            My.Computer.FileSystem.WriteAllText(filePath, rtbText.Text, True)
-        Catch fileException As Exception
-            Throw fileException
-        End Try
-    End Sub
-
-    Private Sub HistoryToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles HistoryToolStripMenuItem.Click
-        History.Show()
-    End Sub
 End Class
