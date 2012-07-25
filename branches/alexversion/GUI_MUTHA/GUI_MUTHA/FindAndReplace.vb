@@ -2,7 +2,7 @@
 
     Private Sub txtFind_TextChanged(sender As Object, e As EventArgs) Handles txtFind.TextChanged
         Dim count As Integer = Editor.rtbText.Find(txtFind.Text)
-        lblCount.Text = "Found " + count + " occurences"
+        lblCount.Text = "Found " + Str(count) + " occurences"
     End Sub
 
     Private Sub btnReplaceAll_Click(sender As Object, e As EventArgs) Handles btnReplaceAll.Click
@@ -18,7 +18,7 @@
         If Not Editor.rtbText.SelectedText = txtFind.Text Then
             Editor.find(txtFind.Text)
         End If
-        Editor.rtbText.SelectedText = txtReplace.Text
+        Editor.ReplaceSelection(txtReplace.Text)
     End Sub
     Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
         If (Not Editor.rtbText.SelectedText = txtFind.Text) And (Not Editor.rtbText.SelectionStart = Editor.rtbText.TextLength - 1) Then

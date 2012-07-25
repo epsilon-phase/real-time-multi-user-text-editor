@@ -20,7 +20,7 @@
     /// <summary>
     /// Text Transform holder(I.E. the instructions about where the text changes, and what that means).
     /// </summary>
-    [Serializable()]
+    [Serializable]
     public class TextTransformActor : System.Runtime.Serialization.ISerializable
     {
         #region Fields
@@ -37,6 +37,7 @@
         #endregion Fields
 
         #region Constructors
+
         /// <summary>
         /// create a new TextTransform actor which is set to the insert command.
         /// </summary>
@@ -68,6 +69,7 @@
             this._uncompensatedindex= dummy;
             this.insert = appendix;
         }
+
         /// <summary>
         /// New initialization command. Use it to set the TextTranformCollection's initial value to something
         /// </summary>
@@ -78,6 +80,7 @@
             this.insert = initialization;
             this._command = TextTransformType.Initialize;
         }
+
         /// <summary>
         /// Initialization for the sake of deletion
         /// </summary>
@@ -89,6 +92,16 @@
             _command = TextTransformType.Delete;
             _uncompensatedindex = index;
             this.lengthtodelete = length;
+        }
+
+        public TextTransformActor(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+        {
+            this._command = (TextTransformType)info.GetInt32("Command");
+            this._uncompensatedindex = info.GetInt32("index");
+            this.insert = info.GetString("Insert");
+            this.isserver = info.GetBoolean("isserver");
+            this.time = DateTime.FromBinary(info.GetInt64("time"));
+            this.lengthtodelete =info.GetInt32( "DeleteLength");
         }
 
         #endregion Constructors
@@ -150,6 +163,13 @@
         #endregion Properties
 
         #region Methods
+
+        //use datetime
+        public static bool Equals(object x, object y)
+        {
+            return ((TextTransformActor)x).time == ((TextTransformActor)y).time;
+        }
+
         /// <summary>
         /// Convert byte array to TextTransformActor
         /// </summary>
@@ -160,15 +180,7 @@
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             return (TextTransformActor)t.Deserialize(new System.IO.MemoryStream(q));
         }
-        /// <summary>
-        /// Almost in the fashion of java constructors
-        /// </summary>
-        /// <returns>The altered transform</returns>
-        public TextTransformActor GetWithServerAlteration() 
-        {
-            this.AlterforServer();
-            return this;
-        }
+
         public static byte[] GetObjectInBytes(TextTransformActor g)
         {
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
@@ -190,14 +202,14 @@
             this.isserver = true;
             this.time = DateTime.Now;
         }
-        public TextTransformActor(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) 
+
+        public override bool Equals(object x)
         {
-            this._command = (TextTransformType)info.GetInt32("Command");
-            this._uncompensatedindex = info.GetInt32("index");
-            this.insert = info.GetString("Insert");
-            this.isserver = info.GetBoolean("isserver");
-            this.time = DateTime.FromBinary(info.GetInt64("time"));
-            this.lengthtodelete =info.GetInt32( "DeleteLength");
+            if (((TextTransformActor)x).time == this.time)
+            {
+                return true;
+            }
+            else return false;
         }
 
         /// <summary>
@@ -213,6 +225,16 @@
             info.AddValue("index", this._uncompensatedindex);
             info.AddValue("isserver", this.isserver);
             info.AddValue("time", time.ToBinary());
+        }
+
+        /// <summary>
+        /// Almost in the fashion of java constructors
+        /// </summary>
+        /// <returns>The altered transform</returns>
+        public TextTransformActor GetWithServerAlteration()
+        {
+            this.AlterforServer();
+            return this;
         }
 
         #endregion Methods

@@ -4,14 +4,79 @@
         <name>OperationalTransform</name>
     </assembly>
     <members>
+        <member name="M:OperationalTransform.TextTransformCollection.#ctor(System.String)">
+            <summary>
+            tell the text transform collection to start with a certain string;
+            </summary>
+            <param name="initial">Initial string to start with</param>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.PrepareCollectionFromLargeText(System.IO.Stream)">
+            <summary>
+            Transform a text file(given as a stream).
+            </summary>
+            <param name="fileyo"></param>
+            <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.Add(OperationalTransform.TextTransformActor)">
+            <summary>
+            Add new operations to the collection so that the computer can mull over it.
+            </summary>
+            <param name="ax"></param>
+            <remarks>Handles the removal of operations when the count surpasses one hundred,
+            consolidating the value to the initial value</remarks>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.CalculateConsolidatedString">
+            <summary>
+            Calculate the end result of all the transformations that occur to the string
+            </summary>
+            <returns> The Consolidated string</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.CalculateOffsetCursorPosition(System.Int32)">
+            <summary>
+            Provides faculty for calculating the cursor position based on changes.
+            </summary>
+            <param name="Selectionstart">The initial position of the cursor</param>
+            <returns>the corrected position of the cursor</returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.ContainsTransform(OperationalTransform.TextTransformActor)">
+            <summary>
+            Checks Whether a specific transform is inside the pool
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OperationalTransform.TextTransformCollection.CompareTextActorTime(OperationalTransform.TextTransformActor,OperationalTransform.TextTransformActor)">
+            <summary>
+            Comparison between two text actors, allowing proper sorting.
+            </summary>
+            <param name="a">this is foo</param>
+            <param name="b">this is bar</param>
+            <returns>The comparison, context sensitive of course, used to order the list.</returns>
+        </member>
+        <member name="P:OperationalTransform.TextTransformCollection.consolidated">
+            <summary>
+            Consolidates string entry using text actor stuff.
+            </summary>
+        </member>
         <member name="T:OperationalTransform.ClientForSam">
             <summary>
             Client for the sake of Sam, our resident(other than adam) VB coder and GUI designer.
             </summary>
         </member>
-        <member name="F:OperationalTransform.ClientForSam.TransformPool">
+        <member name="F:OperationalTransform.ClientForSam.changed">
             <summary>
-            Not a Queue by any means
+            Has the text been changed?
+            </summary>
+        </member>
+        <member name="F:OperationalTransform.ClientForSam.a">
+            <summary>
+            Send and recieve threads
+            </summary>
+        </member>
+        <member name="F:OperationalTransform.ClientForSam.b">
+            <summary>
+            Send and recieve threads
             </summary>
         </member>
         <member name="F:OperationalTransform.ClientForSam.server">
@@ -22,6 +87,11 @@
         <member name="F:OperationalTransform.ClientForSam.thingy">
             <summary>
             Some... thingy... of a kind
+            </summary>
+        </member>
+        <member name="F:OperationalTransform.ClientForSam.TransformPool">
+            <summary>
+            Not a Queue by any means
             </summary>
         </member>
         <member name="M:OperationalTransform.ClientForSam.#ctor(System.Net.IPAddress)">
@@ -51,6 +121,20 @@
             <param name="selectionstart">Selection where the text was cut from</param>
             <param name="selectionend">Selection where the cut ended.</param>
         </member>
+        <member name="M:OperationalTransform.ClientForSam.Generatereplace(System.Int32,System.Int32,System.String)">
+            <summary>
+            generate instructions to replace text that is currently selected
+            </summary>
+            <param name="selectionstart"></param>
+            <param name="selectionlength"></param>
+            <param name="insertion"></param>
+        </member>
+        <member name="M:OperationalTransform.ClientForSam.getconsolidatedstring">
+            <summary>
+            gets the calculated consolidated string
+            </summary>
+            <returns>The consolidated string</returns>
+        </member>
         <member name="M:OperationalTransform.ClientForSam.KeyPressadd(System.Windows.Forms.KeyPressEventArgs,System.Int32)">
             <summary>
             Call from rtbtext keypress event.
@@ -61,7 +145,7 @@
             <param name="q">the keypress arguments</param>
             <param name="selectionindex">index of the cursor</param>
         </member>
-        <member name="M:OperationalTransform.ClientForSam.KeyPressDelete(System.Windows.Forms.PreviewKeyDownEventArgs,System.Int32)">
+        <member name="M:OperationalTransform.ClientForSam.KeyPressDelete(System.Windows.Forms.PreviewKeyDownEventArgs,System.Int32,System.Int32)">
             <summary>
             Add text Transformation for backspace/Delete
             Call from rtbtext.previewkeydown(which is important)
@@ -71,8 +155,7 @@
         </member>
         <member name="M:OperationalTransform.ClientForSam.Start">
             <summary>
-            Start listening, handing everything off to two ne
-            \w threads.
+            Start listening, handing everything off to two new threads.
             </summary>
         </member>
         <member name="M:OperationalTransform.ClientForSam.RecieveandConsolidate">
@@ -80,11 +163,12 @@
             Consolidate thread, listen for messages, and change the "changed" flag to notify the user's thingy.
             </summary>
         </member>
-        <member name="M:OperationalTransform.ClientForSam.getconsolidatedstring">
+        <member name="M:OperationalTransform.ClientForSam.AddParenthesis(System.Int32,System.Int32)">
             <summary>
-            gets the calculated consolidated string
+            Wrap selected text in parenthesis
             </summary>
-            <returns>The consolidated string</returns>
+            <param name="selectionstart">the index of the start of the selection</param>
+            <param name="selectionlength">the length of the selection</param>
         </member>
         <member name="T:OperationalTransform.TextTransformActor">
             <summary>
@@ -126,12 +210,6 @@
             <param name="q">Array of Bytes</param>
             <returns>the equivalent(or something like that) TexttransformActor</returns>
         </member>
-        <member name="M:OperationalTransform.TextTransformActor.GetWithServerAlteration">
-            <summary>
-            Almost in the fashion of java constructors
-            </summary>
-            <returns>The altered transform</returns>
-        </member>
         <member name="M:OperationalTransform.TextTransformActor.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Obtain byte array to make it better
@@ -139,52 +217,11 @@
             <param name="info">Reference object to add information to.</param>
             <param name="context">Not a clue</param>
         </member>
-        <member name="M:OperationalTransform.TextTransformCollection.#ctor(System.String)">
+        <member name="M:OperationalTransform.TextTransformActor.GetWithServerAlteration">
             <summary>
-            tell the text transform collection to start with a certain string;
+            Almost in the fashion of java constructors
             </summary>
-            <param name="initial">Initial string to start with</param>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.PrepareCollectionFromLargeText(System.IO.Stream)">
-            <summary>
-            Transform a text file(given as a stream).
-            </summary>
-            <param name="fileyo"></param>
-            <returns>Representation of text file separated into pieces less than 1024 bytes long</returns>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.CalculateConsolidatedString">
-            <summary>
-            Complicated procedure, should not call unless necessary
-            goes through list of text transformations and applies them, calculating the necessary offsets to do so.
-            </summary>
-            <returns> The Consolidated string</returns>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.ContainsTransform(OperationalTransform.TextTransformActor)">
-            <summary>
-            Checks Whether a specific transform is inside the pool
-            </summary>
-            <param name="t"></param>
-            <returns></returns>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.CompareTextActorTime(OperationalTransform.TextTransformActor,OperationalTransform.TextTransformActor)">
-            <summary>
-            Comparison between two text actors, allowing proper sorting.
-            </summary>
-            <param name="a">this is foo</param>
-            <param name="b">this is bar</param>
-            <returns>The comparison, context sensitive of course, used to order the list.</returns>
-        </member>
-        <member name="M:OperationalTransform.TextTransformCollection.CalculateOffsetCursorPosition(System.Int32)">
-            <summary>
-            Provides faculty for calculating the cursor position based on changes.
-            </summary>
-            <param name="Selectionstart">The initial position of the cursor</param>
-            <returns>the corrected position of the cursor</returns>
-        </member>
-        <member name="P:OperationalTransform.TextTransformCollection.consolidated">
-            <summary>
-            Consolidates string entry using text actor stuff.
-            </summary>
+            <returns>The altered transform</returns>
         </member>
     </members>
 </doc>
