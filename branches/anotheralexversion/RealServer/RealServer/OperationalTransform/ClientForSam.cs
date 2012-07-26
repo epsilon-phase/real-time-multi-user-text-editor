@@ -256,7 +256,10 @@
         /// <param name="selectionlength">the length of the selection</param>
         public void AddParenthesis(int selectionstart, int selectionlength) 
         {
-            TextTransformActor begin = new TextTransformActor(selectionstart, "("), end = new TextTransformActor(1+selectionstart + selectionlength, ")");
+            //Beginning of the selection(or at least the command to insert a parenthesis there
+            TextTransformActor begin = new TextTransformActor(selectionstart, "("),
+                //End of the selection(or possibly offset by 1)
+                end = new TextTransformActor(1+selectionstart + selectionlength, ")");
             thingy.Enqueue(begin);
             thingy.Enqueue(end);
         }
@@ -276,7 +279,8 @@
                         d = TextTransformActor.GetObjectInBytes(Holder);
                         
                         server.Send(d);
-                        System.Threading.Thread.Sleep(5);
+                        //wait after each send, it often seems to cause an issue if there isn't a waiting period in between.
+                        System.Threading.Thread.Sleep(10);
                     }
                     catch (System.Net.Sockets.SocketException serverproblem)
                     {//end the thread quickly when there is a socket error.

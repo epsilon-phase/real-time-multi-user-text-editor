@@ -36,7 +36,10 @@
                         _recptionsocket.Receive(buffer);
                         messages.Enqueue(buffer);
                     }
-                    catch (SocketException e) { r.Abort(); return; }
+                    catch (SocketException e) { 
+                        r.Abort();
+                        return;
+                    }
                 }
             }
 
@@ -57,7 +60,7 @@
                         Console.WriteLine("Message recieved");
                         Console.WriteLine("Message contains {0} command", e.Command);
                         if(e.Command==OperationalTransform.TextTransformType.Insert)
-                        Console.WriteLine(e.Insert);
+                            Console.WriteLine(e.Insert);
                     }
                     else
                     {//Might reduce the processor load a bit
