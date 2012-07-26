@@ -30,14 +30,11 @@ Partial Class Editor
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DownloadFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.FindToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FindAndReplaceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
@@ -48,13 +45,7 @@ Partial Class Editor
         Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GoAwayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WeCantHelpYouToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GetALifeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.backButton = New System.Windows.Forms.Button()
         Me.PanelDown = New System.Windows.Forms.TableLayoutPanel()
         Me.Send = New System.Windows.Forms.Button()
@@ -80,7 +71,6 @@ Partial Class Editor
         Me.rtbText.Name = "rtbText"
         Me.rtbText.Size = New System.Drawing.Size(909, 571)
         Me.rtbText.TabIndex = 0
-        Me.rtbText.Text = ""
         '
         'closeButton
         '
@@ -94,7 +84,7 @@ Partial Class Editor
         '
         'MenuStrip
         '
-        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.ViewToolStripMenuItem, Me.HelpToolStripMenuItem})
+        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.ViewToolStripMenuItem})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
         Me.MenuStrip.Size = New System.Drawing.Size(933, 24)
@@ -111,65 +101,49 @@ Partial Class Editor
         'DownloadFileToolStripMenuItem
         '
         Me.DownloadFileToolStripMenuItem.Name = "DownloadFileToolStripMenuItem"
-        Me.DownloadFileToolStripMenuItem.Size = New System.Drawing.Size(149, 22)
+        Me.DownloadFileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.DownloadFileToolStripMenuItem.Text = "Download File"
         '
         'EditToolStripMenuItem
         '
-        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.ToolStripSeparator2, Me.SelectAllToolStripMenuItem, Me.ToolStripSeparator1, Me.FindToolStripMenuItem})
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopyToolStripMenuItem, Me.CutToolStripMenuItem, Me.PasteToolStripMenuItem, Me.SelectAllToolStripMenuItem, Me.FindAndReplaceToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
         Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.EditToolStripMenuItem.Text = "Edit"
         '
-        'CutToolStripMenuItem
-        '
-        Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
-        Me.CutToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.CutToolStripMenuItem.Text = "Cut                Ctrl+X"
-        '
         'CopyToolStripMenuItem
         '
         Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.CopyToolStripMenuItem.Text = "Copy             Ctrl+C"
+        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.CopyToolStripMenuItem.Text = "Copy"
+        '
+        'CutToolStripMenuItem
+        '
+        Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
+        Me.CutToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.CutToolStripMenuItem.Text = "Cut"
         '
         'PasteToolStripMenuItem
         '
         Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
-        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.PasteToolStripMenuItem.Text = "Paste             Ctrl+V"
-        '
-        'DeleteToolStripMenuItem
-        '
-        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.DeleteToolStripMenuItem.Text = "Delete                 Del"
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(173, 6)
+        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.PasteToolStripMenuItem.Text = "Paste"
         '
         'SelectAllToolStripMenuItem
         '
         Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
-        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.SelectAllToolStripMenuItem.Text = "Select All      Ctrl+A"
+        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.SelectAllToolStripMenuItem.Text = "Select All"
         '
-        'ToolStripSeparator1
+        'FindAndReplaceToolStripMenuItem
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(173, 6)
-        '
-        'FindToolStripMenuItem
-        '
-        Me.FindToolStripMenuItem.Name = "FindToolStripMenuItem"
-        Me.FindToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
-        Me.FindToolStripMenuItem.Text = "Find              Ctrl+F"
+        Me.FindAndReplaceToolStripMenuItem.Name = "FindAndReplaceToolStripMenuItem"
+        Me.FindAndReplaceToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.FindAndReplaceToolStripMenuItem.Text = "Find and Replace"
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.HistoryToolStripMenuItem, Me.ChatToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ChatToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.ViewToolStripMenuItem.Text = "View"
@@ -229,52 +203,11 @@ Partial Class Editor
         Me.ToolStripMenuItem10.Size = New System.Drawing.Size(102, 22)
         Me.ToolStripMenuItem10.Text = "200%"
         '
-        'HistoryToolStripMenuItem
-        '
-        Me.HistoryToolStripMenuItem.Name = "HistoryToolStripMenuItem"
-        Me.HistoryToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.HistoryToolStripMenuItem.Text = "Changelog"
-        '
         'ChatToolStripMenuItem
         '
         Me.ChatToolStripMenuItem.Name = "ChatToolStripMenuItem"
         Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ChatToolStripMenuItem.Text = "Chat"
-        '
-        'HelpToolStripMenuItem
-        '
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GoAwayToolStripMenuItem, Me.WeCantHelpYouToolStripMenuItem, Me.GetALifeToolStripMenuItem, Me.WHYAREYOUSTILLREADINGToolStripMenuItem})
-        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
-        Me.HelpToolStripMenuItem.Text = "Help"
-        '
-        'GoAwayToolStripMenuItem
-        '
-        Me.GoAwayToolStripMenuItem.Enabled = False
-        Me.GoAwayToolStripMenuItem.Name = "GoAwayToolStripMenuItem"
-        Me.GoAwayToolStripMenuItem.Size = New System.Drawing.Size(243, 22)
-        Me.GoAwayToolStripMenuItem.Text = "Go Away!"
-        '
-        'WeCantHelpYouToolStripMenuItem
-        '
-        Me.WeCantHelpYouToolStripMenuItem.Enabled = False
-        Me.WeCantHelpYouToolStripMenuItem.Name = "WeCantHelpYouToolStripMenuItem"
-        Me.WeCantHelpYouToolStripMenuItem.Size = New System.Drawing.Size(243, 22)
-        Me.WeCantHelpYouToolStripMenuItem.Text = "We Can't Help You!"
-        '
-        'GetALifeToolStripMenuItem
-        '
-        Me.GetALifeToolStripMenuItem.Enabled = False
-        Me.GetALifeToolStripMenuItem.Name = "GetALifeToolStripMenuItem"
-        Me.GetALifeToolStripMenuItem.Size = New System.Drawing.Size(243, 22)
-        Me.GetALifeToolStripMenuItem.Text = "Get A Life!"
-        '
-        'WHYAREYOUSTILLREADINGToolStripMenuItem
-        '
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem.Enabled = False
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem.Name = "WHYAREYOUSTILLREADINGToolStripMenuItem"
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem.Size = New System.Drawing.Size(243, 22)
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem.Text = "WHY ARE YOU STILL READING!?"
         '
         'backButton
         '
@@ -357,7 +290,6 @@ Partial Class Editor
         '
         Me.xBox2.BackColor = System.Drawing.SystemColors.Control
         Me.xBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.xBox2.Cursor = System.Windows.Forms.Cursors.Default
         Me.xBox2.Location = New System.Drawing.Point(3, 3)
         Me.xBox2.Name = "xBox2"
         Me.xBox2.ReadOnly = True
@@ -374,7 +306,6 @@ Partial Class Editor
         Me.Chatbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
         Me.Chatbox.Size = New System.Drawing.Size(199, 149)
         Me.Chatbox.TabIndex = 13
-        Me.Chatbox.Text = ""
         '
         'PanelUP
         '
@@ -389,7 +320,6 @@ Partial Class Editor
         '
         Me.xBox.BackColor = System.Drawing.SystemColors.Control
         Me.xBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.xBox.Cursor = System.Windows.Forms.Cursors.Default
         Me.xBox.Location = New System.Drawing.Point(3, 3)
         Me.xBox.Name = "xBox"
         Me.xBox.ReadOnly = True
@@ -415,8 +345,7 @@ Partial Class Editor
         '
         'consolidatetimer
         '
-        Me.consolidatetimer.Enabled = True
-        Me.consolidatetimer.Interval = 300
+        Me.consolidatetimer.Interval = 10
         '
         'Editor
         '
@@ -438,7 +367,7 @@ Partial Class Editor
         Me.MinimizeBox = False
         Me.Name = "Editor"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Editor                                        "
+        Me.Text = "Text Editor"
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
         Me.PanelDown.ResumeLayout(False)
@@ -455,16 +384,11 @@ Partial Class Editor
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ViewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DownloadFileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SelectAllToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents GoAwayToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents WeCantHelpYouToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents GetALifeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents WHYAREYOUSTILLREADINGToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem4 As System.Windows.Forms.ToolStripMenuItem
@@ -488,10 +412,6 @@ Partial Class Editor
     Friend WithEvents Chatbox As System.Windows.Forms.RichTextBox
     Friend WithEvents Consolidator As System.ComponentModel.BackgroundWorker
     Friend WithEvents consolidatetimer As System.Windows.Forms.Timer
-    Friend WithEvents HistoryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents FindToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FindAndReplaceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

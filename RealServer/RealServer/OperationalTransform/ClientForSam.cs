@@ -5,30 +5,42 @@
     using System.Linq;
     using System.Text;
     using System.Windows.Forms;
+
     /// <summary>
-    /// Client fo rthe sake of Sam, our resident(other than adam) VB coder and GUI designer.
+    /// Client for the sake of Sam, our resident(other than adam) VB coder and GUI designer.
     /// </summary>
     public class ClientForSam
     {
         #region Fields
-
-        System.Threading.Thread a, b;
         /// <summary>
-        /// Not a Queue by any means
+        /// Has the text been changed?
         /// </summary>
-        TextTransformCollection queue;
+        public Boolean changed;
+        /// <summary>
+        /// Send and recieve threads
+        /// </summary>
+        System.Threading.Thread a, b;
+        private string consolidated;
+
         /// <summary>
         /// Server socket to be sure boss
         /// </summary>
         private System.Net.Sockets.Socket server;
+
         /// <summary>
         /// Some... thingy... of a kind
         /// </summary>
-        private Queue<TextTransformActor> thingy;
+        private System.Collections.Concurrent.ConcurrentQueue<TextTransformActor> thingy;
+
+        /// <summary>
+        /// Not a Queue by any means
+        /// </summary>
+        TextTransformCollection TransformPool;
 
         #endregion Fields
 
         #region Constructors
+
         /// <summary>
         /// Create new client with the target IP address as a goal
         /// </summary>
@@ -37,10 +49,13 @@
         /// <param name="target">the IP address of the target server.</param>
         public ClientForSam(System.Net.IPAddress target)
         {
-            thingy = new Queue<TextTransformActor>();
+            thingy = new System.Collections.Concurrent.ConcurrentQueue<TextTransformActor>();
             //intialize the text transform collection into a non server profile
-            queue = new TextTransformCollection(false);
-            this.server = new System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.IPv4);
+            TransformPool = new TextTransformCollection(false);
+            this.server = new System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork,
+                System.Net.Sockets.SocketType.Stream,
+                System.Net.Sockets.ProtocolType.IP);
+            this.server.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.ReceiveBuffer, 512);
             this.server.Connect(new System.Net.IPEndPoint(target, 6000));
         }
 
@@ -60,6 +75,14 @@
         }
 
         /// <summary>
+        /// Close connection to the server Once the client is done
+        /// </summary>
+        public void CloseConnection()
+        {
+            this.server.Close();
+        }
+
+        /// <summary>
         /// add text transformation for the "cut" operation
         /// </summary>
         /// <param name="selectionstart">Selection where the text was cut from</param>
@@ -67,8 +90,44 @@
         public void CutAdd(int selectionstart, int selectionend)
         {
             TextTransformActor t = new TextTransformActor(selectionstart, selectionend);
-            queue.Add(t);
             this.thingy.Enqueue(t);
+        }
+        /// <summary>
+        /// generate instructions to replace text that is currently selected
+        /// </summary>
+        /// <param name="selectionstart"></param>
+        /// <param name="selectionlength"></param>
+        /// <param name="insertion"></param>
+        public void Generatereplace(int selectionstart, int selectionlength,string insertion)
+        {
+            TextTransformActor deletion = new TextTransformActor(selectionstart, selectionlength);
+            TextTransformActor insert = new TextTransformActor(selectionstart, insertion);
+            thingy.Enqueue(deletion);
+            thingy.Enqueue(insert);
+        }
+        public void AddDelete(int selectionstart, int selectionlength)
+        {
+            TextTransformActor e = new TextTransformActor(selectionstart, selectionlength);
+            thingy.Enqueue(e);
+        }
+        public void AddInsert(int selectionstart, string insertion) 
+        {
+            TextTransformActor e = new TextTransformActor(selectionstart, insertion);
+            thingy.Enqueue(e);
+        }
+        /// <summary>
+        /// gets the calculated consolidated string
+        /// </summary>
+        /// <returns>The consolidated string</returns>
+        public string getconsolidatedstring()
+        {
+            this.changed = false;
+                return consolidated;
+        }
+
+        public int GetOffsetCursorPosition(int selectionstart)
+        {
+            return TransformPool.CalculateOffsetCursorPosition(selectionstart);
         }
 
         /// <summary>
@@ -82,8 +141,11 @@
         public void KeyPressadd(System.Windows.Forms.KeyPressEventArgs q, int selectionindex)
         {
             TextTransformActor req;
-            req = new TextTransformActor(selectionindex, q.KeyChar);
-            queue.Add(req);
+            req = new TextTransformActor(selectionindex, q.KeyChar.ToString());
+
+            //just to ensure that the datetime is registered correctly. which really shouldn't be needed now that I think about it.
+            req.AlterForClient();
+            //queue.Add(req);
             thingy.Enqueue(req);
         }
 
@@ -93,79 +155,140 @@
         /// </summary>
         /// <param name="key">The keypress event</param>
         /// <param name="SelectionIndex">The index of the cursor</param>
-        public void KeyPressDelete(System.Windows.Forms.PreviewKeyDownEventArgs key,int SelectionIndex)
+        public void KeyPressDelete(System.Windows.Forms.PreviewKeyDownEventArgs key,int SelectionIndex,int selectionlength)
         {
-            TextTransformActor req;
+            TextTransformActor req=null;
             if (key.KeyCode == Keys.Back)
             {//Backspace, delete the character before the cursor.
-                req = new TextTransformActor(SelectionIndex - 1, 1);
+                
+                    req = new TextTransformActor(SelectionIndex - 1, 1);
                 req.AlterForClient();
-                queue.Add(req);
-                thingy.Enqueue(req);
+                //Add to the list of things to send to the server
+                
             }
-            if (key.KeyCode == Keys.Delete)
-            {//Delete key, deletes the character in front of the cursor
-                req = new TextTransformActor(SelectionIndex, 1);
+            else if (key.KeyCode == Keys.Delete)
+            {
+                //Delete key, deletes the character in front of the cursor
+                req = new TextTransformActor(SelectionIndex, selectionlength);
                 req.AlterForClient();
-                queue.Add(req);
-                thingy.Enqueue(req);
+                if (selectionlength > 0)
+                    req = new TextTransformActor(SelectionIndex, selectionlength);
+                else
+                    req = new TextTransformActor(SelectionIndex, 1);
+                //Add to the list of things to send to hte server
+                
             }
+            else if (key.KeyCode == Keys.Enter)
+            {
+                req = new TextTransformActor(SelectionIndex, "\n");
+                
+            }
+            if(req!=null)
+                thingy.Enqueue(req);
         }
 
+        //Handle pasting things
         public void PasteAdd(int selectionstart, string insertedtext)
         {
             TextTransformActor r;
-            if (insertedtext.Length <= 900)
+            //nine hundred bytes should prevent 1024 byte long packets from being too little
+            if (insertedtext.Length <= 100)
             {
                 r = new TextTransformActor(selectionstart, insertedtext);
-                queue.Add(r);
+                thingy.Enqueue(r);
             }
-            else 
+            else
             {
-                string[] e = new string[insertedtext.Length / 900];
-                for (int i = 0; i * 900 <= insertedtext.Length; i++) 
+
+                for (int i = 0; i < insertedtext.Length; i++) 
                 {
-                    e[i]=insertedtext.Substring(0 + i * 900, 899 + i * 900);
-                    
-                }
-                for (int i = 0; i < e.Length; i++)
-                {
-                    r = new TextTransformActor(selectionstart+i * 900,e[i]);
-                    this.queue.Add(r);
+                    thingy.Enqueue(new TextTransformActor(selectionstart+i,insertedtext[i]));
+                    System.Threading.Thread.Sleep(10);
                 }
             }
         }
-
-
+        
+        /// <summary>
+        /// Start listening, handing everything off to two new threads.
+        /// </summary>
         public void Start()
         {
             a = new System.Threading.Thread(new System.Threading.ThreadStart(SendTextTransformation));
             b = new System.Threading.Thread(new System.Threading.ThreadStart(RecieveandConsolidate));
             a.Start();
             b.Start();
+            
         }
 
+        /// <summary>
+        /// Consolidate thread, listen for messages, and change the "changed" flag to notify the user's thingy.
+        /// </summary>
         private void RecieveandConsolidate()
         {
-            byte[] buffery=new byte[1024];
+            byte[] buffery=new byte[512];
             while (true)
-            {
-                server.Receive(buffery);
-                lock(queue)
-                    queue.Add(TextTransformActor.GetObjectFromBytes(buffery));
+            {//Clear buffer(hopefully)
+                
+                try
+                {
+                    //Blocking call, minimizes the amount of work that the thread does needlessly,
+                    //now only if I could find something like it for the queue
+                    server.Receive(buffery);
+                    lock (TransformPool)
+                    {
+                        TransformPool.Add(TextTransformActor.GetObjectFromBytes(buffery));
+                        consolidated = TransformPool.CalculateConsolidatedString();
+                        changed = true;
+                    }
+                }
+                catch (System.Net.Sockets.SocketException e)
+                {
+                    MessageBox.Show("The server has dropped your connection");
+                    //escape the loop, allowing the thread to end.
+                    return;
+                }
             }
         }
+        /// <summary>
+        /// Wrap selected text in parenthesis
+        /// </summary>
+        /// <param name="selectionstart">the index of the start of the selection</param>
+        /// <param name="selectionlength">the length of the selection</param>
+        public void AddParenthesis(int selectionstart, int selectionlength) 
+        {
+            //Beginning of the selection(or at least the command to insert a parenthesis there
+            TextTransformActor begin = new TextTransformActor(selectionstart, "("),
+                //End of the selection(or possibly offset by 1)
+                end = new TextTransformActor(1+selectionstart + selectionlength, ")");
+            thingy.Enqueue(begin);
+            thingy.Enqueue(end);
+        }
+
         private void SendTextTransformation()
         {
+            byte[] d;
+            TextTransformActor Holder;
             while (true)
             {
                 while (thingy.Count > 0)
                 {
-                    server.Send(TextTransformActor.GetObjectInBytes(this.thingy.Dequeue()));
+                    thingy.TryDequeue(out Holder);
+                    try
+                    {
+                        
+                        d = TextTransformActor.GetObjectInBytes(Holder);
+                        
+                        server.Send(d);
+                        //wait after each send, it often seems to cause an issue if there isn't a waiting period in between.
+                        System.Threading.Thread.Sleep(10);
+                    }
+                    catch (System.Net.Sockets.SocketException serverproblem)
+                    {//end the thread quickly when there is a socket error.
+                        return;
+                    }
                 }
             }
         }
-
         #endregion Methods
     }
 }

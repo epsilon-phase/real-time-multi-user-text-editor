@@ -2,7 +2,6 @@
 Imports System.IO
 Imports System.Text
 
-
 Public Class Startup
 
     #Region "Fields"
@@ -15,6 +14,7 @@ Public Class Startup
     #End Region 'Fields
 
     #Region "Methods"
+
     Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
         FileName = ComboBox.Text
         Dim fs As FileStream = File.Create("C:\Users\user\AppData\Local\Temp\Doc.txt")
@@ -42,6 +42,7 @@ Public Class Startup
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
         Editor.Close()
         Me.Close()
+        Application.Exit()
     End Sub
 
     Private Sub ipText_TextChanged(sender As System.Object, e As System.EventArgs) Handles ipText.TextChanged
