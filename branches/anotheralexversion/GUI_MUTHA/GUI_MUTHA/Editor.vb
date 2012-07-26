@@ -19,16 +19,14 @@ Public Class Editor
         NamePerson = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Name.txt")
         lblNames.Text = NamePerson
         IP = Startup.IP
+
         'Parse the IPaddress
         Try
             Me.clienthandlingthingies = New OperationalTransform.ClientForSam(System.Net.IPAddress.Parse(IP))
-            Dim ThreadHandle As New System.Threading.ThreadStart(AddressOf clienthandlingthingies.Start)
-            'if it turns out to be valid, make the thread instance
-            go = New System.Threading.Thread(ThreadHandle)
-            'start the thread
-            go.Start()
+            clienthandlingthingies.Start()
+
             d = New ChatServerLib.ChatClient(IP, 3410)
-            d.start(New ChatServerLib.MessageRecievedListener(AddressOf messagerecieved))
+            d.start(New ChatServerLib.MessageRecievedListener(AddressOf messagerecieved),NamePerson)
 
             MessageBox.Show("Connected Successfully")
             'start the timer
@@ -40,6 +38,7 @@ Public Class Editor
         End Try
         'For Alex'
         'Me.e = New OperationalTransform.TextTransformCollection()
+        Startup.Dispose()
     End Sub
     Sub messagerecieved(msg As String)
         Me.AppendText(msg)
@@ -58,8 +57,8 @@ Public Class Editor
         rtbText.Text = ""
         My.Computer.FileSystem.DeleteFile("C:\Users\user\AppData\Local\Temp\Doc.txt")
         Startup.Show()
-        Me.Hide()
-        Me.Close()
+        FindAndReplace.Dispose()
+        Me.Dispose()
     End Sub
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
         Startup.Close()
@@ -82,7 +81,6 @@ Public Class Editor
     Private Sub paste()
         'Add clipboard contents to the client buffery thingy
         Me.clienthandlingthingies.PasteAdd(rtbText.SelectionStart, My.Computer.Clipboard.GetText())
-        Dim text As String = My.Computer.Clipboard.GetText()
         'rtbText.SelectedText = text
     End Sub
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
@@ -116,12 +114,6 @@ Public Class Editor
             Case Keys.Delete
             Case Keys.Back
                 e.IsInputKey = False
-                'Case Keys.Left
-                'Case Keys.Right
-                'Case Keys.Up
-                'Case Keys.Down
-                '    e.IsInputKey = False
-
             Case Else
                 e.IsInputKey = True
         End Select
@@ -269,10 +261,10 @@ Public Class Editor
 
 
                 Case Keys.Enter
-                    rtbText.SelectionStart = selectionstore + 2
+                    rtbText.SelectionStart = selectionstore + 1
                 Case Else
                     'seems to work just fine.
-                    rtbText.SelectionStart = selectionstore + 1
+                    rtbText.SelectionStart = selectionstore
 
             End Select
         Catch ex As NullReferenceException
@@ -284,8 +276,7 @@ Public Class Editor
     Private Sub Editor_FormClosed(sender As System.Object, e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
         'Closes socket connection
         clienthandlingthingies.CloseConnection()
-        Startup.Close()
-        Me.Close()
+        Application.Exit()
     End Sub
 
     Private Sub rtbText_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles rtbText.KeyPress
@@ -293,14 +284,22 @@ Public Class Editor
     End Sub
 
     Private Sub rtbText_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles rtbText.KeyDown
+
         Select Case e.KeyCode
             Case Keys.Delete
+                e.SuppressKeyPress = True
             Case Keys.Back
+                e.SuppressKeyPress = True
+
+            Case Keys.Enter
                 e.SuppressKeyPress = True
 
             Case Else
                 e.SuppressKeyPress = False
         End Select
+        If (e.Modifiers = Keys.Control) Then
+            e.SuppressKeyPress = True
+        End If
     End Sub
 
     Private Sub DownloadFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DownloadFileToolStripMenuItem.Click
@@ -309,12 +308,12 @@ Public Class Editor
             Dim a As New SaveFileDialog()
             a.ShowDialog()
             FileName = a.FileName
+
             re = File.Create(FileName)
+            a.Dispose()
         Else
             re = File.Create(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\" + FileName)
         End If
-
-
         Dim q() As Byte
 
         q = Encoding.UTF8.GetBytes(rtbText.Text.ToCharArray())

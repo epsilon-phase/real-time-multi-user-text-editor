@@ -26,7 +26,7 @@
             public void StartListening()
             {
                 Console.WriteLine("Listening to client");
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[512];
                 System.Threading.Thread r = new System.Threading.Thread(new System.Threading.ThreadStart(this.ProcessPacket));
                 r.Start();
                 while (true)
@@ -109,8 +109,10 @@
                             //If it decodes, and dequeues a message properly, then send it back to the client.
                             if (_pendingmessage.TryDequeue(out ack))
                             {
+                                _transmissionsocket.Blocking = true;
                                 _transmissionsocket.Send(ack);
                                 Console.WriteLine("Sending Message to Client");
+                                System.Threading.Thread.Sleep(3);
                             }
                             else
                             {
