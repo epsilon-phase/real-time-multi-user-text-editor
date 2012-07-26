@@ -105,7 +105,16 @@
             thingy.Enqueue(deletion);
             thingy.Enqueue(insert);
         }
-
+        public void AddDelete(int selectionstart, int selectionlength)
+        {
+            TextTransformActor e = new TextTransformActor(selectionstart, selectionlength);
+            thingy.Enqueue(e);
+        }
+        public void AddInsert(int selectionstart, string insertion) 
+        {
+            TextTransformActor e = new TextTransformActor(selectionstart, insertion);
+            thingy.Enqueue(e);
+        }
         /// <summary>
         /// gets the calculated consolidated string
         /// </summary>

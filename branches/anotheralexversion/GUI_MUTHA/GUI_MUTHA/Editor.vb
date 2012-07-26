@@ -19,7 +19,7 @@ Public Class Editor
         NamePerson = My.Computer.FileSystem.ReadAllText("C:\Users\user\AppData\Local\Temp\Name.txt")
         lblNames.Text = NamePerson
         IP = Startup.IP
-
+        Me.FindAndReplaceToolStripMenuItem.Enabled = False
         'Parse the IPaddress
         Try
             Me.clienthandlingthingies = New OperationalTransform.ClientForSam(System.Net.IPAddress.Parse(IP))
@@ -80,7 +80,14 @@ Public Class Editor
     End Sub
     Private Sub paste()
         'Add clipboard contents to the client buffery thingy
-        Me.clienthandlingthingies.PasteAdd(rtbText.SelectionStart, My.Computer.Clipboard.GetText())
+        If (rtbText.SelectionLength = 0) Then
+            Me.clienthandlingthingies.PasteAdd(rtbText.SelectionStart, My.Computer.Clipboard.GetText())
+        Else
+            clienthandlingthingies.AddDelete(rtbText.SelectionStart, rtbText.SelectionLength)
+            Me.clienthandlingthingies.PasteAdd(rtbText.SelectionStart, My.Computer.Clipboard.GetText())
+        End If
+
+
         'rtbText.SelectedText = text
     End Sub
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
@@ -331,9 +338,11 @@ Public Class Editor
             'TODO add more hotkeys here
         End If
     End Sub
+
     Public Sub ReplaceSelection(ByVal replacer As String)
         clienthandlingthingies.Generatereplace(rtbText.SelectionStart, rtbText.SelectionLength, replacer)
     End Sub
+
     Private Sub addParentheses()
         'Dim text As String = rtbText.SelectedText
         Dim startex As Integer = rtbText.SelectionStart
