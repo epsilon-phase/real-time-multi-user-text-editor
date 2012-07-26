@@ -112,7 +112,8 @@
                                 _transmissionsocket.Blocking = true;
                                 _transmissionsocket.Send(ack);
                                 Console.WriteLine("Sending Message to Client");
-                                System.Threading.Thread.Sleep(3);
+                                //Should once again help negate the possibility of packet clashing.
+                                System.Threading.Thread.Sleep(5);
                             }
                             else
                             {
@@ -120,7 +121,7 @@
                                 Console.WriteLine("Failed to Dequeue message to send stack properly.");
                             }
                         }
-                        else {
+                        else {//This on the other hoof is more likely to cause the thread to take up a great deal less processing power
                             System.Threading.Thread.Sleep(5);
                         }
                     }

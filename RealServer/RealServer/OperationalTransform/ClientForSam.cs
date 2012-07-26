@@ -276,7 +276,7 @@
                         d = TextTransformActor.GetObjectInBytes(Holder);
                         
                         server.Send(d);
-                        
+                        System.Threading.Thread.Sleep(5);
                     }
                     catch (System.Net.Sockets.SocketException serverproblem)
                     {//end the thread quickly when there is a socket error.
