@@ -10,9 +10,10 @@
         #region Fields
 
         readonly OperationalTransform.TextTransformActor qw;
-
+        //Todo, make a list of all of the events(rather than a list for each client) and a bitarray to figure out whether or not a client has recieved the event
         //associates the client to a list of operations, allowing the server to not send the operations to the client that send the message in the first place;
         System.Collections.Generic.List<List<OperationalTransform.TextTransformActor>> absurdity;
+        
         List<RealServer.SocketHandler.clienthandler> clients;
         System.Threading.Thread ClientSendthread;
         List<System.Threading.Thread> clientthreads;
@@ -68,7 +69,7 @@
                 clientthreads[clientthreads.Count - 1].Start();
             }
         }
-
+        
         /// <summary>
         /// Listen to the clients and add to the queue whenever necessary.
         /// </summary>
@@ -109,7 +110,6 @@
                 }*/
             }
         }
-
         /// <summary>
         /// Continually enumerates through the clients and sends them packets that they don't have
         /// </summary>
@@ -142,10 +142,7 @@
                                         Console.WriteLine("Client has had message added correctly");
                                         Console.WriteLine("Client {0} added change to Client {1}", a, v);
                                     }
-                                    else
-                                    {
-                                        System.Threading.Thread.Sleep(5);
-                                    }
+                                    
                                 }
                             }
                         }
