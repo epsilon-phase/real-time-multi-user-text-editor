@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="scintilla">
+</Property><Property Name="Solution File" Value="C:\Users\user\Desktop\real-time-multi-user-text-editor\scintilla321\scintilla\win32\scintilla.sln">
+</Property><Property Name="Date" Value="Wednesday, July 25, 2012">
+</Property><Property Name="Time" Value="14:59:40 PM">
+</Property></Properties><Event ErrorLevel="0" Project="scintilla" Source="scintilla.mak" Description="Converting project file 'C:\Users\user\Desktop\real-time-multi-user-text-editor\scintilla321\scintilla\win32\scintilla.mak'.">
+</Event><Event ErrorLevel="2" Project="C:\Users\user\Desktop\real-time-multi-user-text-editor\scintilla321\scintilla\win32\scintilla.mak" Source="" Description="The following error has occurred during XML parsing:&#xA;&#xA;File: C:\Users\user\Desktop\real-time-multi-user-text-editor\scintilla321\scintilla\win32\scintilla.mak&#xA;Line: 1&#xA;Column: 1&#xA;Error Message:&#xA;Incorrect document syntax.&#xA;&#xA;The file 'C:\Users\user\Desktop\real-time-multi-user-text-editor\scintilla321\scintilla\win32\scintilla.mak' has failed to load.">
+</Event><Event ErrorLevel="2" Project="scintilla" Source="scintilla.mak" Description="End tag 'xs:choice' does not match the start tag 'xs:sequence'.&#xA;">
+</Event><Event ErrorLevel="2" Project="scintilla" Source="scintilla.mak" Description="Project upgrade failed.">
+</Event><Event ErrorLevel="3" Project="scintilla" Source="scintilla.mak" Description="Not Converted">
+</Event><Event ErrorLevel="2" Project="" Source="scintilla.mak" Description="Project upgrade failed.">
+</Event></UpgradeLog>
