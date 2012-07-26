@@ -30,7 +30,7 @@
         /// <summary>
         /// Some... thingy... of a kind
         /// </summary>
-        private Queue<TextTransformActor> thingy;
+        private System.Collections.Concurrent.ConcurrentQueue<TextTransformActor> thingy;
 
         /// <summary>
         /// Not a Queue by any means
@@ -49,12 +49,13 @@
         /// <param name="target">the IP address of the target server.</param>
         public ClientForSam(System.Net.IPAddress target)
         {
-            thingy = new Queue<TextTransformActor>();
+            thingy = new System.Collections.Concurrent.ConcurrentQueue<TextTransformActor>();
             //intialize the text transform collection into a non server profile
             TransformPool = new TextTransformCollection(false);
             this.server = new System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork,
                 System.Net.Sockets.SocketType.Stream,
                 System.Net.Sockets.ProtocolType.IP);
+            this.server.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.ReceiveBuffer, 512);
             this.server.Connect(new System.Net.IPEndPoint(target, 6000));
         }
 
@@ -168,11 +169,11 @@
                 //Add to the list of things to send to hte server
                 
             }
-            /*else if (key.KeyCode == Keys.Enter)
+            else if (key.KeyCode == Keys.Enter)
             {
-                req = new TextTransformActor(SelectionIndex, "\r\n");
+                req = new TextTransformActor(SelectionIndex, "\n");
                 
-            }*/
+            }
             if(req!=null)
                 thingy.Enqueue(req);
         }
@@ -182,7 +183,7 @@
         {
             TextTransformActor r;
             //nine hundred bytes should prevent 1024 byte long packets from being too little
-            if (insertedtext.Length <= 900)
+            if (insertedtext.Length <= 100)
             {
                 r = new TextTransformActor(selectionstart, insertedtext);
                 thingy.Enqueue(r);
@@ -190,15 +191,14 @@
             else
             {
 
-                var len = 900;
-                var arr = Enumerable.Range(0, insertedtext.Length / len).Select(x => insertedtext.Substring(x * len, len)).ToArray();
-                for (int a = 0; a < arr.Length; a++)
+                for (int i = 0; i < insertedtext.Length; i++) 
                 {
-                    thingy.Enqueue(new TextTransformActor(selectionstart + a * 900, arr[a]));
+                    thingy.Enqueue(new TextTransformActor(selectionstart+i,insertedtext[i]));
+                    System.Threading.Thread.Sleep(10);
                 }
             }
         }
-
+        
         /// <summary>
         /// Start listening, handing everything off to two new threads.
         /// </summary>
@@ -208,6 +208,7 @@
             b = new System.Threading.Thread(new System.Threading.ThreadStart(RecieveandConsolidate));
             a.Start();
             b.Start();
+            
         }
 
         /// <summary>
@@ -215,9 +216,10 @@
         /// </summary>
         private void RecieveandConsolidate()
         {
-            byte[] buffery=new byte[1024];
+            byte[] buffery=new byte[512];
             while (true)
-            {
+            {//Clear buffer(hopefully)
+                
                 try
                 {
                     //Blocking call, minimizes the amount of work that the thread does needlessly,
@@ -252,13 +254,20 @@
 
         private void SendTextTransformation()
         {
+            byte[] d;
+            TextTransformActor Holder;
             while (true)
             {
                 while (thingy.Count > 0)
                 {
+                    thingy.TryDequeue(out Holder);
                     try
                     {
-                        server.Send(TextTransformActor.GetObjectInBytes(this.thingy.Dequeue()));
+                        
+                        d = TextTransformActor.GetObjectInBytes(Holder);
+                        
+                        server.Send(d);
+                        
                     }
                     catch (System.Net.Sockets.SocketException serverproblem)
                     {//end the thread quickly when there is a socket error.
@@ -267,7 +276,6 @@
                 }
             }
         }
-
         #endregion Methods
     }
 }

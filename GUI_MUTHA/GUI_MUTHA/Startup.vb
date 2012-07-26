@@ -42,6 +42,7 @@ Public Class Startup
     Private Sub closeButton_Click(sender As System.Object, e As System.EventArgs) Handles closeButton.Click
         Editor.Close()
         Me.Close()
+        Application.Exit()
     End Sub
 
     Private Sub ipText_TextChanged(sender As System.Object, e As System.EventArgs) Handles ipText.TextChanged

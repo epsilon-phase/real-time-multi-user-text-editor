@@ -46,11 +46,6 @@ Partial Class Editor
         Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GoAwayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WeCantHelpYouToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GetALifeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.backButton = New System.Windows.Forms.Button()
         Me.PanelDown = New System.Windows.Forms.TableLayoutPanel()
         Me.Send = New System.Windows.Forms.Button()
@@ -89,7 +84,7 @@ Partial Class Editor
         '
         'MenuStrip
         '
-        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.ViewToolStripMenuItem, Me.HelpToolStripMenuItem})
+        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.ViewToolStripMenuItem})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
         Me.MenuStrip.Size = New System.Drawing.Size(933, 24)
@@ -106,7 +101,7 @@ Partial Class Editor
         'DownloadFileToolStripMenuItem
         '
         Me.DownloadFileToolStripMenuItem.Name = "DownloadFileToolStripMenuItem"
-        Me.DownloadFileToolStripMenuItem.Size = New System.Drawing.Size(149, 22)
+        Me.DownloadFileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.DownloadFileToolStripMenuItem.Text = "Download File"
         '
         'EditToolStripMenuItem
@@ -157,7 +152,7 @@ Partial Class Editor
         '
         Me.ToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem10})
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(106, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(152, 22)
         Me.ToolStripMenuItem2.Text = "Zoom"
         '
         'ToolStripMenuItem3
@@ -211,43 +206,8 @@ Partial Class Editor
         'ChatToolStripMenuItem
         '
         Me.ChatToolStripMenuItem.Name = "ChatToolStripMenuItem"
-        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
+        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ChatToolStripMenuItem.Text = "Chat"
-        '
-        'HelpToolStripMenuItem
-        '
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GoAwayToolStripMenuItem, Me.WeCantHelpYouToolStripMenuItem, Me.GetALifeToolStripMenuItem, Me.WHYAREYOUSTILLREADINGToolStripMenuItem})
-        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
-        Me.HelpToolStripMenuItem.Text = "Help"
-        '
-        'GoAwayToolStripMenuItem
-        '
-        Me.GoAwayToolStripMenuItem.Enabled = False
-        Me.GoAwayToolStripMenuItem.Name = "GoAwayToolStripMenuItem"
-        Me.GoAwayToolStripMenuItem.Size = New System.Drawing.Size(243, 22)
-        Me.GoAwayToolStripMenuItem.Text = "Go Away!"
-        '
-        'WeCantHelpYouToolStripMenuItem
-        '
-        Me.WeCantHelpYouToolStripMenuItem.Enabled = False
-        Me.WeCantHelpYouToolStripMenuItem.Name = "WeCantHelpYouToolStripMenuItem"
-        Me.WeCantHelpYouToolStripMenuItem.Size = New System.Drawing.Size(243, 22)
-        Me.WeCantHelpYouToolStripMenuItem.Text = "We Can't Help You!"
-        '
-        'GetALifeToolStripMenuItem
-        '
-        Me.GetALifeToolStripMenuItem.Enabled = False
-        Me.GetALifeToolStripMenuItem.Name = "GetALifeToolStripMenuItem"
-        Me.GetALifeToolStripMenuItem.Size = New System.Drawing.Size(243, 22)
-        Me.GetALifeToolStripMenuItem.Text = "Get A Life!"
-        '
-        'WHYAREYOUSTILLREADINGToolStripMenuItem
-        '
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem.Enabled = False
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem.Name = "WHYAREYOUSTILLREADINGToolStripMenuItem"
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem.Size = New System.Drawing.Size(243, 22)
-        Me.WHYAREYOUSTILLREADINGToolStripMenuItem.Text = "WHY ARE YOU STILL READING!?"
         '
         'backButton
         '
@@ -424,16 +384,11 @@ Partial Class Editor
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ViewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DownloadFileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SelectAllToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents GoAwayToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents WeCantHelpYouToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents GetALifeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents WHYAREYOUSTILLREADINGToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem4 As System.Windows.Forms.ToolStripMenuItem
