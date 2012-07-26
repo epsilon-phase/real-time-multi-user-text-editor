@@ -185,7 +185,7 @@
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             return (TextTransformActor)t.Deserialize(new System.IO.MemoryStream(q));
         }
-
+        
         public static byte[] GetObjectInBytes(TextTransformActor g)
         {
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter t = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
