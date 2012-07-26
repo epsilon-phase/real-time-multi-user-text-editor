@@ -34,3 +34,22 @@ C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-ed
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.exe
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.xml
 C:\Users\user\Documents\Visual Studio 2010\Projects\real-time-multi-user-text-editor\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.pdb
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\GUI_MUTHA.exe.config
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\GUI_MUTHA.exe
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\GUI_MUTHA.pdb
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\GUI_MUTHA.xml
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\ChatServerLib.dll
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\OperationalTransform.dll
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\OperationalTransform.pdb
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\OperationalTransform.xml
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\bin\Debug\ChatServerLib.pdb
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.Editor.resources
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.FindAndReplace.resources
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.Resources.resources
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.Startup.resources
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.exe
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.xml
+C:\Users\user\Desktop\SVN\GUI_MUTHA\GUI_MUTHA\obj\x86\Debug\GUI_MUTHA.pdb

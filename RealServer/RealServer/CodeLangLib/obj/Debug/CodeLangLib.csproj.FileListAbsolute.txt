@@ -3,3 +3,8 @@ C:\Users\user\Desktop\real-time-multi-user-text-editor\RealServer\RealServer\Cod
 C:\Users\user\Desktop\real-time-multi-user-text-editor\RealServer\RealServer\CodeLangLib\bin\Debug\CodeLangLib.pdb
 C:\Users\user\Desktop\real-time-multi-user-text-editor\RealServer\RealServer\CodeLangLib\obj\Debug\CodeLangLib.dll
 C:\Users\user\Desktop\real-time-multi-user-text-editor\RealServer\RealServer\CodeLangLib\obj\Debug\CodeLangLib.pdb
+C:\Users\user\Desktop\SVN\RealServer\RealServer\CodeLangLib\bin\Debug\CodeLangLib.dll
+C:\Users\user\Desktop\SVN\RealServer\RealServer\CodeLangLib\bin\Debug\CodeLangLib.pdb
+C:\Users\user\Desktop\SVN\RealServer\RealServer\CodeLangLib\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\user\Desktop\SVN\RealServer\RealServer\CodeLangLib\obj\Debug\CodeLangLib.dll
+C:\Users\user\Desktop\SVN\RealServer\RealServer\CodeLangLib\obj\Debug\CodeLangLib.pdb
