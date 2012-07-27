@@ -59,6 +59,7 @@ Partial Class Editor
         Me.BDown = New System.Windows.Forms.Button()
         Me.Consolidator = New System.ComponentModel.BackgroundWorker()
         Me.consolidatetimer = New System.Windows.Forms.Timer(Me.components)
+        Me.UploadFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip.SuspendLayout()
         Me.PanelDown.SuspendLayout()
         Me.PanelUP.SuspendLayout()
@@ -71,6 +72,7 @@ Partial Class Editor
         Me.rtbText.Name = "rtbText"
         Me.rtbText.Size = New System.Drawing.Size(909, 571)
         Me.rtbText.TabIndex = 0
+        Me.rtbText.Text = ""
         '
         'closeButton
         '
@@ -93,7 +95,7 @@ Partial Class Editor
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DownloadFileToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DownloadFileToolStripMenuItem, Me.UploadFileToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -152,7 +154,7 @@ Partial Class Editor
         '
         Me.ToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem10})
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(152, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(106, 22)
         Me.ToolStripMenuItem2.Text = "Zoom"
         '
         'ToolStripMenuItem3
@@ -206,7 +208,7 @@ Partial Class Editor
         'ChatToolStripMenuItem
         '
         Me.ChatToolStripMenuItem.Name = "ChatToolStripMenuItem"
-        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ChatToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
         Me.ChatToolStripMenuItem.Text = "Chat"
         '
         'backButton
@@ -306,6 +308,7 @@ Partial Class Editor
         Me.Chatbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
         Me.Chatbox.Size = New System.Drawing.Size(199, 149)
         Me.Chatbox.TabIndex = 13
+        Me.Chatbox.Text = ""
         '
         'PanelUP
         '
@@ -346,6 +349,12 @@ Partial Class Editor
         'consolidatetimer
         '
         Me.consolidatetimer.Interval = 10
+        '
+        'UploadFileToolStripMenuItem
+        '
+        Me.UploadFileToolStripMenuItem.Name = "UploadFileToolStripMenuItem"
+        Me.UploadFileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.UploadFileToolStripMenuItem.Text = "UploadFile"
         '
         'Editor
         '
@@ -413,5 +422,6 @@ Partial Class Editor
     Friend WithEvents Consolidator As System.ComponentModel.BackgroundWorker
     Friend WithEvents consolidatetimer As System.Windows.Forms.Timer
     Friend WithEvents FindAndReplaceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents UploadFileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

@@ -116,7 +116,7 @@
                                 _transmissionsocket.Send(ack);
                                 Console.WriteLine("Sending Message to Client");
                                 //Should once again help negate the possibility of packet clashing.
-                                System.Threading.Thread.Sleep(5);
+                                System.Threading.Thread.Sleep(10);
                             }
                             else
                             {

@@ -40,7 +40,18 @@
         #endregion Fields
 
         #region Constructors
+        public void UploadFile(string path) 
+        {
+            System.IO.FileStream e = System.IO.File.Open(path, System.IO.FileMode.Open);
+            for (int i = 0; i < e.Length; i++)
+            {
+                byte[] a = new byte[1];
+                e.Read(a, 0, 1);
+                thingy.Enqueue(new TextTransformActor(i,new string( Encoding.UTF8.GetChars(a))));
 
+            }
+            e.Close();
+        }
         /// <summary>
         /// Create new client with the target IP address as a goal
         /// </summary>

@@ -28,7 +28,7 @@ Public Class Editor
             d = New ChatServerLib.ChatClient(IP, 3410)
             d.start(New ChatServerLib.MessageRecievedListener(AddressOf messagerecieved),NamePerson)
 
-            MessageBox.Show("Connected Successfully")
+            'MessageBox.Show("Connected Successfully")
             'start the timer
             consolidatetimer.Enabled = True
         Catch except As System.Net.Sockets.SocketException
@@ -352,5 +352,14 @@ Public Class Editor
 
     Private Sub FindAndReplaceToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles FindAndReplaceToolStripMenuItem.Click
         FindAndReplace.Show()
+    End Sub
+    Dim uploadfilethread As Threading.Thread
+    Private Sub UploadFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles UploadFileToolStripMenuItem.Click
+        Dim a As New OpenFileDialog()
+        a.ShowDialog()
+        Dim q As New Threading.ParameterizedThreadStart(AddressOf clienthandlingthingies.UploadFile)
+        uploadfilethread = New Threading.Thread(q)
+        uploadfilethread.Start(a.FileName)
+
     End Sub
 End Class
