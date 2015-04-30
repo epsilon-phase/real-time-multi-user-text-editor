@@ -1,0 +1,2 @@
+Software for a Google Docs-esque program.
+Programmed using a custom operatoinal transform library, with a server that has more threads than any sane program should need for running a relatively easy task.
